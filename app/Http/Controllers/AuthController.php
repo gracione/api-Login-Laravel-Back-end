@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Cliente;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,16 +17,27 @@ class AuthController extends Controller
     {
         $attr = $request->validate([
             'name' => 'required|string|max:255',
+            'numero' => 'required|string|max:255',
+            'id_sexo' => 'required|int|max:255',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed'
         ]);
-
+        
         $user = User::create([
             'name' => $attr['name'],
             'password' => bcrypt($attr['password']),
             'email' => $attr['email']
         ]);
+        
+        $id = User::where('email',$attr['email'])->get();
 
+        $cliente = Cliente::create([
+            'ds_nome' => $attr['name'],
+            'ds_numero' => $attr['numero'],
+            'id_usuario' => $id[0]->id,
+            'id_sexo' => $attr['id_sexo']
+        ]);
+        
         return $this->success([
             'token' => $user->createToken('API Token')->plainTextToken
         ]);
