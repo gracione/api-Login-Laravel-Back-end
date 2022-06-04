@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Cliente;
+use App\Models\Pessoa;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     use ApiResponser;
-
+    
     public function register(Request $request)
     {
         $attr = $request->validate([
@@ -30,14 +30,13 @@ class AuthController extends Controller
         ]);
         
         $id = User::where('email',$attr['email'])->get();
-
-        $cliente = Cliente::create([
+        $pessoa = Pessoa::create([
             'ds_nome' => $attr['name'],
             'ds_numero' => $attr['numero'],
             'id_usuario' => $id[0]->id,
-            'id_sexo' => $attr['id_sexo']
+            'id_sexo' => $attr['id_sexo'],
+            'bo_tipo_funcionario' => false
         ]);
-        
         return $this->success([
             'token' => $user->createToken('API Token')->plainTextToken
         ]);

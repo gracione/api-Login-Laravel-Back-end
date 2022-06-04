@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('ds_nome');
         });
-        Schema::create('cliente', function (Blueprint $table) {
+        Schema::create('pessoa', function (Blueprint $table) {
             $table->id();
             $table->string('ds_nome');
             $table->string('ds_numero');
@@ -34,8 +34,10 @@ class CreateUsersTable extends Migration
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->unsignedBigInteger('id_sexo');
             $table->foreign('id_sexo')->references('id')->on('sexo');
+            $table->boolean('bo_tipo_funcionario');
             $table->timestamps();
         });
+
     }
 
     /**
