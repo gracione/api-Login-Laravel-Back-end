@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Home;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,16 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/auth/register', [AuthController::class, 'register']);
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
-Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/me', function (Request $request) {
+    Route::get('/profile', function(Request $request) {
         return auth()->user();
     });
 
-    Route::post('/auth/logout', [AuthController::class, 'logout']);
+    
+    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
-
-Route::get('/verificar-tipo-perfil', [Home::class, 'verificarTipoPerfil']);

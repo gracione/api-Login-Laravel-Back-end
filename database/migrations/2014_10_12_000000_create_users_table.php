@@ -22,22 +22,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-        Schema::create('sexo', function (Blueprint $table) {
-            $table->id();
-            $table->string('ds_nome');
-        });
-        Schema::create('pessoa', function (Blueprint $table) {
-            $table->id();
-            $table->string('ds_nome');
-            $table->string('ds_numero');
-            $table->unsignedBigInteger('id_usuario');
-            $table->foreign('id_usuario')->references('id')->on('users');
-            $table->unsignedBigInteger('id_sexo');
-            $table->foreign('id_sexo')->references('id')->on('sexo');
-            $table->boolean('bo_tipo_funcionario');
-            $table->timestamps();
-        });
-
     }
 
     /**
