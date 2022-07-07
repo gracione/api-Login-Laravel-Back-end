@@ -25,7 +25,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/profile', function(Request $request) {
         return auth()->user();
     });
-
-    
+    Route::get('/listarFuncionarios', [App\Http\Controllers\FuncionariosController::class, 'listar']);
+    Route::post('/tratamentos', [App\Http\Controllers\TratamentosController::class, 'listar']);
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
+
+Route::post('/verificar-tipo-perfil',[App\Http\Controllers\Controller::class,'verificarTipoPerfil']);

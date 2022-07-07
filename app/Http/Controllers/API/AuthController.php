@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use Validator;
 use App\Models\User;
+use App\Traits\ApiResponser;
 
 class AuthController extends Controller
 {
@@ -14,8 +15,10 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
+            'numero' => 'required|string|max:255',
+            'id_sexo' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8'
+            'password' => 'required|string|min:3'
         ]);
 
         if($validator->fails()){
@@ -23,7 +26,10 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->name,
+            'nome' => $request->name,
+            'numero' => $request->numero,
+            'bo_funcionario' => '1',
+            'id_sexo' => $request->id_sexo,
             'email' => $request->email,
             'password' => Hash::make($request->password)
          ]);
@@ -53,7 +59,7 @@ class AuthController extends Controller
     // method for user logout and delete token
     public function logout()
     {
-        auth()->user()->tokens()->delete();
+        auth()->user()->tokens()->delete(); 
 
         return [
             'message' => 'You have successfully logged out and the token was successfully deleted'
