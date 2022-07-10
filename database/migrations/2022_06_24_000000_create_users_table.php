@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateUsersTable extends Migration
 {
@@ -17,7 +18,6 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('numero');
-            $table->integer('bo_funcionario');
             $table->integer('id_sexo')->unsigned();
             $table->foreign('id_sexo')->references('id')->on('sexo');
             $table->string('email')->unique();
@@ -26,6 +26,15 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        DB::table('users')->insert([
+            'id' => '1',
+            'nome' => 'gracione',
+            'numero' => '(99)9 99999',
+            'id_sexo' => '1',
+            'email' => 'gracione@gmail.com',
+            'password' => '$2y$10$HzcQnbhACf/J3RXoOVCq5eduTLtDQJnxX08LZNXsEBqifn8w6eRJi'            
+        ]);
+
     }
 
     /**

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class Funcionarios extends Migration
 {
@@ -26,6 +27,15 @@ class Funcionarios extends Migration
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
         });
+        DB::table('funcao_tipo')->insert([
+            'nome' => 'cabebeleiro',
+            'cor' => 'rosa'
+        ]);
+        DB::table('funcao_funcionario')->insert([
+            'id_funcao_tipo' => '1',
+            'id_usuario' => '1'
+        ]);
+        
     }
 
     /**

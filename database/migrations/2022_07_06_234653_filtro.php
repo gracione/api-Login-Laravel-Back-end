@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class Filtro extends Migration
 {
@@ -27,6 +28,17 @@ class Filtro extends Migration
             $table->integer('id_filtro_tipo')->unsigned();
             $table->foreign('id_filtro_tipo')->references('id')->on('filtro_tipo');
         });
+        DB::table('filtro_tipo')->insert([
+            'nome' => 'tamanho',
+            'id_funcao_tipo' => '1'
+        ]);
+        DB::table('filtro')->insert([
+            'nome' => 'pequeno',
+            'porcentagem_tempo' => 30,
+            'porcentagem_valor' => 30,
+            'id_filtro_tipo' => '1'
+        ]);
+
     }
 
     /**

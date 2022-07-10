@@ -27,6 +27,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     Route::get('/listarFuncionarios', [App\Http\Controllers\FuncionariosController::class, 'listar']);
     Route::post('/tratamentos', [App\Http\Controllers\TratamentosController::class, 'listar']);
+    Route::post('/filtro', [App\Http\Controllers\FiltroController::class, 'listar']);
+    Route::post('/listarFiltro', [App\Http\Controllers\FiltroController::class, 'listarFiltro']);
+
+    Route::post('/horarios-marcados', [App\Http\Controllers\HorarioController::class, 'horariosMarcados']);
+    Route::post('/horarios-disponivel', [App\Http\Controllers\HorarioController::class, 'horariosDiponivel']);
+
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
 
