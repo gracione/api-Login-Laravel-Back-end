@@ -16,7 +16,10 @@ class Horario extends Model
 
         if(!empty($request->dia)) {
             $select = DB::table('horario')
-            ->select('*')
+            ->select(DB::raw('TIME(horario.horario_inicio) as horario_inicio,
+                                    TIME(horario.horario_fim) as horario_fim,
+                                    DATE(horario.horario_inicio) as data'                                    
+                                    ))
             ->whereDay('horario.horario_inicio',$request->dia)
             ->whereMonth('horario.horario_inicio',$mes)
             ->whereYear('horario.horario_inicio',$ano)
