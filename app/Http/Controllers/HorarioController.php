@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Horario;
 use App\Models\Tratamentos;
+use App\Models\Filtro;
 
 class HorarioController extends Controller
 {
@@ -22,6 +23,14 @@ class HorarioController extends Controller
         $horarioPadrao = $horarioPadrao[0]->tempo_padrao;
         $horas = 7;
         $minutos = 0;
+
+        $idsFiltro = explode('#',$request->idFiltro);
+        $porcentagemFiltro = Filtro::filtroById($idsFiltro);
+        
+        foreach ($porcentagemFiltro as $key => $value) {
+            $vetor[] = $value->porcentagem_tempo;
+        }
+        return $vetor; 
         $horarioPadrao = $this->almentarPorcentagem($horarioPadrao,0);
         $hora = floor($horarioPadrao/60);
         $minuto =  $horarioPadrao%60;
@@ -30,12 +39,12 @@ class HorarioController extends Controller
 
         while ($horas < 16) {
             $tempo =  "{$horas}:{$minutos}:00";
+            $horas = $horas + $hora;
+            $minutos = $minutos + $minuto;
 
             if($this->verificarHorario($tempo,$horariosMarcados)) {
                 $horario[] = $tempo;
             }
-            $horas = $horas + $hora;
-            $minutos = $minutos + $minuto;
 
             if($minutos > 60) {
                 $horas = $horas + 1;

@@ -26,4 +26,12 @@ class Filtro extends Model
         return $users;
     }
 
+    public function filtroById ($idFiltro) {
+        $users = DB::table('filtro')
+        ->select('porcentagem_tempo')
+        ->whereIn('id',$idFiltro )
+        ->get();
+        return $users;
+    }
+
 }
