@@ -28,7 +28,7 @@ class Filtro extends Model
 
     public function filtroById ($idFiltro) {
         $users = DB::table('filtro')
-        ->select('porcentagem_tempo')
+        ->select(DB::raw('SUM(porcentagem_tempo) as porcentagem_tempo'))
         ->whereIn('id',$idFiltro )
         ->get();
         return $users;

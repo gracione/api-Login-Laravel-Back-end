@@ -23,15 +23,9 @@ class HorarioController extends Controller
         $horarioPadrao = $horarioPadrao[0]->tempo_padrao;
         $horas = 7;
         $minutos = 0;
-
         $idsFiltro = explode('#',$request->idFiltro);
-        $porcentagemFiltro = Filtro::filtroById($idsFiltro);
-        
-        foreach ($porcentagemFiltro as $key => $value) {
-            $vetor[] = $value->porcentagem_tempo;
-        }
-        return $vetor; 
-        $horarioPadrao = $this->almentarPorcentagem($horarioPadrao,0);
+        $porcentagemFiltro = Filtro::filtroById($idsFiltro)[0]->porcentagem_tempo;
+        $horarioPadrao = $this->almentarPorcentagem($horarioPadrao,$porcentagemFiltro);
         $hora = floor($horarioPadrao/60);
         $minuto =  $horarioPadrao%60;
 
