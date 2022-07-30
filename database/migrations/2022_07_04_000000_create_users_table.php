@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('nome_estabelecimento');
             $table->string('nome');
             $table->string('numero');
-            $table->integer('tipo_funcionario')->unsigned();
-            $table->foreign('tipo_funcionario')->references('id')->on('tipo_funcionario');
+            $table->integer('usuario_tipo')->unsigned();
+            $table->foreign('usuario_tipo')->references('id')->on('usuario_tipo');
             $table->integer('id_sexo')->unsigned();
             $table->foreign('id_sexo')->references('id')->on('sexo');
             $table->string('email')->unique();
@@ -31,8 +31,10 @@ class CreateUsersTable extends Migration
         });
         DB::table('users')->insert([
             'id' => '1',
+            'nome_estabelecimento' => 'null',
             'nome' => 'gracione',
             'numero' => '(99)9 99999',
+            'usuario_tipo' => '1',
             'id_sexo' => '1',
             'email' => 'gracione@gmail.com',
             'password' => '$2y$10$HzcQnbhACf/J3RXoOVCq5eduTLtDQJnxX08LZNXsEBqifn8w6eRJi'            

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class Tratamentos extends Migration
+class Funcionario extends Migration
 {
     /**
      * Run the migrations.
@@ -14,23 +14,21 @@ class Tratamentos extends Migration
      */
     public function up()
     {
-        Schema::create('tratamentos', function (Blueprint $table) {
+        Schema::create('funcionario', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome');
-            $table->integer('tempo_padrao');
-            $table->integer('valor_padrao');
-            $table->integer('id_funcao_tipo')->unsigned();
-            $table->foreign('id_funcao_tipo')->references('id')->on('funcao_tipo');
             $table->integer('id_estabelecimento')->unsigned();
             $table->foreign('id_estabelecimento')->references('id')->on('users');
+            $table->integer('id_funcionario')->unsigned();
+            $table->foreign('id_funcionario')->references('id')->on('users');
         });
-        DB::table('tratamentos')->insert([
-            'nome' => 'hidratacao',
-            'tempo_padrao' => '30',
-            'valor_padrao' => '30',
-            'id_funcao_tipo' => '1',
+
+        DB::table('funcionario')->insert([
+            'id' => '1',
+            'id_estabelecimento' => '1',
+            'id_funcionario' => '1',
             'id_estabelecimento' => '1'
         ]);
+
     }
 
     /**
@@ -40,6 +38,7 @@ class Tratamentos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tratamentos');
+        //
+        Schema::dropIfExists('funcionario');
     }
 }

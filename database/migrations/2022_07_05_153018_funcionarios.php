@@ -18,6 +18,8 @@ class Funcionarios extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('cor');
+            $table->integer('id_estabelecimento')->unsigned();
+            $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
 
         Schema::create('funcao_funcionario', function (Blueprint $table) {
@@ -26,14 +28,19 @@ class Funcionarios extends Migration
             $table->foreign('id_funcao_tipo')->references('id')->on('funcao_tipo');
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
+            $table->integer('id_estabelecimento')->unsigned();
+            $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
+
         DB::table('funcao_tipo')->insert([
             'nome' => 'cabebeleiro',
-            'cor' => 'rosa'
+            'cor' => 'rosa',
+            'id_estabelecimento' => '1'
         ]);
         DB::table('funcao_funcionario')->insert([
             'id_funcao_tipo' => '1',
-            'id_usuario' => '1'
+            'id_usuario' => '1',
+            'id_estabelecimento' => '1'
         ]);
         
     }

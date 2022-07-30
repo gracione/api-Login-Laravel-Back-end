@@ -21,11 +21,10 @@ class User extends Authenticatable
         'nome_estabelecimento',
         'nome',
         'numero',
-        'tipo_perfil',
+        'usuario_tipo',
         'id_sexo',
         'email',
         'password',
-        ''
     ];
 
     /**

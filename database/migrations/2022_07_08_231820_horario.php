@@ -24,6 +24,8 @@ class Horario extends Migration
             $table->foreign('id_tratamento')->references('id')->on('tratamentos');
             $table->integer('id_funcionario')->unsigned();
             $table->foreign('id_funcionario')->references('id')->on('funcao_funcionario');
+            $table->integer('id_estabelecimento')->unsigned();
+            $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
         DB::table('horario')->insert([
             'horario_inicio' => '2022-6-21 10:00:00',
