@@ -27,27 +27,27 @@ class Horario extends Migration
             $table->integer('id_estabelecimento')->unsigned();
             $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
-        DB::table('horario')->insert([
-            'horario_inicio' => '2022-6-21 10:00:00',
-            'horario_fim' => '2022-6-21 10:30:00',
-            'id_usuario' => '1',
-            'id_tratamento' => '1',
-            'id_funcionario' => '1'
-        ]);
-        DB::table('horario')->insert([
-            'horario_inicio' => '2022-6-21 11:00:00',
-            'horario_fim' => '2022-6-21 11:20:00',
-            'id_usuario' => '1',
-            'id_tratamento' => '1',
-            'id_funcionario' => '1'
-        ]);
-        DB::table('horario')->insert([
-            'horario_inicio' => '2022-6-21 12:00:00',
-            'horario_fim' => '2022-6-21 12:45:00',
-            'id_usuario' => '1',
-            'id_tratamento' => '1',
-            'id_funcionario' => '1'
-        ]);
+//        DB::table('horario')->insert([
+//            'horario_inicio' => '2022-6-21 10:00:00',
+//            'horario_fim' => '2022-6-21 10:30:00',
+//            'id_usuario' => '1',
+//            'id_tratamento' => '1',
+//            'id_funcionario' => '1'
+//        ]);
+//        DB::table('horario')->insert([
+//            'horario_inicio' => '2022-6-21 11:00:00',
+//            'horario_fim' => '2022-6-21 11:20:00',
+//            'id_usuario' => '1',
+//            'id_tratamento' => '1',
+//            'id_funcionario' => '1'
+//        ]);
+//        DB::table('horario')->insert([
+//            'horario_inicio' => '2022-6-21 12:00:00',
+//            'horario_fim' => '2022-6-21 12:45:00',
+//            'id_usuario' => '1',
+//            'id_tratamento' => '1',
+//            'id_funcionario' => '1'
+//        ]);
     }
 
     /**
