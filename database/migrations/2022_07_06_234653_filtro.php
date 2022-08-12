@@ -32,20 +32,6 @@ class Filtro extends Migration
             $table->integer('id_estabelecimento')->unsigned();
             $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
-        DB::table('filtro_tipo')->insert([
-            'nome' => 'tamanho',
-            'id_funcao_tipo' => '1',
-            'id_estabelecimento' => '1'
-
-        ]);
-        DB::table('filtro')->insert([
-            'nome' => 'pequeno',
-            'porcentagem_tempo' => 30,
-            'porcentagem_valor' => 30,
-            'id_filtro_tipo' => '1',
-            'id_estabelecimento' => '1'
-
-        ]);
 
     }
 

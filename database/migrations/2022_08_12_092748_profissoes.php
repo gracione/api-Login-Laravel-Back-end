@@ -3,9 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
-class CreateSexo extends Migration
+class Profissoes extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +13,11 @@ class CreateSexo extends Migration
      */
     public function up()
     {
-        Schema::create('sexo', function (Blueprint $table) {
+        Schema::create('profissao', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->timestamps();
+            $table->integer('id_estabelecimento')->unsigned();
+            $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateSexo extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sexo');
+        Schema::dropIfExists('profissao');
     }
 }

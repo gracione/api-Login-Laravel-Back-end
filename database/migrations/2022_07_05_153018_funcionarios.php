@@ -31,17 +31,6 @@ class Funcionarios extends Migration
             $table->integer('id_estabelecimento')->unsigned();
             $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
-
-        DB::table('funcao_tipo')->insert([
-            'nome' => 'cabebeleiro',
-            'cor' => 'rosa',
-            'id_estabelecimento' => '1'
-        ]);
-        DB::table('funcao_funcionario')->insert([
-            'id_funcao_tipo' => '1',
-            'id_usuario' => '1',
-            'id_estabelecimento' => '1'
-        ]);
         
     }
 

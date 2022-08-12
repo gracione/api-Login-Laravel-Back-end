@@ -23,14 +23,6 @@ class Funcionario extends Migration
             $table->integer('id_funcao_tipo')->unsigned();
             $table->foreign('id_funcao_tipo')->references('id')->on('funcao_tipo');
         });
-
-        DB::table('funcionario')->insert([
-            'id' => '1',
-            'id_estabelecimento' => '1',
-            'id_funcionario' => '1',
-            'id_funcao_tipo' => '1'
-        ]);
-
     }
 
     /**

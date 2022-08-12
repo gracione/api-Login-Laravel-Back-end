@@ -23,10 +23,62 @@ class Horario extends Migration
             $table->integer('id_tratamento')->unsigned();
             $table->foreign('id_tratamento')->references('id')->on('tratamentos');
             $table->integer('id_funcionario')->unsigned();
-            $table->foreign('id_funcionario')->references('id')->on('funcao_funcionario');
+            $table->foreign('id_funcionario')->references('id')->on('funcionario');
             $table->integer('id_estabelecimento')->unsigned();
             $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
+        if(true) {
+            DB::table('sexo')->insert([
+                'id' => '1',
+                'nome' => 'masculino'
+            ]);
+            DB::table('sexo')->insert([
+                'id' => '2',
+                'nome' => 'feminino'
+            ]);
+            DB::table('users')->insert([
+                'id' => '1',
+                'nome_estabelecimento' => 'null',
+                'nome' => 'gracione',
+                'numero' => '(99)9 99999',
+                'usuario_tipo' => '1',
+                'id_sexo' => '1',
+                'email' => 'gracione@gmail.com',
+                'password' => '$2y$10$HzcQnbhACf/J3RXoOVCq5eduTLtDQJnxX08LZNXsEBqifn8w6eRJi'            
+            ]);
+            DB::table('funcao_tipo')->insert([
+                'nome' => 'cabebeleiro',
+                'cor' => 'rosa',
+                'id_estabelecimento' => '1'
+            ]);
+            DB::table('funcao_funcionario')->insert([
+                'id_funcao_tipo' => '1',
+                'id_usuario' => '1',
+                'id_estabelecimento' => '1'
+            ]);
+            DB::table('tratamentos')->insert([
+                'nome' => 'hidratacao',
+                'tempo_padrao' => '30',
+                'valor_padrao' => '30',
+                'id_funcao_tipo' => '1',
+                'id_estabelecimento' => '1'
+            ]);
+            DB::table('filtro_tipo')->insert([
+                'nome' => 'tamanho',
+                'id_funcao_tipo' => '1',
+                'id_estabelecimento' => '1'
+    
+            ]);
+            DB::table('filtro')->insert([
+                'nome' => 'pequeno',
+                'porcentagem_tempo' => 30,
+                'porcentagem_valor' => 30,
+                'id_filtro_tipo' => '1',
+                'id_estabelecimento' => '1'
+    
+            ]);
+                    
+        }
 //        DB::table('horario')->insert([
 //            'horario_inicio' => '2022-6-21 10:00:00',
 //            'horario_fim' => '2022-6-21 10:30:00',

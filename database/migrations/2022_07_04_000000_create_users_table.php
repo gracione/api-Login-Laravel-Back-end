@@ -29,16 +29,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-        DB::table('users')->insert([
-            'id' => '1',
-            'nome_estabelecimento' => 'null',
-            'nome' => 'gracione',
-            'numero' => '(99)9 99999',
-            'usuario_tipo' => '1',
-            'id_sexo' => '1',
-            'email' => 'gracione@gmail.com',
-            'password' => '$2y$10$HzcQnbhACf/J3RXoOVCq5eduTLtDQJnxX08LZNXsEBqifn8w6eRJi'            
-        ]);
 
     }
 
