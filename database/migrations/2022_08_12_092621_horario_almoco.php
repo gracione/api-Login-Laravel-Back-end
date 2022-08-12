@@ -15,7 +15,8 @@ class HorarioAlmoco extends Migration
     {
         Schema::create('horario_almoco', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('data');
+            $table->dateTime('inicio');
+            $table->dateTime('fim');
             $table->integer('id_estabelecimento')->unsigned();
             $table->foreign('id_estabelecimento')->references('id')->on('users');
             $table->integer('id_funcionario')->unsigned();

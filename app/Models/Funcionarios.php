@@ -38,7 +38,7 @@ class Funcionarios extends Model
             'nome_estabelecimento' => '',
             'nome' => $request->nome,
             'numero' => $request->numero,
-            'usuario_tipo' => '2',
+            'tipo_usuario' => '2',
             'id_sexo' => $request->id_sexo,
             'email' => $request->email,
             'password' => Hash::make($request->password)

@@ -28,6 +28,18 @@ class Horario extends Migration
             $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
         if(true) {
+            DB::table('tipo_usuario')->insert([
+                'id' => '1',
+                'nome' => 'administrativo',
+            ]);
+            DB::table('tipo_usuario')->insert([
+                'id' => '2',
+                'nome' => 'funcionario',
+            ]);
+            DB::table('tipo_usuario')->insert([
+                'id' => '3',
+                'nome' => 'cliente',
+            ]);    
             DB::table('sexo')->insert([
                 'id' => '1',
                 'nome' => 'masculino'
@@ -41,7 +53,7 @@ class Horario extends Migration
                 'nome_estabelecimento' => 'null',
                 'nome' => 'gracione',
                 'numero' => '(99)9 99999',
-                'usuario_tipo' => '1',
+                'tipo_usuario' => '1',
                 'id_sexo' => '1',
                 'email' => 'gracione@gmail.com',
                 'password' => '$2y$10$HzcQnbhACf/J3RXoOVCq5eduTLtDQJnxX08LZNXsEBqifn8w6eRJi'            

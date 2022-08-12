@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use Validator;
 use App\Models\User;
+use App\Models\Estabelecimento;
 use App\Traits\ApiResponser;
 
 class AuthController extends Controller
@@ -29,12 +30,17 @@ class AuthController extends Controller
             'nome_estabelecimento' => $request->nome,
             'nome' => $request->nome,
             'numero' => $request->numero,
-            'usuario_tipo' => '1',
+            'tipo_usuario' => '1',
             'id_sexo' => '1',
             'email' => $request->email,
             'password' => Hash::make($request->password)
          ]);
+         $user = Estabelecimento::create([
+            'nome' => $request->nome,
+            'id_proprietario' => $request->numero,
+         ]);
 
+         
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()
@@ -59,7 +65,7 @@ class AuthController extends Controller
             'nome_estabelecimento' => '',
             'nome' => $request->name,
             'numero' => $request->numero,
-            'usuario_tipo' => '3',
+            'tipo_usuario' => '3',
             'id_sexo' => $request->id_sexo,
             'email' => $request->email,
             'password' => Hash::make($request->password)
@@ -81,13 +87,13 @@ class AuthController extends Controller
 
         $user = User::where('email', $request['email'])->firstOrFail();
 
-        if($user['usuario_tipo'] == 1) {
+        if($user['tipo_usuario'] == 1) {
             print("administrativo");
         };
-        if($user['usuario_tipo'] == 2) {
+        if($user['tipo_usuario'] == 2) {
             print("funcionario");
         };
-        if($user['usuario_tipo'] == 3) {
+        if($user['tipo_usuario'] == 3) {
             print("cliente");
         };
 

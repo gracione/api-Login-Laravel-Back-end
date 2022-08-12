@@ -19,10 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('nome_estabelecimento');
             $table->string('nome');
             $table->string('numero');
-            $table->integer('usuario_tipo')->unsigned();
-            $table->foreign('usuario_tipo')->references('id')->on('usuario_tipo');
+            $table->integer('tipo_usuario')->unsigned();
+            $table->foreign('tipo_usuario')->references('id')->on('tipo_usuario');
             $table->integer('id_sexo')->unsigned();
             $table->foreign('id_sexo')->references('id')->on('sexo');
+            $table->integer('id_estabelecimento')->unsigned();
+            $table->foreign('id_estabelecimento')->references('id')->on('estabelecimento');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

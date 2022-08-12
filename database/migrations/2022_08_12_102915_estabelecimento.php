@@ -3,9 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
-class TipoFuncionario extends Migration
+class Estabelecimento extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +13,11 @@ class TipoFuncionario extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_usuario', function (Blueprint $table) {
+        Schema::create('estabelecimento', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
+            $table->integer('id_proprietario')->unsigned();
+            $table->foreign('id_proprietario')->references('id')->on('users');
         });
     }
 
@@ -27,6 +28,6 @@ class TipoFuncionario extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_usuario');
+        //
     }
 }
