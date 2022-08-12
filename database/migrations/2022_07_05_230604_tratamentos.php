@@ -18,7 +18,6 @@ class Tratamentos extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->integer('tempo_padrao');
-            $table->integer('valor_padrao');
             $table->integer('id_funcao_tipo')->unsigned();
             $table->foreign('id_funcao_tipo')->references('id')->on('funcao_tipo');
             $table->integer('id_estabelecimento')->unsigned();
