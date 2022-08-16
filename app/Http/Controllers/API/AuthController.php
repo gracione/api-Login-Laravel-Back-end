@@ -9,6 +9,7 @@ use Validator;
 use App\Models\User;
 use App\Models\Estabelecimento;
 use App\Traits\ApiResponser;
+use App\Http\Controllers\API\Constantes;
 
 class AuthController extends Controller
 {
@@ -87,20 +88,20 @@ class AuthController extends Controller
 
         $user = User::where('email', $request['email'])->firstOrFail();
 
-        if($user['tipo_usuario'] == 1) {
+        if($user['tipo_usuario'] == Constantes::ADMINISTRADOR) {
             print("administrativo");
         };
-        if($user['tipo_usuario'] == 2) {
+        if($user['tipo_usuario'] == Constantes::FUNCIONARIO) {
             print("funcionario");
         };
-        if($user['tipo_usuario'] == 3) {
+        if($user['tipo_usuario'] == Constantes::CLIENTE) {
             print("cliente");
         };
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()
-            ->json(['message' => 'Hi '.$user->name.', welcome to home','access_token' => $token, 'token_type' => 'Bearer', ]);
+            ->json(['message' => 'Token gerado com sucesso','access_token' => $token, 'token_type' => 'Bearer', ]);
     }
 
     // method for user logout and delete token
