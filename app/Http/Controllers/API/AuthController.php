@@ -64,7 +64,6 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'nome_estabelecimento' => '',
             'nome' => $request->name,
             'numero' => $request->numero,
             'tipo_usuario' => '3',
@@ -72,6 +71,11 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
          ]);
+
+         DB::table('cliente')->insert([
+            'id_usuario' => $user['id'],
+            'id_estabelecimento' => $request->id_estabelecimento,
+        ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 

@@ -35,7 +35,6 @@ class Funcionarios extends Model
         }
 
         $user = User::create([
-            'nome_estabelecimento' => '',
             'nome' => $request->nome,
             'numero' => $request->numero,
             'tipo_usuario' => '2',
@@ -43,11 +42,11 @@ class Funcionarios extends Model
             'email' => $request->email,
             'password' => Hash::make($request->password)
          ]);
-
+         print($user['id']);
          
          DB::table('funcionario')->insert([
             'id_estabelecimento' => $request->id_estabelecimento,
-            'id_funcionario' => $user['id'],
+            'id_usuario' => $user['id'],
             'id_funcao_tipo' => $request->id_funcao_tipo
         ]);
 
