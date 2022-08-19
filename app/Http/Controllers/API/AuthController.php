@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Estabelecimento;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\API\Constantes;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -28,7 +29,6 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'nome_estabelecimento' => $request->nome,
             'nome' => $request->nome,
             'numero' => $request->numero,
             'tipo_usuario' => '1',
@@ -36,10 +36,11 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
          ]);
-         $user = Estabelecimento::create([
+        
+         DB::table('estabelecimento')->insert([
             'nome' => $request->nome,
-            'id_proprietario' => $request->numero,
-         ]);
+            'id_proprietario' => $user['id'],
+        ]);
 
          
         $token = $user->createToken('auth_token')->plainTextToken;
