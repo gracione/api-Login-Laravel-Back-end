@@ -36,6 +36,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/horarios-marcados', [App\Http\Controllers\HorarioController::class, 'horariosMarcados']);
     Route::post('/horarios-disponivel', [App\Http\Controllers\HorarioController::class, 'horariosDiponivel']);
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
+
+    Route::post('/profissao/cadastrar', [App\Http\Controllers\ProfissaoController::class, 'inserir']); 
+
 });
 
 Route::post('/verificar-tipo-perfil',[App\Http\Controllers\Controller::class,'verificarTipoPerfil']);

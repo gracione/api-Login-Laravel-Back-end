@@ -16,5 +16,12 @@ class Profissao extends Model
         ->get();
         return $select;
     }
+    public function inserir ($request) {
+         DB::table('profissao')->insert([
+            'nome' => $request->nome,
+            'id_estabelecimento' => $request->id_estabelecimento
+        ]);
 
+        return 'cadastrado';
+    }
 }
