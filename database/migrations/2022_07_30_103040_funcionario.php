@@ -18,10 +18,10 @@ class Funcionario extends Migration
             $table->increments('id');
             $table->integer('id_estabelecimento')->unsigned();
             $table->foreign('id_estabelecimento')->references('id')->on('users');
-            $table->integer('id_funcionario')->unsigned();
-            $table->foreign('id_funcionario')->references('id')->on('users');
+            $table->integer('id_usuario')->unsigned();
+            $table->foreign('id_usuario')->references('id')->on('users');
             $table->integer('id_funcao_tipo')->unsigned();
-            $table->foreign('id_funcao_tipo')->references('id')->on('funcao_tipo');
+            $table->foreign('id_funcao_tipo')->references('id')->on('profissao');
         });
     }
 

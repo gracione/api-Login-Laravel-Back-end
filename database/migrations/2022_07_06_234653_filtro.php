@@ -19,8 +19,6 @@ class Filtro extends Migration
             $table->string('nome');
             $table->integer('id_profissao')->unsigned();
             $table->foreign('id_profissao')->references('id')->on('profissao');
-            $table->integer('id_estabelecimento')->unsigned();
-            $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
         Schema::create('filtro', function (Blueprint $table) {
             $table->increments('id');
@@ -28,8 +26,6 @@ class Filtro extends Migration
             $table->integer('porcentagem_tempo');
             $table->integer('id_filtro_tipo')->unsigned();
             $table->foreign('id_filtro_tipo')->references('id')->on('filtro_tipo');
-            $table->integer('id_estabelecimento')->unsigned();
-            $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
 
     }

@@ -17,10 +17,8 @@ class HorarioAlmoco extends Migration
             $table->increments('id');
             $table->dateTime('inicio');
             $table->dateTime('fim');
-            $table->integer('id_estabelecimento')->unsigned();
-            $table->foreign('id_estabelecimento')->references('id')->on('users');
             $table->integer('id_funcionario')->unsigned();
-            $table->foreign('id_funcionario')->references('id')->on('users');
+            $table->foreign('id_funcionario')->references('id')->on('funcionario');
         });
     }
 

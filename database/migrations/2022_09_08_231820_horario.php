@@ -18,14 +18,12 @@ class Horario extends Migration
             $table->increments('id');
             $table->dateTime('horario_inicio');
             $table->dateTime('horario_fim');
-            $table->integer('id_usuario')->unsigned();
-            $table->foreign('id_usuario')->references('id')->on('users');
+            $table->integer('id_cliente')->unsigned();
+            $table->foreign('id_cliente')->references('id')->on('users');
             $table->integer('id_tratamento')->unsigned();
             $table->foreign('id_tratamento')->references('id')->on('tratamentos');
             $table->integer('id_funcionario')->unsigned();
             $table->foreign('id_funcionario')->references('id')->on('funcionario');
-            $table->integer('id_estabelecimento')->unsigned();
-            $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
         if(true) {
             DB::table('tipo_usuario')->insert([
@@ -57,16 +55,6 @@ class Horario extends Migration
                 'id_sexo' => '1',
                 'email' => 'gracione@gmail.com',
                 'password' => '$2y$10$HzcQnbhACf/J3RXoOVCq5eduTLtDQJnxX08LZNXsEBqifn8w6eRJi'            
-            ]);
-            DB::table('funcao_tipo')->insert([
-                'nome' => 'cabebeleiro',
-                'cor' => 'rosa',
-                'id_estabelecimento' => '1'
-            ]);
-            DB::table('funcao_funcionario')->insert([
-                'id_funcao_tipo' => '1',
-                'id_usuario' => '1',
-                'id_estabelecimento' => '1'
             ]);
             DB::table('tratamentos')->insert([
                 'nome' => 'hidratacao',
