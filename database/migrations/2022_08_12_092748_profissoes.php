@@ -17,7 +17,7 @@ class Profissoes extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->integer('id_estabelecimento')->unsigned();
-            $table->foreign('id_estabelecimento')->references('id')->on('users');
+            $table->foreign('id_estabelecimento')->references('id')->on('estabelecimento');
         });
     }
 
