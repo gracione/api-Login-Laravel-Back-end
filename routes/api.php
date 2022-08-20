@@ -39,6 +39,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/profissao/cadastrar', [App\Http\Controllers\ProfissaoController::class, 'inserir']); 
 
+    Route::post('/feriado/cadastrar', [App\Http\Controllers\FeriadoController::class, 'inserir']); 
+
 });
 
 Route::post('/verificar-tipo-perfil',[App\Http\Controllers\Controller::class,'verificarTipoPerfil']);
