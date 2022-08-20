@@ -16,4 +16,13 @@ class HorarioAlmoco extends Model
         ->get();
         return $select;
     }
+    public function inserir ($request) {
+         DB::table('horario_almoco')->insert([
+            'inicio' => $request->inicio,
+            'fim' => $request->fim,
+            'id_funcionario' => $request->id_funcionario
+        ]);
+
+        return 'cadastrado';
+    }
 }

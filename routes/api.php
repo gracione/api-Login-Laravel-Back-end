@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/ferias/cadastrar', [App\Http\Controllers\FeriasController::class, 'inserir']); 
 
+    Route::post('/horarioAlmoco/cadastrar', [App\Http\Controllers\HorarioAlmocoController::class, 'inserir']); 
+    
 });
 
 Route::post('/verificar-tipo-perfil',[App\Http\Controllers\Controller::class,'verificarTipoPerfil']);
