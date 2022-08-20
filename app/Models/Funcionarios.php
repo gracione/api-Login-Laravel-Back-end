@@ -15,7 +15,7 @@ class Funcionarios extends Model
     public function listar ($request) {
         $users = DB::table('users')
         ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
-        ->join('profissao', 'funcionario.id_funcao_tipo', '=', 'profissao.id')
+        ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
         ->select('users.nome as nome_usuario','users.id as id_usuario', 'profissao.nome as funcao', 'profissao.id as id_funcao')
         ->where('funcionario.id_estabelecimento',$request->id_estabelecimento)
         ->get();
@@ -47,7 +47,7 @@ class Funcionarios extends Model
          DB::table('funcionario')->insert([
             'id_estabelecimento' => $request->id_estabelecimento,
             'id_usuario' => $user['id'],
-            'id_funcao_tipo' => $request->id_funcao_tipo
+            'id_profissao' => $request->id_funcao_tipo
         ]);
 
         return 'cadastrado';
