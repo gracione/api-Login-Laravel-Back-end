@@ -25,5 +25,14 @@ class Tratamentos extends Model
         ->get();
         return $select;
     }
+    public function inserir ($request) {    
+        DB::table('tratamento')->insert([
+            'nome' => $request->nome,
+            'tempo_gasto' => $request->tempo_gasto,
+            'id_profissao' => $request->id_profissao
+       ]);
+
+       return 'cadastrado';
+   }
 
 }

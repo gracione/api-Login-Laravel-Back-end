@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/funcionario/listar', [App\Http\Controllers\FuncionariosController::class, 'listar']);
 
     Route::post('/tratamento/listarPorFuncao', [App\Http\Controllers\TratamentosController::class, 'listar']);
+    Route::post('/tratamento/cadastrar', [App\Http\Controllers\TratamentosController::class, 'inserir']);
+
     Route::post('/filtro', [App\Http\Controllers\FiltroController::class, 'listar']);
     Route::post('/listarFiltro', [App\Http\Controllers\FiltroController::class, 'listarFiltro']);
 
