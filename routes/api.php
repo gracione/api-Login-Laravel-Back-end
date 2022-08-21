@@ -26,11 +26,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/profile', function(Request $request) {
         return auth()->user();
     });
-    Route::post('/funcionario/cadastrarFuncionario', [App\Http\Controllers\FuncionariosController::class, 'inserir']); 
+    Route::post('/funcionario/inserir', [App\Http\Controllers\FuncionariosController::class, 'inserir']); 
     Route::post('/funcionario/listar', [App\Http\Controllers\FuncionariosController::class, 'listar']);
 
     Route::post('/tratamento/listarPorFuncao', [App\Http\Controllers\TratamentosController::class, 'listar']);
-    Route::post('/tratamento/cadastrar', [App\Http\Controllers\TratamentosController::class, 'inserir']);
+    Route::post('/tratamento/inserir', [App\Http\Controllers\TratamentosController::class, 'inserir']);
 
     Route::post('/filtro', [App\Http\Controllers\FiltroController::class, 'listar']);
     Route::post('/listarFiltro', [App\Http\Controllers\FiltroController::class, 'listarFiltro']);
@@ -39,15 +39,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/horarios-disponivel', [App\Http\Controllers\HorarioController::class, 'horariosDiponivel']);
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 
-    Route::post('/profissao/cadastrar', [App\Http\Controllers\ProfissaoController::class, 'inserir']); 
+    Route::post('/profissao/inserir', [App\Http\Controllers\ProfissaoController::class, 'inserir']); 
 
-    Route::post('/feriado/cadastrar', [App\Http\Controllers\FeriadoController::class, 'inserir']); 
+    Route::post('/feriado/inserir', [App\Http\Controllers\FeriadoController::class, 'inserir']); 
 
-    Route::post('/folga/cadastrar', [App\Http\Controllers\FolgasController::class, 'inserir']); 
+    Route::post('/folga/inserir', [App\Http\Controllers\FolgasController::class, 'inserir']); 
 
-    Route::post('/ferias/cadastrar', [App\Http\Controllers\FeriasController::class, 'inserir']); 
+    Route::post('/ferias/inserir', [App\Http\Controllers\FeriasController::class, 'inserir']); 
 
-    Route::post('/horarioAlmoco/cadastrar', [App\Http\Controllers\HorarioAlmocoController::class, 'inserir']); 
+    Route::post('/horarioAlmoco/inserir', [App\Http\Controllers\HorarioAlmocoController::class, 'inserir']); 
     
 });
 
