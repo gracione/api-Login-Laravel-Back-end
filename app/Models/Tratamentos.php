@@ -19,7 +19,7 @@ class Tratamentos extends Model
     }
 
     public function listarPorId ($id) {
-        $select = DB::table('tratamentos')
+        $select = DB::table('tratamento')
         ->select('*')
         ->where('id','=',$id)
         ->get();

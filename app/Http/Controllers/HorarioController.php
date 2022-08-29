@@ -20,7 +20,7 @@ class HorarioController extends Controller
             return 'horario não encontrado';
         }
 
-        $horarioPadrao = $horarioPadrao[0]->tempo_padrao;
+        $horarioPadrao = $horarioPadrao[0]->tempo_gasto;
         $horas = 7;
         $minutos = 0;
         $idsFiltro = explode('#',$request->idFiltro);
@@ -31,6 +31,7 @@ class HorarioController extends Controller
 
         $horariosMarcados = $this->converterJsonParaArray(Horario::horarioPorDia($request));
 
+        $horario = [];
         while ($horas < 16) {
             $tempo =  "{$horas}:{$minutos}:00";
             $horas = $horas + $hora;
