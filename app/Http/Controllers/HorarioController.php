@@ -12,10 +12,14 @@ class HorarioController extends Controller
     public function horariosMarcados(Request $request) {
         return Horario::horarioPorDia($request);
     }
+    
+    public function separarPorHashtag($valor) {
+        return explode('#',$valor);
+    }
 
     public function horariosDiponivel(Request $request) {
-        $horarioPadrao = Tratamentos::listarPorId($request->idTratamento);
 
+        $horarioPadrao = Tratamentos::listarPorId($request->idTratamento);
         if(empty($horarioPadrao[0])) {
             return 'horario não encontrado';
         }
@@ -23,12 +27,12 @@ class HorarioController extends Controller
         $horarioPadrao = $horarioPadrao[0]->tempo_gasto;
         $horas = 7;
         $minutos = 0;
-        $idsFiltro = explode('#',$request->idFiltro);
+        $idsFiltro = $this->separarPorHashtag($request->idFiltro);
         $porcentagemFiltro = Filtro::filtroById($idsFiltro)[0]->porcentagem_tempo;
         $horarioPadrao = $this->almentarPorcentagem($horarioPadrao,$porcentagemFiltro);
         $hora = floor($horarioPadrao/60);
         $minuto =  $horarioPadrao%60;
-
+        
         $horariosMarcados = $this->converterJsonParaArray(Horario::horarioPorDia($request));
 
         $horario = [];
