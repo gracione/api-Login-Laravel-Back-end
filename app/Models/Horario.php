@@ -13,22 +13,20 @@ class Horario extends Model
     public function horarioPorDia ($request) {
         $mes = empty($request->mes) ? date('m'): $request->mes;
         $ano = empty($request->ano) ? date('Y'): $request->ano;
-
+        
         if(!empty($request->dia)) {
             $select = DB::table('horario')
-            ->select(DB::raw('TIME(horario.horario_inicio) as horario_inicio,
-                                    TIME(horario.horario_fim) as horario_fim,
-                                    DATE(horario.horario_inicio) as data'                                    
-                                    ))
+            ->select(DB::raw('TIME(horario.horario_inicio) as horario_inicio'                                    
+            ))
             ->whereDay('horario.horario_inicio',$request->dia)
             ->whereMonth('horario.horario_inicio',$mes)
             ->whereYear('horario.horario_inicio',$ano)
             ->get();
         } else {
             $select = DB::table('horario')
-            ->select('*')
-            ->whereMonth('horario.horario_inicio',$mes)
-            ->whereYear('horario.horario_inicio',$ano)
+            ->select(DB::raw('TIME(horario.horario_inicio) as horario_inicio'))
+//            ->whereMonth('horario.horario_inicio',$mes)
+//            ->whereYear('horario.horario_inicio',$ano)
             ->get();
         }
 

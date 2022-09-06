@@ -28,13 +28,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     Route::post('/funcionario/inserir', [App\Http\Controllers\FuncionariosController::class, 'inserir']); 
     Route::post('/funcionario/listar', [App\Http\Controllers\FuncionariosController::class, 'listar']);
-
+    
     Route::post('/tratamento/listarPorFuncao', [App\Http\Controllers\TratamentosController::class, 'listar']);
     Route::post('/tratamento/inserir', [App\Http\Controllers\TratamentosController::class, 'inserir']);
-
+    
     Route::post('/filtro', [App\Http\Controllers\FiltroController::class, 'listar']);
     Route::post('/listarFiltro', [App\Http\Controllers\FiltroController::class, 'listarFiltro']);
-
+    
     Route::post('/horarios-marcados', [App\Http\Controllers\HorarioController::class, 'horariosMarcados']);
     Route::post('/horarios-disponivel', [App\Http\Controllers\HorarioController::class, 'horariosDiponivel']);
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
