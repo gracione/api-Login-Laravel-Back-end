@@ -13,10 +13,12 @@ class HorarioAlmoco extends Migration
      */
     public function up()
     {
-        Schema::create('horario_almoco', function (Blueprint $table) {
+        Schema::create('horario_trabalho', function (Blueprint $table) {
             $table->increments('id');
-            $table->time('inicio');
-            $table->time('fim');
+            $table->time('inicio1');
+            $table->time('fim1');
+            $table->time('inicio2');
+            $table->time('fim2');
             $table->integer('id_funcionario')->unsigned();
             $table->foreign('id_funcionario')->references('id')->on('funcionario');
         });
@@ -29,6 +31,6 @@ class HorarioAlmoco extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('horario_almoco');
+        Schema::dropIfExists('horario_trabalho');
     }
 }

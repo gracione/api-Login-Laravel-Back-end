@@ -17,41 +17,31 @@ class HorarioController extends Controller
         return explode('#',$valor);
     }
 
-    public function horariosDiponivel(Request $request) {
+    public function converterMinutosParaHora($tempoMinutos){
+        $hora = floor($tempoMinutos/60);
+        $minutos = $tempoMinutos%60;    
+        return $hora.":".$minutos;
+    
+    }
 
-        $horarioPadrao = Tratamentos::listarPorId($request->idTratamento);
-        if(empty($horarioPadrao[0])) {
-            return 'horario não encontrado';
+    public function calcularTempoGasto($filtros, $tratamento){
+        $filtros = $this->separarPorHashtag($filtros);
+        $tempoTratamento = Tratamentos::listarPorId($tratamento)[0]->tempo_gasto;
+        $porcentagemFiltro = Filtro::filtroById($filtros);
+
+        foreach ($porcentagemFiltro as $value) {
+            $tempoTratamento = $this->almentarPorcentagem($tempoTratamento, $value->porcentagem_tempo);
         }
 
-        $horarioPadrao = $horarioPadrao[0]->tempo_gasto;
-        $horas = 7;
-        $minutos = 0;
-        $idsFiltro = $this->separarPorHashtag($request->idFiltro);
-        $porcentagemFiltro = Filtro::filtroById($idsFiltro)[0]->porcentagem_tempo;
-        $horarioPadrao = $this->almentarPorcentagem($horarioPadrao,$porcentagemFiltro);
-        $hora = floor($horarioPadrao/60);
-        $minuto =  $horarioPadrao%60;
+        //converterMinutosParaHora($tempoTratamento);
+        return $tempoTratamento;
+   }
+
+   public function horariosDiponivel(Request $request) {
+
+       $tempoGasto =  $this->calcularTempoGasto($request->idFiltro,$request->idTratamento);
+       return Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario);
         
-        $horariosMarcados = $this->converterJsonParaArray(Horario::horarioPorDia($request));
-
-        $horario = [];
-        while ($horas < 16) {
-            $tempo =  "{$horas}:{$minutos}:00";
-            $horas = $horas + $hora;
-            $minutos = $minutos + $minuto;
-
-            if($this->verificarHorario($tempo,$horariosMarcados)) {
-                $horario[] = $tempo;
-            }
-
-            if($minutos > 60) {
-                $horas = $horas + 1;
-                $minutos = $minutos - 60;
-            }
-        }
-        
-        return $horario;
     }
 
     public function almentarPorcentagem($valor, $porcentagem) {

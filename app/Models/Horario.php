@@ -32,4 +32,12 @@ class Horario extends Model
 
         return $select;
     }
+    public function buscarHorariosDisponivel($tempoGasto, $idFuncionario){
+        $select = DB::table('horario')
+        ->select(DB::raw('time(horario_inicio)'))
+            ->where(DB::raw('TIME_TO_SEC(time(horario_fim) -time(horario_inicio))/60'), '>=' , $tempoGasto)
+            ->where('id_funcionario', '>=' , $idFuncionario)
+            ->get();
+        return $select;
+       }
 }
