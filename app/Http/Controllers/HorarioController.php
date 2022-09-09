@@ -9,22 +9,35 @@ use App\Models\Filtro;
 
 class HorarioController extends Controller
 {
-    public function horariosMarcados(Request $request) {
+    public function horariosMarcados(Request $request)
+    {
         return Horario::horarioPorDia($request);
     }
-    
-    public function separarPorHashtag($valor) {
-        return explode('#',$valor);
+
+    public function separarPorHashtag($valor)
+    {
+        return explode('#', $valor);
     }
 
-    public function converterMinutosParaHora($tempoMinutos){
-        $hora = floor($tempoMinutos/60);
-        $minutos = $tempoMinutos%60;    
-        return $hora.":".$minutos;
-    
+    public function converterMinutosParaHora($tempoMinutos)
+    {
+        $hora = floor($tempoMinutos / 60);
+        $minutos = $tempoMinutos % 60;
+        return $hora . ":" . $minutos;
+    }
+    public function converterHoraToMinuto($hora)
+    {
+        $arrayHm = explode(":", $hora);
+        $arrayHm[0];
+        $arrayHm[1];
+        $minutos = ($arrayHm[0] * 60);
+        $minutos = $minutos + $arrayHm[1];
+
+        return $minutos;
     }
 
-    public function calcularTempoGasto($filtros, $tratamento){
+    public function calcularTempoGasto($filtros, $tratamento)
+    {
         $filtros = $this->separarPorHashtag($filtros);
         $tempoTratamento = Tratamentos::listarPorId($tratamento)[0]->tempo_gasto;
         $porcentagemFiltro = Filtro::filtroById($filtros);
@@ -35,37 +48,50 @@ class HorarioController extends Controller
 
         //converterMinutosParaHora($tempoTratamento);
         return $tempoTratamento;
-   }
-
-   public function horariosDiponivel(Request $request) {
-
-       $tempoGasto =  $this->calcularTempoGasto($request->idFiltro,$request->idTratamento);
-       return Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario);
-        
     }
 
-    public function almentarPorcentagem($valor, $porcentagem) {
+    public function horariosDiponivel(Request $request)
+    {
+        $espedienteFuncionario = $this->converterHoraToMinuto('17:00');
+        $inicioDeEspedien = $this->converterHoraToMinuto('07:00');
+        $horariosDisponivel = [];
+        $tempoContado = $inicioDeEspedien;
+
+        $tempoGasto =  $this->calcularTempoGasto($request->idFiltro, $request->idTratamento);
+        while ($tempoContado < $espedienteFuncionario) {
+            $tempoContado += $tempoGasto;
+            $horariosDisponivel[] = $this->converterMinutosParaHora($tempoContado);
+        }
+        return $horariosDisponivel;
+        return Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario);
+    }
+
+    public function almentarPorcentagem($valor, $porcentagem)
+    {
         return $valor + ($valor / 100 * $porcentagem);
     }
-    public function converterHorasEmSegundos($horario) {
-        return strtotime('1970-01-01 '.$horario.'UTC');
+    public function converterHorasEmSegundos($horario)
+    {
+        return strtotime('1970-01-01 ' . $horario . 'UTC');
     }
-    public function verificarHorario($tempo,$horario){
+    public function verificarHorario($tempo, $horario)
+    {
 
         foreach ($horario as $key => $value) {
             $tempoSeg = $this->converterHorasEmSegundos($tempo);
             $inicio = $this->converterHorasEmSegundos($value['horario_inicio']);
             $fim = $this->converterHorasEmSegundos($value['horario_fim']);
-            if($inicio <= $tempoSeg and $fim >= $tempoSeg) {
+            if ($inicio <= $tempoSeg and $fim >= $tempoSeg) {
                 return false;
             }
             return true;
         }
     }
-    function converterJsonParaArray($json){
+    function converterJsonParaArray($json)
+    {
         $vetor = [];
         foreach ($json as $key => $value) {
-            $value= get_object_vars($value);
+            $value = get_object_vars($value);
             $vetor[] = $value;
         }
         return $vetor;
