@@ -52,13 +52,13 @@ class HorarioController extends Controller
 
     public function horariosDiponivel(Request $request)
     {
-        $espedienteFuncionario = $this->converterHoraToMinuto('17:00');
-        $inicioDeEspedien = $this->converterHoraToMinuto('07:00');
+        $saida2 = $this->converterHoraToMinuto('17:00');
+        $entrada1 = $this->converterHoraToMinuto('07:00');
         $horariosDisponivel = [];
-        $tempoContado = $inicioDeEspedien;
+        $tempoContado = $entrada1;
 
         $tempoGasto =  $this->calcularTempoGasto($request->idFiltro, $request->idTratamento);
-        while ($tempoContado < $espedienteFuncionario) {
+        while ($tempoContado < $saida2) {
             $tempoContado += $tempoGasto;
             $horariosDisponivel[] = $this->converterMinutosParaHora($tempoContado);
         }
