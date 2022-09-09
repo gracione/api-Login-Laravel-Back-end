@@ -24,8 +24,18 @@ class Horario extends Model
             ->get();
         } else {
             $select = DB::table('horario')
-            ->select(DB::raw('TIME(horario.horario_inicio) as horario_inicio'))
-//            ->whereMonth('horario.horario_inicio',$mes)
+            ->select(DB::raw(
+                'TIME_FORMAT(horario.horario_inicio, "%h:%i") as horario_inicio,
+                DATE_FORMAT(horario.horario_inicio, " %d %M de %Y") as data,
+                users.nome as cliente,
+                users.numero as numero,
+                func.nome as funcionario,
+                t.nome as tratamento'))
+            ->join('users', 'users.id', '=', 'horario.id_cliente')
+            ->join('users as func', 'func.id', '=', 'horario.id_funcionario')
+            ->join('tratamento as t', 't.id', '=', 'horario.id_tratamento')
+
+//            ->where('horario.horario_inicio',$mes)
 //            ->whereYear('horario.horario_inicio',$ano)
             ->get();
         }

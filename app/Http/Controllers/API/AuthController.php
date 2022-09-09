@@ -42,7 +42,6 @@ class AuthController extends Controller
             'id_proprietario' => $user['id'],
         ]);
 
-         
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()
