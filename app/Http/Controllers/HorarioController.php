@@ -53,12 +53,16 @@ class HorarioController extends Controller
     public function horariosDiponivel(Request $request)
     {
         $entrada1 = $this->converterHoraToMinuto('07:00');
+        $saida1 = $this->converterHoraToMinuto('07:40');
+        $entrada2 = $this->converterHoraToMinuto('08:00');
         $saida2 = $this->converterHoraToMinuto('17:00');
+
         $horariosDisponivel = [];
         $tempoContado = $entrada1;
         $tempoGasto =  $this->calcularTempoGasto($request->idFiltro, $request->idTratamento);
         $horariosMarcados = Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario);
         $horariosMarcadosMinutos = [];
+
         foreach ($horariosMarcados as $value) {
             $horariosMarcadosMinutos[] = [
                 'inicio' => $this->converterHoraToMinuto($value->horario_inicio),
@@ -66,34 +70,32 @@ class HorarioController extends Controller
             ];
         }
 
-        $naoContar = true;
-        while ($tempoContado < $saida2) {
-            $tempoContado += $tempoGasto;;
+        $verificarDisponibilidade = true;
+        for ($tempoContado = $entrada1; $tempoContado < $saida2; $tempoContado += $tempoGasto) {
             foreach ($horariosMarcadosMinutos as $valueMarcados) {
                 $inicio = $tempoContado;
                 $fim = $tempoContado + $tempoGasto;
-                if (
-                    $valueMarcados['inicio'] <= $inicio &&
-                    $valueMarcados['fim'] >= $inicio
-                ) {
-                    $naoContar = false;
+                if ($valueMarcados['inicio'] <= $inicio && $valueMarcados['fim'] >= $inicio) {
+                    $verificarDisponibilidade = false;
                 }
-                if (
-                    $valueMarcados['inicio'] < $fim &&
-                    $valueMarcados['fim'] > $fim
-                ) {
-                    $naoContar = false;
+                if ($valueMarcados['inicio'] <= $fim && $valueMarcados['fim'] >= $fim) {
+                    $verificarDisponibilidade = false;
                 }
-
+                if ($saida1 <= $inicio && $entrada2 >= $inicio) {
+                    $verificarDisponibilidade = false;
+                }
+                if ($saida1 <= $fim && $entrada2 >= $fim) {
+                    $verificarDisponibilidade = false;
+                }
             }
 
-            if ($naoContar) {
+            if ($verificarDisponibilidade) {
                 $horariosDisponivel[] = [
                     'inicio' => $this->converterMinutosParaHora($inicio),
                     'fim' => $this->converterMinutosParaHora($fim)
                 ];
             }
-            $naoContar = true;
+            $verificarDisponibilidade = true;
         }
         return $horariosDisponivel;
     }
