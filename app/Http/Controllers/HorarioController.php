@@ -52,18 +52,50 @@ class HorarioController extends Controller
 
     public function horariosDiponivel(Request $request)
     {
-        $saida2 = $this->converterHoraToMinuto('17:00');
         $entrada1 = $this->converterHoraToMinuto('07:00');
+        $saida2 = $this->converterHoraToMinuto('17:00');
         $horariosDisponivel = [];
         $tempoContado = $entrada1;
-
         $tempoGasto =  $this->calcularTempoGasto($request->idFiltro, $request->idTratamento);
+        $horariosMarcados = Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario);
+        $horariosMarcadosMinutos = [];
+        foreach ($horariosMarcados as $value) {
+            $horariosMarcadosMinutos[] = [
+                'inicio' => $this->converterHoraToMinuto($value->horario_inicio),
+                'fim' => $this->converterHoraToMinuto($value->horario_fim)
+            ];
+        }
+
+        $naoContar = true;
         while ($tempoContado < $saida2) {
-            $tempoContado += $tempoGasto;
-            $horariosDisponivel[] = $this->converterMinutosParaHora($tempoContado);
+            $tempoContado += $tempoGasto;;
+            foreach ($horariosMarcadosMinutos as $valueMarcados) {
+                $inicio = $tempoContado;
+                $fim = $tempoContado + $tempoGasto;
+                if (
+                    $valueMarcados['inicio'] <= $inicio &&
+                    $valueMarcados['fim'] >= $inicio
+                ) {
+                    $naoContar = false;
+                }
+                if (
+                    $valueMarcados['inicio'] < $fim &&
+                    $valueMarcados['fim'] > $fim
+                ) {
+                    $naoContar = false;
+                }
+
+            }
+
+            if ($naoContar) {
+                $horariosDisponivel[] = [
+                    'inicio' => $this->converterMinutosParaHora($inicio),
+                    'fim' => $this->converterMinutosParaHora($fim)
+                ];
+            }
+            $naoContar = true;
         }
         return $horariosDisponivel;
-        return Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario);
     }
 
     public function almentarPorcentagem($valor, $porcentagem)
