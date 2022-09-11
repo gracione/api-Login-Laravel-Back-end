@@ -16,7 +16,11 @@ class Funcionarios extends Model
         $users = DB::table('users')
         ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
         ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
-        ->select('users.nome as nome_usuario','users.id as id_usuario', 'profissao.nome as funcao', 'profissao.id as id_funcao')
+        ->select('users.nome as nome_usuario',
+                    'funcionario.id as id_funcionario', 
+                    'users.id as id_usuario', 
+                    'profissao.nome as funcao',
+                    'profissao.id as id_funcao')
         ->where('funcionario.id_estabelecimento',$request->id_estabelecimento)
         ->get();
         return $users;
