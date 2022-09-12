@@ -25,6 +25,16 @@ class Tratamentos extends Model
         ->get();
         return $select;
     }
+    public function listarByFuncionario ($request) {
+        $select = DB::table('tratamento')
+        ->join('funcionario', 'funcionario.id_profissao', '=', 'tratamento.id_profissao')
+        ->select('*')
+        ->where('funcionario.id','=',$request->id_profissao)
+        ->where('funcionario.id_estabelecimento','=',$request->id_estabelecimento)
+        ->get();
+        return $select;
+    }
+
     public function inserir ($request) {    
         DB::table('tratamento')->insert([
             'nome' => $request->nome,
