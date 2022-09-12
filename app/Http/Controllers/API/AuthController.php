@@ -93,13 +93,13 @@ class AuthController extends Controller
         $user = User::where('email', $request['email'])->firstOrFail();
 
         if($user['tipo_usuario'] == Constantes::ADMINISTRADOR) {
-            print("administrativo");
+            //print("administrativo");
         };
         if($user['tipo_usuario'] == Constantes::FUNCIONARIO) {
-            print("funcionario");
+            //print("funcionario");
         };
         if($user['tipo_usuario'] == Constantes::CLIENTE) {
-            print("cliente");
+            //print("cliente");
         };
 
         $token = $user->createToken('auth_token')->plainTextToken;
