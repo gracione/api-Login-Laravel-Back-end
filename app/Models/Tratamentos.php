@@ -11,9 +11,11 @@ class Tratamentos extends Model
     use HasFactory;
 
     public function listar ($request) {
-        $select = DB::table('tratamentos')
-        ->select('*')
-        ->where('id_funcao_tipo','=',$request->idFuncaoTipo)
+        $select = DB::table('tratamento')
+        ->select('tratamento.nome as nome','tratamento.id as id')
+        ->join('funcionario', 'funcionario.id_profissao', '=', 'tratamento.id_profissao')
+        ->where('funcionario.id_estabelecimento',$request->id_estabelecimento)
+        ->groupBy('tratamento.nome','tratamento.id')
         ->get();
         return $select;
     }

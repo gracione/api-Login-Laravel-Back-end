@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     
     Route::post('/tratamento/listarPorFuncao', [App\Http\Controllers\TratamentosController::class, 'listar']);
     Route::post('/tratamento/listarPorFuncionario', [App\Http\Controllers\TratamentosController::class, 'listarByFuncionario']);
+    Route::post('/tratamentos/listar', [App\Http\Controllers\TratamentosController::class, 'listar']);
     Route::post('/tratamento/inserir', [App\Http\Controllers\TratamentosController::class, 'inserir']);
     
     Route::post('/filtro', [App\Http\Controllers\FiltroController::class, 'listar']);
@@ -41,14 +42,19 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 
     Route::post('/profissao/inserir', [App\Http\Controllers\ProfissaoController::class, 'inserir']); 
+    Route::post('/profissao/listar', [App\Http\Controllers\ProfissaoController::class, 'listar']); 
 
-    Route::post('/feriado/inserir', [App\Http\Controllers\FeriadoController::class, 'inserir']); 
+    Route::post('/feriados/inserir', [App\Http\Controllers\FeriadoController::class, 'inserir']); 
+    Route::post('/feriados/listar', [App\Http\Controllers\FeriadoController::class, 'listar']); 
 
     Route::post('/folga/inserir', [App\Http\Controllers\FolgasController::class, 'inserir']); 
+    Route::post('/folga/listar', [App\Http\Controllers\FolgasController::class, 'listar']); 
 
     Route::post('/ferias/inserir', [App\Http\Controllers\FeriasController::class, 'inserir']); 
+    Route::post('/ferias/listar', [App\Http\Controllers\FeriasController::class, 'listar']); 
 
     Route::post('/horarioAlmoco/inserir', [App\Http\Controllers\HorarioAlmocoController::class, 'inserir']); 
+    Route::post('/horarioAlmoco/listar', [App\Http\Controllers\HorarioAlmocoController::class, 'listar']); 
     
 });
 

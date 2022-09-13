@@ -12,6 +12,7 @@ class Feriado extends Model
     public function listar ($request) {
         $select = DB::table('feriados')
         ->select('*')
+        ->where('feriados.id_estabelecimento',$request->id_estabelecimento)
         ->get();
         return $select;
     }
