@@ -10,7 +10,7 @@ class ProfissaoController extends Controller
     public function inserir (Request $request) {
         return Profissao::inserir($request);
     }
-    public function listar () {
-        return Profissao::listar();
+    public function listar (Request $request) {
+        return Profissao::listar($request);
     }
 }
