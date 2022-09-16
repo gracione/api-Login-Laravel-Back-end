@@ -27,4 +27,10 @@ class Profissao extends Model
 
         return 'cadastrado';
     }
+    public function excluir($request)
+    {
+          DB::table('profissao')->where('id', $request->id)->delete();
+        return 'deletado';
+    }
+
 }

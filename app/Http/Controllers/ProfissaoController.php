@@ -13,4 +13,7 @@ class ProfissaoController extends Controller
     public function listar (Request $request) {
         return Profissao::listar($request);
     }
+    public function excluir (Request $request) {
+        return Profissao::excluir($request);
+    }
 }
