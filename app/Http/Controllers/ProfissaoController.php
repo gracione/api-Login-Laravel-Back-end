@@ -8,6 +8,7 @@ use App\Models\Profissao;
 class ProfissaoController extends Controller
 {
     public function inserir (Request $request) {
+        $request = Profissao::prepareInsert($request);
         return Profissao::inserir($request);
     }
     public function listar (Request $request) {

@@ -12,21 +12,31 @@ class Profissao extends Model
 
     public function listar($request)
     {
-        $select = DB::table('profissao')
+            $select = DB::table('profissao')
             ->select('*')
             ->where('id_estabelecimento', $request->id_estabelecimento)
             ->get();
         return $select;
     }
+
+    public function prepareInsert($request)
+    {
+        $dados = [
+            'nome' => $request->dados['nome'],
+            'id_estabelecimento' => $request->id_estabelecimento
+        ];
+
+        return $dados;
+    }
+
     public function inserir($request)
     {
-        DB::table('profissao')->insert([
-            'nome' => $request->nome,
-            'id_estabelecimento' => $request->id_estabelecimento
-        ]);
+
+        DB::table('profissao')->insert($request);
 
         return 'cadastrado';
     }
+
     public function excluir($request)
     {
           DB::table('profissao')->where('id', $request->id)->delete();
