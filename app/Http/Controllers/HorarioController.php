@@ -60,7 +60,7 @@ class HorarioController extends Controller
         $horariosDisponivel = [];
         $tempoContado = $entrada1;
         $tempoGasto =  $this->calcularTempoGasto($request->idFiltro, $request->idTratamento);
-        $horariosMarcados = Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario);
+        $horariosMarcados = Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
         $horariosMarcadosMinutos = [];
 
         foreach ($horariosMarcados as $value) {
@@ -72,6 +72,9 @@ class HorarioController extends Controller
 
         $verificarDisponibilidade = true;
         for ($tempoContado = $entrada1; $tempoContado < $saida2; $tempoContado += $tempoGasto) {
+            $inicio = $tempoContado;
+            $fim = $tempoContado + $tempoGasto;
+
             foreach ($horariosMarcadosMinutos as $valueMarcados) {
                 $inicio = $tempoContado;
                 $fim = $tempoContado + $tempoGasto;
