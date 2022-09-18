@@ -46,13 +46,18 @@ class Horario extends Model
 
         return $select;
     }
-    public function buscarHorariosDisponivel($tempoGasto, $idFuncionario)
+    public function buscarHorariosDisponivel($tempoGasto, $idFuncionario, $data = "21/8/2022")
     {
+        $dataExplode = explode('/', $data);
         $select = DB::table('horario')
             ->select(DB::raw('TIME_FORMAT(horario.horario_inicio, "%H:%i") as horario_inicio,
         TIME_FORMAT(horario.horario_fim, "%H:%i") as horario_fim'))
             ->where(DB::raw('TIME_TO_SEC(time(horario_fim) -time(horario_inicio))/60'), '>=', $tempoGasto)
             ->where('id_funcionario', '>=', $idFuncionario)
+            ->where('id_funcionario', '>=', $idFuncionario)
+            ->whereDay('horario.horario_inicio', $dataExplode[0])
+            ->whereMonth('horario.horario_inicio', $dataExplode[1])
+            ->whereYear('horario.horario_inicio', $dataExplode[2])
             ->get();
         return $select;
     }
