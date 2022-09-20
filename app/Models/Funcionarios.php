@@ -46,7 +46,6 @@ class Funcionarios extends Model
             'email' => $request->email,
             'password' => Hash::make($request->password)
          ]);
-         print($user['id']);
          
          DB::table('funcionario')->insert([
             'id_estabelecimento' => $request->id_estabelecimento,
