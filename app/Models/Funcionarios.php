@@ -46,12 +46,13 @@ class Funcionarios extends Model
             'email' => $request->email,
             'password' => Hash::make($request->password)
          ]);
-         
-         DB::table('funcionario')->insert([
-            'id_estabelecimento' => $request->id_estabelecimento,
-            'id_usuario' => $user['id'],
-            'id_profissao' => $request->id_funcao_tipo
-        ]);
+         foreach ($request->profissoesCadastradas as $key => $value) {
+             DB::table('funcionario')->insert([
+                'id_estabelecimento' => $request->id_estabelecimento,
+                'id_usuario' => $user['id'],
+                'id_profissao' => $value
+            ]);             
+         }
 
         return 'cadastrado';
     }
