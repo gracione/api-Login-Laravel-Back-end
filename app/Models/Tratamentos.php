@@ -47,4 +47,10 @@ class Tratamentos extends Model
        return 'cadastrado';
    }
 
+   public function excluir($request)
+   {
+         DB::table('tratamento')->where('id', $request->id)->delete();
+       return 'deletado';
+   }
+
 }

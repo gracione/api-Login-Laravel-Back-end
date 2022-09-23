@@ -16,5 +16,8 @@ class TratamentosController extends Controller
     public function inserir (Request $request) {
         return Tratamentos::inserir($request);
     }
+    public function excluir (Request $request) {
+        return Tratamentos::excluir($request);
+    }
 
 }

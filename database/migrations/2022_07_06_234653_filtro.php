@@ -17,8 +17,8 @@ class Filtro extends Migration
         Schema::create('filtro_tipo', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->integer('id_profissao')->unsigned();
-            $table->foreign('id_profissao')->references('id')->on('profissao');
+            $table->integer('id_tratamento')->unsigned();
+            $table->foreign('id_tratamento')->references('id')->on('tratamento');
         });
         Schema::create('filtro', function (Blueprint $table) {
             $table->increments('id');
