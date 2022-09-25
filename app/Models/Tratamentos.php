@@ -49,8 +49,8 @@ class Tratamentos extends Model
         ]);
         foreach ($request->tipo_de_filtro as $value) {
             foreach ($value as $valor) {
-                $porcentagem = $valor->porcentagem;
-                $nomeTipoFiltro = $valor->nome;
+                $nomeTipoFiltro = $valor[1];
+                $porcentagem = $valor[2];
             }
         }
 
