@@ -19,11 +19,6 @@ class Filtro extends Model
     }
 
     public function listarFiltro ($request) {
-        $users = DB::table('filtro')
-        ->select('*')
-        ->where('filtro.id_filtro_tipo','=',$request->id_tratamento)
-        ->get();
-
         $filtroTipo = DB::table('filtro_tipo') 
         ->join('tratamento','filtro_tipo.id_tratamento', '=', 'tratamento.id')  
         ->join('profissao','tratamento.id_profissao', '=', 'profissao.id')

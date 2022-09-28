@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/tratamentos/excluir', [App\Http\Controllers\TratamentosController::class, 'excluir']); 
     
     Route::post('/filtro', [App\Http\Controllers\FiltroController::class, 'listar']);
-    Route::post('/listarFiltro', [App\Http\Controllers\FiltroController::class, 'listarFiltro']);
+    Route::post('/filtro/listar', [App\Http\Controllers\FiltroController::class, 'listarFiltro']);
     
     Route::post('/horarios-marcados', [App\Http\Controllers\HorarioController::class, 'horariosMarcados']);
     Route::post('/horarios-disponivel', [App\Http\Controllers\HorarioController::class, 'horariosDiponivel']);
