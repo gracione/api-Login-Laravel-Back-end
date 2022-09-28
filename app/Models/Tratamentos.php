@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\FiltroTipo;
 
 class Tratamentos extends Model
 {
@@ -42,15 +43,16 @@ class Tratamentos extends Model
 
     public function inserir($request)
     {
-        $idTratamento = DB::table('tratamento')->insert([
+        $idTratamento = DB::table('tratamento')->insertGetId([
             'nome' => $request->nome_tratamento,
             'tempo_gasto' => $request->tempo_gasto,
             'id_profissao' => $request->id_profissao
         ]);
+
         foreach ($request->tipo_de_filtro as $key => $value) {
             $nomeFiltro = $request->nomesTipoFiltro[$key];
 
-            $idTipoFiltro = DB::table('filtro_tipo')->insert([
+            $idTipoFiltro = DB::table('filtro_tipo')->insertGetId([
                 'nome' => $nomeFiltro,
                 'id_tratamento' => $idTratamento
             ]);

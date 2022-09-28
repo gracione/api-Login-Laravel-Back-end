@@ -31,7 +31,7 @@ class Filtro extends Model
         ->select(DB::raw('porcentagem_tempo'))
         ->whereIn('id',$idFiltro )
         ->get();
-        return $users;
+    return $users;
     }
 
 }
