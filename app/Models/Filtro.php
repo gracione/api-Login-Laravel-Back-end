@@ -21,9 +21,27 @@ class Filtro extends Model
     public function listarFiltro ($request) {
         $users = DB::table('filtro')
         ->select('*')
-        ->where('filtro.id_filtro_tipo','=',$request->id)
+        ->where('filtro.id_filtro_tipo','=',$request->id_tratamento)
         ->get();
-        return $users;
+
+        $filtroTipo = DB::table('filtro_tipo') 
+        ->join('tratamento','filtro_tipo.id_tratamento', '=', 'tratamento.id')  
+        ->join('profissao','tratamento.id_profissao', '=', 'profissao.id')
+        ->where('profissao.id_estabelecimento','=',$request->id_estabelecimento)
+        ->where('filtro_tipo.id_tratamento','=',$request->id_tratamento)
+        ->select(DB::raw('distinct filtro_tipo.id as id'),'filtro_tipo.nome as nome')
+        ->get();
+
+        $filtro = [];
+        foreach ($filtroTipo as $key => $value) {
+            $filtro[$key]['nome']= $value->nome;
+            $filtro[$key]['filtro']= DB::table('filtro') 
+            ->where('filtro.id_filtro_tipo','=',$value->id)
+            ->select('*')
+            ->get();
+    
+        }
+        return $filtro;
     }
 
     public function filtroById ($idFiltro) {
