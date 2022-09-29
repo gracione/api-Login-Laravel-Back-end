@@ -34,7 +34,6 @@ class Filtro extends Model
             ->where('filtro.id_filtro_tipo','=',$value->id)
             ->select('*')
             ->get();
-    
         }
         return $filtro;
     }
