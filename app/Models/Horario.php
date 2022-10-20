@@ -36,10 +36,11 @@ class Horario extends Model
         } else {
             $select = DB::table('horario')
                 ->select(DB::raw(
-                    'TIME_FORMAT(horario.horario_inicio, "%h:%i") as horario_inicio,
+                    'TIME_FORMAT(horario.horario_inicio, "%h:%i") as horario,
+                    TIME_FORMAT(horario.horario_inicio, "%h:%i") as horario_inicio,
                 DATE_FORMAT(horario.horario_inicio, " %d %M de %Y") as data,
                 users.nome as cliente,
-                users.numero as numero,
+                users.numero as telefone,
                 func.nome as funcionario,
                 t.nome as tratamento'
                 ))
