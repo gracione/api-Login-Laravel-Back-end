@@ -10,6 +10,14 @@ class Horario extends Model
 {
     use HasFactory;
 
+    public function inserir($ar)
+    {
+
+        DB::table('horario')->insert($ar);
+
+        return 'cadastrado';
+    }
+
     public function horarioPorDia($request)
     {
         $mes = empty($request->mes) ? date('m') : $request->mes;
@@ -48,7 +56,7 @@ class Horario extends Model
     }
     public function buscarHorariosDisponivel($tempoGasto, $idFuncionario, $data = "21/8/2022")
     {
-        $dataExplode = explode('/', $data);
+        $dataExplode = explode('-', $data);
         $select = DB::table('horario')
             ->select(DB::raw('TIME_FORMAT(horario.horario_inicio, "%H:%i") as horario_inicio,
         TIME_FORMAT(horario.horario_fim, "%H:%i") as horario_fim'))

@@ -9,6 +9,15 @@ use App\Models\Filtro;
 
 class HorarioController extends Controller
 {
+    public function inserir(Request $request){
+        $ar['horario_inicio'] = $request->data." ".$request->horario.":00";
+        $ar['horario_fim'] = $request->data." ".$request->horario;
+        $ar['id_cliente'] = $request->idCliente;
+        $ar['id_tratamento'] = $request->idTratamento;
+        $ar['id_funcionario'] = $request->idFuncionario;
+
+        return Horario::inserir($ar);
+    }
     public function horariosMarcados(Request $request)
     {
         return Horario::horarioPorDia($request);
@@ -16,7 +25,7 @@ class HorarioController extends Controller
 
     public function separarPorHashtag($valor)
     {
-        return explode('#', $valor);
+        return explode(',', $valor);
     }
 
     public function converterMinutosParaHora($tempoMinutos)
@@ -73,7 +82,6 @@ class HorarioController extends Controller
         for ($tempoContado = $entrada1; $tempoContado < $saida2; $tempoContado += $tempoGasto) {
             $inicio = $tempoContado;
             $fim = $tempoContado + $tempoGasto;
-
             foreach ($horariosMarcadosMinutos as $valueMarcados) {
                 $inicio = $tempoContado;
                 $fim = $tempoContado + $tempoGasto;

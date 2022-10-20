@@ -30,6 +30,7 @@ class Filtro extends Model
         $filtro = [];
         foreach ($filtroTipo as $key => $value) {
             $filtro[$key]['nome']= $value->nome;
+            $filtro[$key]['id']= $value->id;
             $filtro[$key]['filtro']= DB::table('filtro') 
             ->where('filtro.id_filtro_tipo','=',$value->id)
             ->select('*')

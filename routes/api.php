@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     
     Route::post('/horarios-marcados', [App\Http\Controllers\HorarioController::class, 'horariosMarcados']);
     Route::post('/horarios-disponivel', [App\Http\Controllers\HorarioController::class, 'horariosDiponivel']);
+    Route::post('/horario/inserir', [App\Http\Controllers\HorarioController::class, 'inserir']); 
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 
     Route::post('/profissao/inserir', [App\Http\Controllers\ProfissaoController::class, 'inserir']); 
@@ -57,7 +58,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/horarioAlmoco/inserir', [App\Http\Controllers\HorarioAlmocoController::class, 'inserir']); 
     Route::post('/horarioAlmoco/listar', [App\Http\Controllers\HorarioAlmocoController::class, 'listar']); 
-    
+
+
 });
 
 Route::post('/verificar-tipo-perfil',[App\Http\Controllers\Controller::class,'verificarTipoPerfil']);
