@@ -27,6 +27,15 @@ class Profissao extends Model
         return 'excluido';
     }
 
+    public function listarDadosAlterar($request) {
+        $select = DB::table('profissao')
+        ->select('profissao.nome as nome')
+        ->where('id', $request->id)
+        ->get();
+
+        return $select;
+    }
+
     public function prepareInsert($request)
     {
         $dados = [
