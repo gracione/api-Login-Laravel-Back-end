@@ -18,6 +18,9 @@ class HorarioController extends Controller
 
         return Horario::inserir($ar);
     }
+    public function desmarcar(Request $request) {
+        return Horario::excluir($request);
+    }
     public function horariosMarcados(Request $request)
     {
         return Horario::horarioPorDia($request);

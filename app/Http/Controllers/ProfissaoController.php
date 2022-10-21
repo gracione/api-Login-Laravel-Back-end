@@ -17,4 +17,5 @@ class ProfissaoController extends Controller
     public function excluir (Request $request) {
         return Profissao::excluir($request);
     }
+
 }

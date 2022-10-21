@@ -19,6 +19,14 @@ class Profissao extends Model
         return $select;
     }
 
+    public function excluir($request)
+    {
+
+        DB::table('profissao')->delete($request->id);
+
+        return 'excluido';
+    }
+
     public function prepareInsert($request)
     {
         $dados = [
@@ -35,12 +43,6 @@ class Profissao extends Model
         DB::table('profissao')->insert($request);
 
         return 'cadastrado';
-    }
-
-    public function excluir($request)
-    {
-          DB::table('profissao')->where('id', $request->id)->delete();
-        return 'deletado';
     }
 
 }

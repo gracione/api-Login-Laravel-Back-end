@@ -41,10 +41,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/horarios-marcados', [App\Http\Controllers\HorarioController::class, 'horariosMarcados']);
     Route::post('/horarios-disponivel', [App\Http\Controllers\HorarioController::class, 'horariosDiponivel']);
     Route::post('/horario/inserir', [App\Http\Controllers\HorarioController::class, 'inserir']); 
+    Route::post('/horario/desmarcar', [App\Http\Controllers\HorarioController::class, 'desmarcar']); 
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 
     Route::post('/profissao/inserir', [App\Http\Controllers\ProfissaoController::class, 'inserir']); 
-    Route::post('/profissao/excluir', [App\Http\Controllers\ProfissaoController::class, 'excluir']); 
+    Route::post('/profissoes/excluir', [App\Http\Controllers\ProfissaoController::class, 'excluir']); 
     Route::post('/profissao/listar', [App\Http\Controllers\ProfissaoController::class, 'listar']); 
 
     Route::post('/feriados/inserir', [App\Http\Controllers\FeriadoController::class, 'inserir']); 

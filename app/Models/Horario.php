@@ -18,6 +18,14 @@ class Horario extends Model
         return 'cadastrado';
     }
 
+    public function excluir($request)
+    {
+
+        DB::table('horario')->delete($request->id);
+
+        return 'excluido';
+    }
+
     public function horarioPorDia($request)
     {
         $mes = empty($request->mes) ? date('m') : $request->mes;
