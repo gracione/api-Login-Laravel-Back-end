@@ -9,7 +9,7 @@ class HorarioAlmocoController extends Controller
 {
     public function listar () {
         return HorarioAlmoco::listar();
-    }
+       }
     public function inserir(Request $request)
     {
         return HorarioAlmoco::inserir($request);

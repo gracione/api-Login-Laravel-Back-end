@@ -42,7 +42,8 @@ class Horario extends Model
                 users.nome as cliente,
                 users.numero as telefone,
                 func.nome as funcionario,
-                t.nome as tratamento'
+                t.nome as tratamento,
+                horario.id as idHorario',
                 ))
                 ->join('users', 'users.id', '=', 'horario.id_cliente')
                 ->join('users as func', 'func.id', '=', 'horario.id_funcionario')
