@@ -46,10 +46,14 @@ class Profissao extends Model
         return $dados;
     }
 
-    public function inserir($request)
+    public function alterar($request)
     {
 
-        DB::table('profissao')->insert($request);
+        if(!empty($request->nome)){
+            DB::table('profissao')
+            ->where('id',$request->id)
+            ->update(['nome'=> $request->nome]);
+        }
 
         return 'cadastrado';
     }

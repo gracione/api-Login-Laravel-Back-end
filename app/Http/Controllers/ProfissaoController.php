@@ -12,14 +12,22 @@ class ProfissaoController extends Controller
         $request = Profissao::prepareInsert($request);
         return Profissao::inserir($request);
     }
+
     public function listar(Request $request)
     {
         return Profissao::listar($request);
     }
+
     public function excluir(Request $request)
     {
         return Profissao::excluir($request);
     }
+
+    public function alterar(Request $request)
+    {
+        return Profissao::alterar($request);
+    }
+
     public function listarDadosAlterar(Request $request)
     {
         return Profissao::listarDadosAlterar($request);
