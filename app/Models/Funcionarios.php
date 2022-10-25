@@ -33,8 +33,11 @@ class Funcionarios extends Model
         ->select('users.nome as nome',
                     'funcionario.id as id', 
                     'users.id as id_usuario', 
-                    'profissao.nome as funcao',
-                    'profissao.id as id_funcao')
+                    'users.numero as numero', 
+                    'users.email as email', 
+                    'users.id_sexo as id_sexo', 
+                    'profissao.nome as  ',
+                    'profissao.id as id_profissao')
         ->where('funcionario.id',$request->id)
         ->get();
         return $users;
