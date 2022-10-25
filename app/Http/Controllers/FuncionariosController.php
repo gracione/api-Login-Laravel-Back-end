@@ -19,4 +19,8 @@ class FuncionariosController extends Controller
     {
         return Funcionarios::listarDadosFuncionario($request);
     }
+    public function excluir (Request $request) {
+        return Funcionarios::excluir($request);
+    }
+
 }

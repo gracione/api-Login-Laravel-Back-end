@@ -27,7 +27,7 @@ class Funcionarios extends Model
     }
     
     public function listarDadosFuncionario($request){
-        $users = DB::table('users')
+        $ar = DB::table('users')
         ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
         ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
         ->select('users.nome as nome',
@@ -40,7 +40,7 @@ class Funcionarios extends Model
                     'profissao.id as id_profissao')
         ->where('funcionario.id',$request->id)
         ->get();
-        return $users;
+        return $ar;
     }
     public function inserir ($request) {
         $validator = Validator::make($request->all(),[
