@@ -14,44 +14,10 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    public function registrarEstabelecimento(Request $request)
-    {
-        $validator = Validator::make($request->all(),[
-            'nome' => 'required|string|max:255',
-            'nome_estabelecimento' => 'required|string|max:255',
-            'numero' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:3'
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors());       
-        }
-
-        $user = User::create([
-            'nome' => $request->nome,
-            'numero' => $request->numero,
-            'tipo_usuario' => '1',
-            'id_sexo' => '1',
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-         ]);
-        
-         DB::table('estabelecimento')->insert([
-            'nome' => $request->nome,
-            'id_proprietario' => $user['id'],
-        ]);
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()
-            ->json(['data' => $user,'access_token' => $token, 'token_type' => 'Bearer', ]);
-    }
-
     public function registrarCliente(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' => 'required|string|max:255',
+            'nome' => 'required|string|max:255',
             'numero' => 'required|string|max:255',
             'id_sexo' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -63,7 +29,7 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'nome' => $request->name,
+            'nome' => $request->nome,
             'numero' => $request->numero,
             'tipo_usuario' => '3',
             'id_sexo' => $request->id_sexo,

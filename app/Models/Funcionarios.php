@@ -74,12 +74,7 @@ class Funcionarios extends Model
     }
     public function excluir($request)
     {
-        $dadosUsuarios = $this->listarDadosFuncionario($request);
-        DB::table('funcionarios')->where('id', $request->id)->delete();
-        foreach ($dadosUsuarios as $key => $value) {
-            print_r($value);
-        }
-        DB::table('user')->where('id', $request->id)->delete();
+        DB::table('funcionario')->where('id', $request->id)->delete();
         return 'deletado';
     }
 

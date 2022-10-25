@@ -19,7 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/registrarCliente', [App\Http\Controllers\API\AuthController::class, 'registrarCliente']);
-Route::post('/registrarEstabelecimento', [App\Http\Controllers\API\AuthController::class, 'registrarEstabelecimento']);
 Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -29,7 +28,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/funcionario/inserir', [App\Http\Controllers\FuncionariosController::class, 'inserir']);
     Route::post('/funcionario/listar', [App\Http\Controllers\FuncionariosController::class, 'listar']);
     Route::post('/funcionario/dados-alterar', [App\Http\Controllers\FuncionariosController::class, 'listarDadosFuncionario']);
-    Route::post('/funcionario/excluir', [App\Http\Controllers\FuncionariosController::class, 'excluir']);
+    Route::post('/funcionarios/excluir', [App\Http\Controllers\FuncionariosController::class, 'excluir']);
 
     Route::post('/tratamento/listarPorFuncao', [App\Http\Controllers\TratamentosController::class, 'listar']);
     Route::post('/tratamento/listarPorFuncionario', [App\Http\Controllers\TratamentosController::class, 'listarByFuncionario']);
