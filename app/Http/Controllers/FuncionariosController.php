@@ -7,11 +7,16 @@ use App\Models\Funcionarios;
 
 class FuncionariosController extends Controller
 {
-    public function inserir (Request $request) {
+    public function inserir(Request $request)
+    {
         return Funcionarios::inserir($request);
     }
-    public function listar (Request $request) {
+    public function listar(Request $request)
+    {
         return Funcionarios::listar($request);
     }
-    
+    public function listarDadosFuncionario(Request $request)
+    {
+        return Funcionarios::listarDadosFuncionario($request);
+    }
 }

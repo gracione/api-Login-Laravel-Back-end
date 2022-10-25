@@ -13,7 +13,6 @@ class Funcionarios extends Model
     use HasFactory;
 
     public function listar ($request) {
-        $token = $request->headers;
         $users = DB::table('users')
         ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
         ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
@@ -26,7 +25,20 @@ class Funcionarios extends Model
         ->get();
         return $users;
     }
-
+    
+    public function listarDadosFuncionario($request){
+        $users = DB::table('users')
+        ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
+        ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
+        ->select('users.nome as nome',
+                    'funcionario.id as id', 
+                    'users.id as id_usuario', 
+                    'profissao.nome as funcao',
+                    'profissao.id as id_funcao')
+        ->where('funcionario.id',$request->id)
+        ->get();
+        return $users;
+    }
     public function inserir ($request) {
         $validator = Validator::make($request->all(),[
             'nome' => 'required|string|max:255',

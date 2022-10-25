@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     Route::post('/funcionario/inserir', [App\Http\Controllers\FuncionariosController::class, 'inserir']); 
     Route::post('/funcionario/listar', [App\Http\Controllers\FuncionariosController::class, 'listar']);
+    Route::post('/funcionario/dados-alterar', [App\Http\Controllers\FuncionariosController::class, 'listarDadosFuncionario']);
     
     Route::post('/tratamento/listarPorFuncao', [App\Http\Controllers\TratamentosController::class, 'listar']);
     Route::post('/tratamento/listarPorFuncionario', [App\Http\Controllers\TratamentosController::class, 'listarByFuncionario']);
