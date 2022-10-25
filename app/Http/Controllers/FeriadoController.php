@@ -13,5 +13,8 @@ class FeriadoController extends Controller
     public function inserir (Request $request) {
         return Feriado::inserir($request);
     }
+    public function excluir (Request $request) {
+        return Feriado::excluir($request);
+    }
 
 }

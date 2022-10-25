@@ -14,5 +14,9 @@ class HorarioAlmocoController extends Controller
     {
         return HorarioAlmoco::inserir($request);
     }
+    public function excluir (Request $request) {
+        return HorarioAlmoco::excluir($request);
+    }
+
 
 }

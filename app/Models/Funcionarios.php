@@ -72,4 +72,15 @@ class Funcionarios extends Model
 
         return 'cadastrado';
     }
+    public function excluir($request)
+    {
+        $dadosUsuarios = $this->listarDadosFuncionario($request);
+        DB::table('funcionarios')->where('id', $request->id)->delete();
+        foreach ($dadosUsuarios as $key => $value) {
+            print_r($value);
+        }
+        DB::table('user')->where('id', $request->id)->delete();
+        return 'deletado';
+    }
+
 }

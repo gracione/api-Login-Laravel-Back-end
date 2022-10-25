@@ -15,4 +15,8 @@ class FeriasController extends Controller
     {
         return Ferias::inserir($request);
     }
+    public function excluir (Request $request) {
+        return Ferias::excluir($request);
+    }
+
 }

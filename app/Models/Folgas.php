@@ -24,4 +24,10 @@ class Folgas extends Model
 
        return 'cadastrado';
    }
+   public function excluir($request)
+   {
+       DB::table('folgas')->where('id', $request->id)->delete();
+       return 'deletado';
+   }
+  
 }

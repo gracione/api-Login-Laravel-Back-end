@@ -24,4 +24,10 @@ class Ferias extends Model
 
         return 'cadastrado';
     }
+    public function excluir($request)
+    {
+        DB::table('ferias')->where('id', $request->id)->delete();
+        return 'deletado';
+    }
+
 }
