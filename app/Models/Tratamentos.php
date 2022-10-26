@@ -16,7 +16,6 @@ class Tratamentos extends Model
         $select = DB::table('tratamento')
             ->select('tratamento.nome as nome', 'tratamento.id as id')
             ->join('funcionario', 'funcionario.id_profissao', '=', 'tratamento.id_profissao')
-            ->where('funcionario.id_estabelecimento', $request->id_estabelecimento)
             ->groupBy('tratamento.nome', 'tratamento.id')
             ->get();
         return $select;
@@ -36,7 +35,6 @@ class Tratamentos extends Model
             ->join('funcionario', 'funcionario.id_profissao', '=', 'tratamento.id_profissao')
             ->select(DB::raw('tratamento.nome as nome,tratamento.id as id'))
             ->where('funcionario.id', '=', $request->id_profissao)
-            ->where('funcionario.id_estabelecimento', '=', $request->id_estabelecimento)
             ->get();
         return $select;
     }

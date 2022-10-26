@@ -22,7 +22,6 @@ class Filtro extends Model
         $filtroTipo = DB::table('filtro_tipo') 
         ->join('tratamento','filtro_tipo.id_tratamento', '=', 'tratamento.id')  
         ->join('profissao','tratamento.id_profissao', '=', 'profissao.id')
-        ->where('profissao.id_estabelecimento','=',$request->id_estabelecimento)
         ->where('filtro_tipo.id_tratamento','=',$request->id_tratamento)
         ->select(DB::raw('distinct filtro_tipo.id as id'),'filtro_tipo.nome as nome')
         ->get();

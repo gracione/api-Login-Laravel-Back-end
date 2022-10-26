@@ -16,8 +16,6 @@ class Funcionario extends Migration
     {
         Schema::create('funcionario', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_estabelecimento')->unsigned();
-            $table->foreign('id_estabelecimento')->references('id')->on('users');
             $table->integer('id_usuario')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->integer('id_profissao')->unsigned();

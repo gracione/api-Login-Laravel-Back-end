@@ -21,7 +21,6 @@ class Funcionarios extends Model
                     'users.id as id_usuario', 
                     'profissao.nome as funcao',
                     'profissao.id as id_funcao')
-        ->where('funcionario.id_estabelecimento',$request->id_estabelecimento)
         ->get();
         return $users;
     }
@@ -64,7 +63,6 @@ class Funcionarios extends Model
          ]);
          foreach ($request->profissoesCadastradas as $key => $value) {
              DB::table('funcionario')->insert([
-                'id_estabelecimento' => $request->id_estabelecimento,
                 'id_usuario' => $user['id'],
                 'id_profissao' => $value
             ]);             

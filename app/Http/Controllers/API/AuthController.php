@@ -25,7 +25,7 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors());       
+            return $validator->errors();       
         }
 
         $user = User::create([
@@ -38,8 +38,7 @@ class AuthController extends Controller
          ]);
 
          DB::table('cliente')->insert([
-            'id_usuario' => $user['id'],
-            'id_estabelecimento' => $request->id_estabelecimento,
+            'id_usuario' => $user['id']
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;

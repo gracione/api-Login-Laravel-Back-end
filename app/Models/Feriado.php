@@ -13,7 +13,6 @@ class Feriado extends Model
     {
         $select = DB::table('feriados')
             ->select('*')
-            ->where('feriados.id_estabelecimento', $request->id_estabelecimento)
             ->get();
         return $select;
     }
@@ -21,8 +20,7 @@ class Feriado extends Model
     {
         DB::table('feriados')->insert([
             'nome' => $request->nome,
-            'data' => $request->data,
-            'id_estabelecimento' => $request->id_estabelecimento
+            'data' => $request->data
         ]);
 
         return 'cadastrado';

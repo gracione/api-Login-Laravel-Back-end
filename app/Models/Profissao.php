@@ -14,7 +14,6 @@ class Profissao extends Model
     {
             $select = DB::table('profissao')
             ->select('*')
-            ->where('id_estabelecimento', $request->id_estabelecimento)
             ->get();
         return $select;
     }
@@ -39,8 +38,7 @@ class Profissao extends Model
     public function prepareInsert($request)
     {
         $dados = [
-            'nome' => $request->dados['nome'],
-            'id_estabelecimento' => $request->id_estabelecimento
+            'nome' => $request->dados['nome']
         ];
 
         return $dados;
@@ -56,6 +54,14 @@ class Profissao extends Model
         }
 
         return 'cadastrado';
+    }
+
+    public function inserir($request)
+    {
+        DB::table('profissao')->insert($request);
+
+
+        return 'inserido';
     }
 
 }

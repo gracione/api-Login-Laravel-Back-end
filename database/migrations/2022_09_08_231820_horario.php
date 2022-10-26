@@ -61,12 +61,10 @@ class Horario extends Migration
             //                'tempo_padrao' => '30',
             //                'valor_padrao' => '30',
             //                'id_funcao_tipo' => '1',
-            //                'id_estabelecimento' => '1'
             //            ]);
             //            DB::table('filtro_tipo')->insert([
             //                'nome' => 'tamanho',
             //                'id_funcao_tipo' => '1',
-            //                'id_estabelecimento' => '1'
             //    
             //            ]);
             //            DB::table('filtro')->insert([
@@ -74,7 +72,6 @@ class Horario extends Migration
             //                'porcentagem_tempo' => 30,
             //                'porcentagem_valor' => 30,
             //                'id_filtro_tipo' => '1',
-            //                'id_estabelecimento' => '1'
             //    
             //            ]);
             //                    

@@ -17,8 +17,6 @@ class Feriados extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->date('data');
-            $table->integer('id_estabelecimento')->unsigned();
-            $table->foreign('id_estabelecimento')->references('id')->on('users');
         });
     }
 
