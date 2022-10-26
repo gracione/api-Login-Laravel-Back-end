@@ -9,16 +9,21 @@ use App\Models\Filtro;
 
 class HorarioController extends Controller
 {
-    public function inserir(Request $request){
-        $ar['horario_inicio'] = $request->data." ".$request->horario.":00";
-        $ar['horario_fim'] = $request->data." ".$request->horario;
+    public function inserir(Request $request)
+    {
+        $tempoGasto =  $this->calcularTempoGasto($request->idFiltro, $request->idTratamento);
+        $horarioInicioMinutos = $this->converterHoraToMinuto($request->horario);
+        $horarioFim = $this->converterMinutosParaHora($horarioInicioMinutos + $tempoGasto);
+        $ar['horario_inicio'] = $request->data . " " . $request->horario . ":00";
+        $ar['horario_fim'] = $request->data . " " . $horarioFim . ":00";
         $ar['id_cliente'] = $request->idCliente;
         $ar['id_tratamento'] = $request->idTratamento;
         $ar['id_funcionario'] = $request->idFuncionario;
 
         return Horario::inserir($ar);
     }
-    public function desmarcar(Request $request) {
+    public function desmarcar(Request $request)
+    {
         return Horario::excluir($request);
     }
     public function horariosMarcados(Request $request)
@@ -48,10 +53,10 @@ class HorarioController extends Controller
         return $minutos;
     }
 
-    public function calcularTempoGasto($filtros, $tratamento)
+    public function calcularTempoGasto($filtros = 0, $tratamento)
     {
         $filtros = $this->separarPorHashtag($filtros);
-        $tempoTratamento = Tratamentos::listarPorId($tratamento)[0]->tempo_gasto??0;
+        $tempoTratamento = Tratamentos::listarPorId($tratamento)[0]->tempo_gasto ?? 0;
         $porcentagemFiltro = Filtro::filtroById($filtros);
 
         foreach ($porcentagemFiltro as $value) {
