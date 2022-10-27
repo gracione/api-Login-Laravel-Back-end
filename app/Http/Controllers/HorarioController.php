@@ -93,16 +93,16 @@ class HorarioController extends Controller
             foreach ($horariosMarcadosMinutos as $valueMarcados) {
                 $inicio = $tempoContado;
                 $fim = $tempoContado + $tempoGasto;
-                if ($valueMarcados['inicio'] <= $inicio && $valueMarcados['fim'] >= $inicio) {
+                if ($valueMarcados['inicio'] < $inicio && $valueMarcados['fim'] > $inicio) {
                     $verificarDisponibilidade = false;
                 }
-                if ($valueMarcados['inicio'] <= $fim && $valueMarcados['fim'] >= $fim) {
+                if ($valueMarcados['inicio'] < $fim && $valueMarcados['fim'] >= $fim) {
                     $verificarDisponibilidade = false;
                 }
-                if ($saida1 <= $inicio && $entrada2 >= $inicio) {
+                if ($saida1 < $inicio && $entrada2 > $inicio) {
                     $verificarDisponibilidade = false;
                 }
-                if ($saida1 <= $fim && $entrada2 >= $fim) {
+                if ($saida1 < $fim && $entrada2 > $fim) {
                     $verificarDisponibilidade = false;
                 }
             }
