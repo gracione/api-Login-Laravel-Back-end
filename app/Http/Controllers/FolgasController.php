@@ -10,6 +10,9 @@ class FolgasController extends Controller
     public function listar () {
         return Folgas::listar();
     }
+    public function listarById (Request $request) {
+        return Folgas::listarById($request);
+    }
     public function inserir (Request $request) {
         return Folgas::inserir($request);
     }
