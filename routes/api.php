@@ -66,6 +66,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/horarioAlmoco/inserir', [App\Http\Controllers\HorarioAlmocoController::class, 'inserir']);
     Route::post('/horarioAlmoco/listar', [App\Http\Controllers\HorarioAlmocoController::class, 'listar']);
     Route::post('/horarioAlmoco/excluir', [App\Http\Controllers\HorarioAlmocoController::class, 'excluir']);
+
+    Route::post('/expediente/inserir', [App\Http\Controllers\HorarioTrabalhoController::class, 'inserir']);
+    Route::post('/expediente/listar', [App\Http\Controllers\HorarioTrabalhoController::class, 'listar']);
+    Route::post('/expediente/alterar', [App\Http\Controllers\HorarioTrabalhoController::class, 'alterar']);
+    Route::post('/expediente/dados-alterar', [App\Http\Controllers\HorarioTrabalhoController::class, 'listarDadosAlterar']);
+    Route::post('/expediente/excluir', [App\Http\Controllers\HorarioTrabalhoController::class, 'excluir']);
+
 });
 
 Route::post('/verificar-tipo-perfil', [App\Http\Controllers\Controller::class, 'verificarTipoPerfil']);
