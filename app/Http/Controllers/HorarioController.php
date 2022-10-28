@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Horario;
 use App\Models\Tratamentos;
 use App\Models\Filtro;
+use App\Models\HorarioTrabalho;
 
 class HorarioController extends Controller
 {
@@ -68,10 +69,14 @@ class HorarioController extends Controller
 
     public function horariosDiponivel(Request $request)
     {
-        $entrada1 = $this->converterHoraToMinuto('07:00');
-        $saida1 = $this->converterHoraToMinuto('07:40');
-        $entrada2 = $this->converterHoraToMinuto('08:00');
-        $saida2 = $this->converterHoraToMinuto('17:00');
+        
+        $entradaSaida = HorarioTrabalho::listarById($request->idFuncionario);
+        $entrada1 = $this->converterHoraToMinuto($entradaSaida[0]->inicio1);
+        $saida1 = $this->converterHoraToMinuto($entradaSaida[0]->fim1);
+        $entrada2 = $this->converterHoraToMinuto($entradaSaida[0]->inicio2);
+        $saida2 = $this->converterHoraToMinuto($entradaSaida[0]->fim2);
+
+
 
         $horariosDisponivel = [];
         $tempoContado = $entrada1;

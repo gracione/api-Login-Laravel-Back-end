@@ -25,6 +25,23 @@ class HorarioTrabalho extends Model
             ->get();
         return $select;
     }
+    public function listarById($idFuncionario)
+    {
+        $select = DB::table('horario_trabalho')
+            ->select(
+                'users.nome as nome',
+                'horario_trabalho.id as id',
+                'horario_trabalho.inicio1 as inicio1',
+                'horario_trabalho.fim1 as fim1',
+                'horario_trabalho.inicio2 as inicio2',
+                'horario_trabalho.fim2 as fim2'
+            )
+            ->join('funcionario', 'funcionario.id', '=', 'horario_trabalho.id_funcionario')
+            ->join('users', 'users.id', '=', 'funcionario.id_usuario')
+            ->where('funcionario.id','=',$idFuncionario)
+            ->get();
+        return $select;
+    }
     public function inserir($request)
     {
         DB::table('horario_trabalho')->insert([
