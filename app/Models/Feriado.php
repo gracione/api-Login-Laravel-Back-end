@@ -16,6 +16,16 @@ class Feriado extends Model
             ->get();
         return $select;
     }
+
+    public function listarFeriadoPorMes ($request) {
+        $select = DB::table('feriados')
+        ->select(DB::raw('DAY(data) as dia, nome'))
+        ->whereMonth('feriados.data', $request->dados['mes'])
+        ->whereYear('feriados.data', $request->dados['ano'])
+        ->get();
+        return $select;
+    }
+
     public function inserir($request)
     {
         DB::table('feriados')->insert([

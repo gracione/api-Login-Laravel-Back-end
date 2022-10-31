@@ -17,9 +17,10 @@ class Folgas extends Model
         return $select;
     }
     public function listarById ($request) {
+        $idFuncionario=$request->dados['idFuncionario'];
         $select = DB::table('folga')
         ->select('*')
-        ->where('id_funcionario','=',$request->idFuncionario)
+        ->where('id_funcionario', $idFuncionario)
         ->get();
         return $select;
     }
@@ -34,7 +35,7 @@ class Folgas extends Model
    }
    public function excluir($request)
    {
-       DB::table('folgas')->where('id', $request->id)->delete();
+       DB::table('folga')->where('id', $request->id)->delete();
        return 'deletado';
    }
   
