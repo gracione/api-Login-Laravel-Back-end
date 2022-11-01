@@ -54,4 +54,12 @@ class HorarioTrabalho extends Model
 
         return 'cadastrado';
     }
+    public function excluir($request)
+    {
+
+        DB::table('horario_trabalho')->delete($request->id);
+
+        return 'excluido';
+    }
+
 }
