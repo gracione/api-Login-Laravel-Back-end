@@ -54,6 +54,9 @@ class HorarioController extends Controller
         return $minutos;
     }
 
+    public function tempoGasto(Request $request){
+        return $this->converterMinutosParaHora($this->calcularTempoGasto($request->filtros, $request->tratamento));
+    }
     public function calcularTempoGasto($filtros = 0, $tratamento)
     {
         $filtros = $this->separarPorHashtag($filtros);
