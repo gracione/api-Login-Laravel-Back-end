@@ -34,6 +34,9 @@ class HorarioController extends Controller
 
     public function separarPorHashtag($valor)
     {
+        if(is_array($valor)){
+            return $valor;
+        }
         return explode(',', $valor);
     }
 
@@ -54,10 +57,10 @@ class HorarioController extends Controller
         return $minutos;
     }
 
-    public function tempoGasto(Request $request){
-        return $this->converterMinutosParaHora($this->calcularTempoGasto($request->filtros, $request->tratamento));
+    public function tempoGasto(Request $request)
+    {        return $this->converterMinutosParaHora($this->calcularTempoGasto($request->filtros, $request->tratamento));
     }
-    public function calcularTempoGasto($filtros = 0, $tratamento)
+    public function calcularTempoGasto($filtros = 0, $tratamento = 0)
     {
         $filtros = $this->separarPorHashtag($filtros);
         $tempoTratamento = Tratamentos::listarPorId($tratamento)[0]->tempo_gasto ?? 0;
@@ -72,7 +75,7 @@ class HorarioController extends Controller
 
     public function horariosDiponivel(Request $request)
     {
-        
+
         $entradaSaida = HorarioTrabalho::listarById($request->idFuncionario);
         $entrada1 = $this->converterHoraToMinuto($entradaSaida[0]->inicio1);
         $saida1 = $this->converterHoraToMinuto($entradaSaida[0]->fim1);

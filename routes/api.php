@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/funcionarios/excluir', [App\Http\Controllers\FuncionariosController::class, 'excluir']);
 
     Route::post('/tratamento/listarPorFuncao', [App\Http\Controllers\TratamentosController::class, 'listar']);
-    Route::post('/tratamento/listarPorFuncionario', [App\Http\Controllers\TratamentosController::class, 'listarByFuncionario']);
+    Route::post('/tratamentos/listar-profissao', [App\Http\Controllers\TratamentosController::class, 'listarByFuncionario']);
     Route::post('/tratamentos/listar', [App\Http\Controllers\TratamentosController::class, 'listar']);
     Route::post('/tratamentos/inserir', [App\Http\Controllers\TratamentosController::class, 'inserir']);
     Route::post('/tratamentos/excluir', [App\Http\Controllers\TratamentosController::class, 'excluir']);
