@@ -10,6 +10,10 @@ class FeriadoController extends Controller
     public function listar (Request $request) {
         return Feriado::listar($request);
     }
+    public function listarById (Request $request) {
+        return Feriado::listarById($request);
+    }
+    
     public function listarFeriadoPorMes (Request $request) {
         return Feriado::listarFeriadoPorMes($request);
     }

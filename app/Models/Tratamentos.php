@@ -34,7 +34,7 @@ class Tratamentos extends Model
         $select = DB::table('tratamento')
             ->join('funcionario', 'funcionario.id_profissao', '=', 'tratamento.id_profissao')
             ->select(DB::raw('tratamento.nome as nome,tratamento.id as id'))
-            ->where('funcionario.id', '=', $request->dados['id_profissao'])
+            ->where('funcionario.id', '=', $request->dados['idProfissao'])
             ->get();
         return $select;
     }

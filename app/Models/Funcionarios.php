@@ -20,7 +20,7 @@ class Funcionarios extends Model
                     'funcionario.id as id', 
                     'users.id as id_usuario', 
                     'profissao.nome as funcao',
-                    'profissao.id as id_funcao')
+                    'profissao.id as id_profissao')
         ->get();
         return $users;
     }
