@@ -19,6 +19,10 @@ class Folgas extends Migration
             $table->integer('id_funcionario')->unsigned();
             $table->foreign('id_funcionario')->references('id')->on('funcionario');
         });
+        Schema::create('semana', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nome');
+        });
         Schema::create('ferias', function (Blueprint $table) {
             $table->increments('id');
             $table->date('inicio');

@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\DB;
 class Feriado extends Model
 {
     use HasFactory;
-    public function listar($request)
+    public function listar()
     {
         $select = DB::table('feriados')
-            ->select('*')
+            ->select(
+            'feriados.nome as nome',
+            'feriados.data as nome2')
             ->get();
         return $select;
     }

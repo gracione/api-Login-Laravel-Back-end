@@ -7,13 +7,14 @@ use App\Models\Horario;
 use App\Models\Tratamentos;
 use App\Models\Filtro;
 use App\Models\HorarioTrabalho;
+use App\Models\Util;
 
 class HorarioController extends Controller
 {
     public function inserir(Request $request)
     {
         $tempoGasto =  $this->calcularTempoGasto($request->idFiltro, $request->idTratamento);
-        $horarioInicioMinutos = $this->converterHoraToMinuto($request->horario);
+        $horarioInicioMinutos = Util::converterHoraToMinuto($request->horario);
         $horarioFim = $this->converterMinutosParaHora($horarioInicioMinutos + $tempoGasto);
         $ar['horario_inicio'] = $request->data . " " . $request->horario . ":00";
         $ar['horario_fim'] = $request->data . " " . $horarioFim . ":00";
@@ -40,23 +41,6 @@ class HorarioController extends Controller
         return explode(',', $valor);
     }
 
-    public function converterMinutosParaHora($tempoMinutos)
-    {
-        $hora = floor($tempoMinutos / 60);
-        $minutos = $tempoMinutos % 60;
-        return $hora . ":" . $minutos;
-    }
-    public function converterHoraToMinuto($hora)
-    {
-        $arrayHm = explode(":", $hora);
-        $arrayHm[0];
-        $arrayHm[1];
-        $minutos = ($arrayHm[0] * 60);
-        $minutos = $minutos + $arrayHm[1];
-
-        return $minutos;
-    }
-
     public function tempoGasto(Request $request)
     {        return $this->converterMinutosParaHora($this->calcularTempoGasto($request->filtros, $request->tratamento));
     }
@@ -77,10 +61,10 @@ class HorarioController extends Controller
     {
 
         $entradaSaida = HorarioTrabalho::listarById($request->idFuncionario);
-        $entrada1 = $this->converterHoraToMinuto($entradaSaida[0]->inicio1);
-        $saida1 = $this->converterHoraToMinuto($entradaSaida[0]->fim1);
-        $entrada2 = $this->converterHoraToMinuto($entradaSaida[0]->inicio2);
-        $saida2 = $this->converterHoraToMinuto($entradaSaida[0]->fim2);
+        $entrada1 = Util::converterHoraToMinuto($entradaSaida[0]->inicio1);
+        $saida1 = Util::converterHoraToMinuto($entradaSaida[0]->fim1);
+        $entrada2 = Util::converterHoraToMinuto($entradaSaida[0]->inicio2);
+        $saida2 = Util::converterHoraToMinuto($entradaSaida[0]->fim2);
 
 
 
@@ -92,8 +76,8 @@ class HorarioController extends Controller
 
         foreach ($horariosMarcados as $value) {
             $horariosMarcadosMinutos[] = [
-                'inicio' => $this->converterHoraToMinuto($value->horario_inicio),
-                'fim' => $this->converterHoraToMinuto($value->horario_fim)
+                'inicio' => Util::converterHoraToMinuto($value->horario_inicio),
+                'fim' => Util::converterHoraToMinuto($value->horario_fim)
             ];
         }
 

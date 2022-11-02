@@ -26,6 +26,35 @@ class Horario extends Migration
             $table->foreign('id_funcionario')->references('id')->on('funcionario');
         });
         if (true) {
+            DB::table('semana')->insert([
+                'id' => '1',
+                'nome' => 'Domingo'
+            ]);
+            DB::table('semana')->insert([
+                'id' => '2',
+                'nome' => 'Segunda Feira'
+            ]);
+            DB::table('semana')->insert([
+                'id' => '3',
+                'nome' => 'Terça Feira'
+            ]);
+            DB::table('semana')->insert([
+                'id' => '4',
+                'nome' => 'Quarta Feira'
+            ]);
+            DB::table('semana')->insert([
+                'id' => '5',
+                'nome' => 'Quinta Feira'
+            ]);
+            DB::table('semana')->insert([
+                'id' => '6',
+                'nome' => 'Sexta Feira',
+            ]);
+            DB::table('semana')->insert([
+                'id' => '7',
+                'nome' => 'Sabado'
+            ]);
+
             DB::table('tipo_usuario')->insert([
                 'id' => '1',
                 'nome' => 'administrativo',

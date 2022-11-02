@@ -9,7 +9,6 @@ class ProfissaoController extends Controller
 {
     public function inserir(Request $request)
     {
-        $request = Profissao::prepareInsert($request);
         return Profissao::inserir($request);
     }
 

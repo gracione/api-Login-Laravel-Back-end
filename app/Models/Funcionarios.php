@@ -19,7 +19,7 @@ class Funcionarios extends Model
         ->select('users.nome as nome',
                     'funcionario.id as id', 
                     'users.id as id_usuario', 
-                    'profissao.nome as funcao',
+                    'profissao.nome as nome2',
                     'profissao.id as id_profissao')
         ->get();
         return $users;

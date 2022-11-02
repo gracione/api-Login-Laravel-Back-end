@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\Util;
 
 class Tratamentos extends Model
 {
@@ -32,30 +33,20 @@ class Tratamentos extends Model
 
     public function inserir($request)
     {
-        $idTratamento = DB::table('tratamento')->insertGetId([
-            'nome' => $request->nome_tratamento,
-            'tempo_gasto' => $request->tempo_gasto,
-            'id_profissao' => $request->id_profissao
-        ]);
+        $tratamento['nome'] = $request->tratamento;
+        $tratamento['tempo_gasto'] = Util::converterHoraToMinuto($request->tempoGasto);
+        $tratamento['id_profissao'] = $request->idProfissao;
 
-        foreach ($request->tipo_de_filtro as $key => $value) {
-            $nomeFiltro = $request->nomesTipoFiltro[$key];
+        $idTratamento = DB::table('tratamento')->insertGetId($tratamento);
 
-            $idTipoFiltro = DB::table('filtro_tipo')->insertGetId([
-                'nome' => $nomeFiltro,
-                'id_tratamento' => $idTratamento
-            ]);
-                
-            
+        foreach ($request->tipoDeFiltro as $key => $value) {
+            $nomeFiltro = $request->tipoFiltro[$key];
+            $filtroTipo = ['nome' => $nomeFiltro, 'id_tratamento' => $idTratamento];
+            $idTipoFiltro = DB::table('filtro_tipo')->insertGetId($filtroTipo);
+
             foreach ($value as $valor) {
-                $nomeTipoFiltro = $valor[0];
-                $porcentagem = $valor[1];
-                DB::table('filtro')->insert([
-                    'nome' => $nomeTipoFiltro,
-                    'porcentagem_tempo' => $porcentagem,
-                    'id_filtro_tipo' => $idTipoFiltro
-                ]);
-    
+                $filtro=['nome' => $valor[0],'porcentagem_tempo' => $valor[1],'id_filtro_tipo' => $idTipoFiltro];
+                DB::table('filtro')->insert($filtro);
             }
         }
 

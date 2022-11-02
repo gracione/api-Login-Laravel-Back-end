@@ -36,14 +36,6 @@ class Profissao extends Model
     }
 
 
-    public function prepareInsert($request)
-    {
-        $dados = [
-            'nome' => $request->dados['nome']
-        ];
-
-        return $dados;
-    }
 
     public function alterar($request)
     {
@@ -58,9 +50,11 @@ class Profissao extends Model
 
     public function inserir($request)
     {
-        DB::table('profissao')->insert($request);
+        $dados = [
+            'nome' => $request->nome
+        ];
 
-
+        DB::table('profissao')->insert($dados);
         return 'inserido';
     }
 

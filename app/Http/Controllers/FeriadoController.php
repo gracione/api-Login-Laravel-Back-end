@@ -7,8 +7,8 @@ use App\Models\Feriado;
 
 class FeriadoController extends Controller
 {
-    public function listar (Request $request) {
-        return Feriado::listar($request);
+    public function listar () {
+        return Feriado::listar();
     }
     public function listarById (Request $request) {
         return Feriado::listarById($request);
