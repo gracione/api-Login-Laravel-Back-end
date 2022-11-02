@@ -52,10 +52,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profissao/dados-alterar', [App\Http\Controllers\ProfissaoController::class, 'listarDadosAlterar']);
     Route::post('/profissoes/excluir', [App\Http\Controllers\ProfissaoController::class, 'excluir']);
 
-    Route::post('/feriados/inserir', [App\Http\Controllers\FeriadoController::class, 'inserir']);
     Route::post('/feriados/listar', [App\Http\Controllers\FeriadoController::class, 'listar']);
     Route::post('/feriados/listar-id', [App\Http\Controllers\FeriadoController::class, 'listarById']);
     Route::post('/feriados/excluir', [App\Http\Controllers\FeriadoController::class, 'excluir']);
+    Route::post('/feriados/inserir', [App\Http\Controllers\FeriadoController::class, 'inserir']);
+    Route::post('/feriados/alterar', [App\Http\Controllers\FeriadoController::class, 'alterar']);
     Route::post('/feriados/listarFeriadoPorMes', [App\Http\Controllers\FeriadoController::class, 'listarFeriadoPorMes']);
     
     Route::post('/folga/inserir', [App\Http\Controllers\FolgasController::class, 'inserir']);

@@ -46,7 +46,6 @@ class Profissao extends Model
 
     public function alterar($request)
     {
-
         if(!empty($request->nome)){
             DB::table('profissao')
             ->where('id',$request->id)

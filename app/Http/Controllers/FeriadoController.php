@@ -23,5 +23,8 @@ class FeriadoController extends Controller
     public function excluir (Request $request) {
         return Feriado::excluir($request);
     }
+    public function alterar (Request $request) {
+        return Feriado::alterar($request);
+    }
 
 }
