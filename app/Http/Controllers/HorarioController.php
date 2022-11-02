@@ -63,7 +63,7 @@ class HorarioController extends Controller
     public function calcularTempoGasto($filtros = 0, $tratamento = 0)
     {
         $filtros = $this->separarPorHashtag($filtros);
-        $tempoTratamento = Tratamentos::listarPorId($tratamento)[0]->tempo_gasto ?? 0;
+        $tempoTratamento = Tratamentos::listarById($tratamento)[0]->tempo_gasto ?? 0;
         $porcentagemFiltro = Filtro::filtroById($filtros);
 
         foreach ($porcentagemFiltro as $value) {

@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Models\FiltroTipo;
 
 class Tratamentos extends Model
 {
@@ -21,7 +20,7 @@ class Tratamentos extends Model
         return $select;
     }
 
-    public function listarPorId($id)
+    public function listarById($id)
     {
         $select = DB::table('tratamento')
             ->select('*')
@@ -29,7 +28,7 @@ class Tratamentos extends Model
             ->get();
         return $select;
     }
-    public function listarByFuncionario($request)
+    public function listarById($request)
     {
         $select = DB::table('tratamento')
             ->join('funcionario', 'funcionario.id_profissao', '=', 'tratamento.id_profissao')

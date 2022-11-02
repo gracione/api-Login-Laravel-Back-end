@@ -28,8 +28,8 @@ class ProfissaoController extends Controller
         return Profissao::alterar($request);
     }
 
-    public function listarDadosAlterar(Request $request)
+    public function listarById(Request $request)
     {
-        return Profissao::listarDadosAlterar($request);
+        return Profissao::listarById($request);
     }
 }

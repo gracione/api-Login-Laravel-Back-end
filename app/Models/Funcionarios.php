@@ -25,7 +25,7 @@ class Funcionarios extends Model
         return $users;
     }
     
-    public function listarDadosFuncionario($request){
+    public function listarById($request){
         $ar = DB::table('users')
         ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
         ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
