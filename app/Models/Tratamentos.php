@@ -20,20 +20,12 @@ class Tratamentos extends Model
         return $select;
     }
 
-    public function listarById($id)
-    {
-        $select = DB::table('tratamento')
-            ->select('*')
-            ->where('id', '=', $id)
-            ->get();
-        return $select;
-    }
     public function listarById($request)
     {
         $select = DB::table('tratamento')
             ->join('funcionario', 'funcionario.id_profissao', '=', 'tratamento.id_profissao')
             ->select(DB::raw('tratamento.nome as nome,tratamento.id as id'))
-            ->where('funcionario.id', '=', $request->dados['idProfissao'])
+            ->where('funcionario.id', '=', $request->dados['id'])
             ->get();
         return $select;
     }
