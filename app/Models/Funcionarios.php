@@ -12,7 +12,7 @@ class Funcionarios extends Model
 {
     use HasFactory;
 
-    public function listar ($request) {
+    public function listar () {
         $users = DB::table('users')
         ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
         ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
