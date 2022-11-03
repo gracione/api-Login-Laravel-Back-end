@@ -7,7 +7,9 @@ class Util
     public function converterMinutosParaHora($tempoMinutos)
     {
         $hora = floor($tempoMinutos / 60);
+        $hora = $hora < 10 ? "0$hora" : $hora;
         $minutos = $tempoMinutos % 60;
+        $minutos = $minutos < 10 ? "0$minutos" : $minutos;
         return $hora . ":" . $minutos;
     }
     public function converterHoraToMinuto($hora)
@@ -20,5 +22,4 @@ class Util
 
         return $minutos;
     }
-
 }

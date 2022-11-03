@@ -63,12 +63,10 @@ class HorarioController extends Controller
     {
 
         $entradaSaida = HorarioTrabalho::listarById($request->idFuncionario);
-        $entrada1 = Util::converterHoraToMinuto($entradaSaida[0]->inicio1);
-        $saida1 = Util::converterHoraToMinuto($entradaSaida[0]->fim1);
-        $entrada2 = Util::converterHoraToMinuto($entradaSaida[0]->inicio2);
-        $saida2 = Util::converterHoraToMinuto($entradaSaida[0]->fim2);
-
-
+        $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
+        $saida1 = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
+        $entrada2 = Util::converterHoraToMinuto($entradaSaida->fim_horario_de_almoco);
+        $saida2 = Util::converterHoraToMinuto($entradaSaida->fim_de_expediente);
 
         $horariosDisponivel = [];
         $tempoContado = $entrada1;

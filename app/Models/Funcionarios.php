@@ -65,8 +65,15 @@ class Funcionarios extends Model
              DB::table('funcionario')->insert([
                 'id_usuario' => $user['id'],
                 'id_profissao' => $value
-            ]);             
-         }
+            ]);
+        }
+        DB::table('horario_trabalho')->insert([
+           'inicio1' => $request->inicioExpediente . ":00",
+           'fim1' => $request->inicioAlmoco . ":00",
+           'inicio2' => $request->fimAlmoco . ":00",
+           'fim2' => $request->fimExpediente . ":00",
+           'id_usuario' => $user['id']
+       ]);
 
         return 'cadastrado';
     }

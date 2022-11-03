@@ -31,16 +31,17 @@ class HorarioTrabalho extends Model
             ->select(
                 'users.nome as nome',
                 'horario_trabalho.id as id',
-                'horario_trabalho.inicio1 as inicio1',
-                'horario_trabalho.fim1 as fim1',
-                'horario_trabalho.inicio2 as inicio2',
-                'horario_trabalho.fim2 as fim2'
+                'horario_trabalho.inicio1 as inicio_de_expediente',
+                'horario_trabalho.fim1 as inicio_horario_de_almoco',
+                'horario_trabalho.inicio2 as fim_horario_de_almoco',
+                'horario_trabalho.fim2 as fim_de_expediente'
             )
             ->join('funcionario', 'funcionario.id', '=', 'horario_trabalho.id_funcionario')
             ->join('users', 'users.id', '=', 'funcionario.id_usuario')
-            ->where('funcionario.id','=',$idFuncionario)
+            ->where('funcionario.id', '=', $idFuncionario)
             ->get();
-        return $select;
+        $result = $select->toArray();
+        return $result[0]??0;
     }
     public function inserir($request)
     {
@@ -61,5 +62,4 @@ class HorarioTrabalho extends Model
 
         return 'excluido';
     }
-
 }

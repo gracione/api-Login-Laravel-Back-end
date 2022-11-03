@@ -13,7 +13,7 @@ class Profissao extends Model
     public function listar()
     {
             $select = DB::table('profissao')
-            ->select('profissao.nome as profissão')
+            ->select('profissao.nome as profissão','profissao.id as id')
             ->get();
         return $select;
     }
