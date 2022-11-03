@@ -35,19 +35,21 @@ class HorarioController extends Controller
 
     public function separarPorHashtag($valor)
     {
-        if(is_array($valor)){
+        if (is_array($valor)) {
             return $valor;
         }
         return explode(',', $valor);
     }
 
     public function tempoGasto(Request $request)
-    {        return $this->converterMinutosParaHora($this->calcularTempoGasto($request->filtros, $request->tratamento));
+    {
+        return $request->filtros == 0 && $request->tratamento == 0 ? 0 :
+            Util::converterMinutosParaHora($this->calcularTempoGasto($request->filtros, $request->tratamento));
     }
     public function calcularTempoGasto($filtros = 0, $tratamento = 0)
     {
         $filtros = $this->separarPorHashtag($filtros);
-        $tempoTratamento = Tratamentos::listarById($tratamento)[0]->tempo_gasto ?? 0;
+        $tempoTratamento = Tratamentos::listarById($tratamento)->tempo_gasto;
         $porcentagemFiltro = Filtro::filtroById($filtros);
 
         foreach ($porcentagemFiltro as $value) {

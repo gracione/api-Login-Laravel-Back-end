@@ -10,10 +10,10 @@ class Profissao extends Model
 {
     use HasFactory;
 
-    public function listar($request)
+    public function listar()
     {
             $select = DB::table('profissao')
-            ->select('*')
+            ->select('profissao.nome as profissão')
             ->get();
         return $select;
     }

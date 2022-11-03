@@ -11,24 +11,47 @@ class Tratamentos extends Model
 {
     use HasFactory;
 
-    public function listar($request)
+    public function listar()
     {
         $select = DB::table('tratamento')
-            ->select('tratamento.nome as nome', 'tratamento.id as id')
-            ->join('funcionario', 'funcionario.id_profissao', '=', 'tratamento.id_profissao')
-            ->groupBy('tratamento.nome', 'tratamento.id')
+            ->select(
+                'tratamento.nome as tratamento',
+                'profissao.nome as profissão',
+                'tratamento.tempo_gasto as tempo_gasto',
+                'tratamento.id as id
+            '
+            )
+            ->join('profissao', 'profissao.id', '=', 'tratamento.id_profissao')
+            ->get();
+        $results = $select->toArray();;
+
+        foreach ($results as $key => $value) {
+            $results[$key]->tempo_gasto = Util::converterMinutosParaHora($value->tempo_gasto);
+        }
+
+        return $results;
+    }
+
+    public function listarByIdProfissao($request)
+    {
+        $id = !empty($request->dados['id']) ? $request->dados['id'] : $request;
+
+        $select = DB::table('tratamento')
+            ->select(DB::raw('tratamento.nome as nome,tratamento.id as id'))
+            ->where('tratamento.id_profissao', '=', $id)
             ->get();
         return $select;
     }
-
     public function listarById($request)
     {
+        $id = !empty($request->dados['id']) ? $request->dados['id'] : $request;
+
         $select = DB::table('tratamento')
-            ->join('funcionario', 'funcionario.id_profissao', '=', 'tratamento.id_profissao')
-            ->select(DB::raw('tratamento.nome as nome,tratamento.id as id'))
-            ->where('funcionario.id', '=', $request->dados['id'])
+            ->select(DB::raw('tratamento.nome as nome,tratamento.tempo_gasto as tempo_gasto,tratamento.id as id'))
+            ->where('tratamento.id', '=', $id)
             ->get();
-        return $select;
+        $result = $select->toArray();
+        return $result[0];
     }
 
     public function inserir($request)
@@ -45,7 +68,7 @@ class Tratamentos extends Model
             $idTipoFiltro = DB::table('filtro_tipo')->insertGetId($filtroTipo);
 
             foreach ($value as $valor) {
-                $filtro=['nome' => $valor[0],'porcentagem_tempo' => $valor[1],'id_filtro_tipo' => $idTipoFiltro];
+                $filtro = ['nome' => $valor[0], 'porcentagem_tempo' => $valor[1], 'id_filtro_tipo' => $idTipoFiltro];
                 DB::table('filtro')->insert($filtro);
             }
         }

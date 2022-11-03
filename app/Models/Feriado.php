@@ -14,7 +14,7 @@ class Feriado extends Model
         $select = DB::table('feriados')
             ->select(
             'feriados.nome as nome',
-            'feriados.data as nome2')
+            'feriados.data as data')
             ->get();
         return $select;
     }

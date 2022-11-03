@@ -17,8 +17,8 @@ class Folgas extends Model
         ->join('users', 'users.id', '=', 'funcionario.id_usuario')
         ->join('semana', 'semana.id', '=', 'folga.dia_semana')
             ->select(
-                'users.nome as nome',
-                'semana.nome as nome2'
+                'users.nome as funcionario',
+                'semana.nome as folga'
             )
             ->get();
         return $select;

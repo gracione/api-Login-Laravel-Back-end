@@ -13,12 +13,12 @@ class HorarioTrabalho extends Model
     {
         $select = DB::table('horario_trabalho')
             ->select(
-                'users.nome as nome',
+                'users.nome as funcionario',
                 'horario_trabalho.id as id',
-                'horario_trabalho.inicio1 as inicio1',
-                'horario_trabalho.fim1 as fim1',
-                'horario_trabalho.inicio2 as inicio2',
-                'horario_trabalho.fim2 as fim2'
+                'horario_trabalho.inicio1 as inicio_de_expediente',
+                'horario_trabalho.fim1 as inicio_horario_de_almoco',
+                'horario_trabalho.inicio2 as fim_horario_de_almoco',
+                'horario_trabalho.fim2 as fim_de_expediente'
             )
             ->join('funcionario', 'funcionario.id', '=', 'horario_trabalho.id_funcionario')
             ->join('users', 'users.id', '=', 'funcionario.id_usuario')
