@@ -61,7 +61,6 @@ class HorarioController extends Controller
 
     public function horariosDiponivel(Request $request)
     {
-
         $entradaSaida = HorarioTrabalho::listarById($request->idFuncionario);
         $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
         $saida1 = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
@@ -104,8 +103,8 @@ class HorarioController extends Controller
 
             if ($verificarDisponibilidade) {
                 $horariosDisponivel[] = [
-                    'inicio' => $this->converterMinutosParaHora($inicio),
-                    'fim' => $this->converterMinutosParaHora($fim)
+                    'inicio' => Util::converterMinutosParaHora($inicio),
+                    'fim' => Util::converterMinutosParaHora($fim)
                 ];
             }
             $verificarDisponibilidade = true;
