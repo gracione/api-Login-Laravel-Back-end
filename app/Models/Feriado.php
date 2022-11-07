@@ -13,8 +13,9 @@ class Feriado extends Model
     {
         $select = DB::table('feriados')
             ->select(
-            'feriados.nome as nome',
-            'feriados.data as data')
+                'feriados.nome as nome',
+                'feriados.data as data'
+            )
             ->get();
         return $select;
     }
@@ -34,7 +35,27 @@ class Feriado extends Model
             ->whereMonth('feriados.data', $request->dados['mes'])
             ->whereYear('feriados.data', $request->dados['ano'])
             ->get();
-        return $select;
+        $results = $select->toArray();
+
+        $arr = [];
+        foreach ($results as $value) {
+            $arr[$value->dia] = $value->nome;
+        }
+        return $arr;
+    }
+
+    public function verificarFeriado($request)
+    {
+        $data = explode('-', $request->data);
+        $select = DB::table('feriados')
+            ->select(DB::raw('DAY(data) as dia, nome'))
+            ->whereMonth('feriados.data', $data[1])
+            ->whereYear('feriados.data', $data[0])
+            ->whereDay('feriados.data', $data[2])
+            ->get();
+
+        $results = $select->toArray();
+        return !empty($results[0]) ? true : false;
     }
 
     public function inserir($request)

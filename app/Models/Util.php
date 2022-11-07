@@ -22,4 +22,29 @@ class Util
 
         return $minutos;
     }
+    public function almentarPorcentagem($valor, $porcentagem)
+    {
+        return $valor + ($valor / 100 * $porcentagem);
+    }
+
+    public function separarPorHashtag($valor)
+    {
+        if (is_array($valor)) {
+            return $valor;
+        }
+        return explode(',', $valor);
+    }
+
+    public function calcularTempoGasto($filtros = 0, $tratamento = 0)
+    {
+        $filtros = Util::separarPorHashtag($filtros);
+        $tempoTratamento = Tratamentos::listarById($tratamento)->tempo_gasto;
+        $porcentagemFiltro = Filtro::filtroById($filtros);
+
+        foreach ($porcentagemFiltro as $value) {
+            $tempoTratamento = Util::almentarPorcentagem($tempoTratamento, $value->porcentagem_tempo);
+        }
+
+        return $tempoTratamento;
+    }
 }

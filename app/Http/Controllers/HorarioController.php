@@ -8,14 +8,16 @@ use App\Models\Tratamentos;
 use App\Models\Filtro;
 use App\Models\HorarioTrabalho;
 use App\Models\Util;
+use App\Models\Feriado;
+use App\Models\Folgas;
 
 class HorarioController extends Controller
 {
     public function inserir(Request $request)
     {
-        $tempoGasto =  $this->calcularTempoGasto($request->idFiltro, $request->idTratamento);
+        $tempoGasto =  Util::calcularTempoGasto($request->idFiltro, $request->idTratamento);
         $horarioInicioMinutos = Util::converterHoraToMinuto($request->horario);
-        $horarioFim = $this->converterMinutosParaHora($horarioInicioMinutos + $tempoGasto);
+        $horarioFim = Util::converterMinutosParaHora($horarioInicioMinutos + $tempoGasto);
         $ar['horario_inicio'] = $request->data . " " . $request->horario . ":00";
         $ar['horario_fim'] = $request->data . " " . $horarioFim . ":00";
         $ar['id_cliente'] = $request->idCliente;
@@ -33,34 +35,20 @@ class HorarioController extends Controller
         return Horario::horarioPorDia($request);
     }
 
-    public function separarPorHashtag($valor)
-    {
-        if (is_array($valor)) {
-            return $valor;
-        }
-        return explode(',', $valor);
-    }
 
     public function tempoGasto(Request $request)
     {
         return $request->filtros == 0 && $request->tratamento == 0 ? 0 :
-            Util::converterMinutosParaHora($this->calcularTempoGasto($request->filtros, $request->tratamento));
-    }
-    public function calcularTempoGasto($filtros = 0, $tratamento = 0)
-    {
-        $filtros = $this->separarPorHashtag($filtros);
-        $tempoTratamento = Tratamentos::listarById($tratamento)->tempo_gasto;
-        $porcentagemFiltro = Filtro::filtroById($filtros);
-
-        foreach ($porcentagemFiltro as $value) {
-            $tempoTratamento = $this->almentarPorcentagem($tempoTratamento, $value->porcentagem_tempo);
-        }
-
-        return $tempoTratamento;
+            Util::converterMinutosParaHora(Util::calcularTempoGasto($request->filtros, $request->tratamento));
     }
 
     public function horariosDiponivel(Request $request)
     {
+        if(Feriado::verificarFeriado($request) ||
+            Folgas::verificarFolga($request)){
+            return false;
+        }
+
         $entradaSaida = HorarioTrabalho::listarById($request->idFuncionario);
         $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
         $saida1 = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
@@ -69,7 +57,7 @@ class HorarioController extends Controller
 
         $horariosDisponivel = [];
         $tempoContado = $entrada1;
-        $tempoGasto =  $this->calcularTempoGasto($request->idFiltro, $request->idTratamento);
+        $tempoGasto =  Util::calcularTempoGasto($request->idFiltro, $request->idTratamento);
         $horariosMarcados = Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
         $horariosMarcadosMinutos = [];
 
@@ -112,10 +100,6 @@ class HorarioController extends Controller
         return $horariosDisponivel;
     }
 
-    public function almentarPorcentagem($valor, $porcentagem)
-    {
-        return $valor + ($valor / 100 * $porcentagem);
-    }
     public function converterHorasEmSegundos($horario)
     {
         return strtotime('1970-01-01 ' . $horario . 'UTC');

@@ -16,7 +16,7 @@ class Folgas extends Model
         ->join('funcionario', 'funcionario.id', '=', 'folga.id_funcionario')
         ->join('users', 'users.id', '=', 'funcionario.id_usuario')
         ->join('semana', 'semana.id', '=', 'folga.dia_semana')
-            ->select(
+        ->select(
                 'users.nome as funcionario',
                 'semana.nome as folga'
             )
@@ -31,6 +31,38 @@ class Folgas extends Model
             ->where('id_funcionario', $idFuncionario)
             ->get();
         return $select;
+    }
+
+    public function listarByIdFuncionario($request)
+    {
+        $idFuncionario = $request->dados['idFuncionario'];
+        $select = DB::table('folga')
+            ->select('dia_semana')
+            ->where('id_funcionario', $idFuncionario)
+            ->get();
+        $results= $select->toArray();
+
+        $arr = [];
+        foreach ($results as $value) {
+            $arr[]=$value->dia_semana;            
+        }
+        return $arr;
+    }
+
+    public function verificarFolga($request)
+    {
+        $diaSemana = date('w', strtotime($request->data))+1;
+        $idFuncionario = $request->idFuncionario;
+
+        $select = DB::table('folga')
+            ->select('dia_semana')
+            ->where('dia_semana', $diaSemana)
+            ->where('id_funcionario', $idFuncionario)
+            ->get();
+        $results= $select->toArray();
+
+        return !empty($results[0]) ? true : false;
+
     }
 
     public function inserir($request)
