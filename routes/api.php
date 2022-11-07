@@ -66,7 +66,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/folgas/listar-id-funcionario', [App\Http\Controllers\FolgasController::class, 'listarByIdFuncionario']);
     Route::post('/folgas/inserir', [App\Http\Controllers\FolgasController::class, 'inserir']);
     Route::post('/folgas/alterar', [App\Http\Controllers\FolgasController::class, 'alterar']);
-    Route::post('/folgas/excluir', [App\Http\Controllers\ProfissaoController::class, 'excluir']);
+    Route::post('/folgas/excluir', [App\Http\Controllers\FolgasController::class, 'excluir']);
 
     Route::post('/ferias/listar', [App\Http\Controllers\FeriasController::class, 'listar']);
     Route::post('/ferias/listar-id', [App\Http\Controllers\FeriasController::class, 'listarById']);
