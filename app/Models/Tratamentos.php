@@ -15,11 +15,10 @@ class Tratamentos extends Model
     {
         $select = DB::table('tratamento')
             ->select(
+                'tratamento.id as id',
                 'tratamento.nome as tratamento',
                 'profissao.nome as profissão',
-                'tratamento.tempo_gasto as tempo_gasto',
-                'tratamento.id as id
-            '
+                'tratamento.tempo_gasto as tempo_gasto'
             )
             ->join('profissao', 'profissao.id', '=', 'tratamento.id_profissao')
             ->get();
@@ -78,6 +77,16 @@ class Tratamentos extends Model
 
     public function excluir($request)
     {
+        $filtroTipo = DB::table('filtro_tipo')
+            ->select('*')
+            ->where('filtro_tipo.id_tratamento', '=', $request->id)
+            ->get();
+
+        foreach ($filtroTipo as $value) {
+            DB::table('filtro')->where('id_filtro_tipo', $value->id)->delete();
+        }
+
+        DB::table('filtro_tipo')->where('id_tratamento', $request->id)->delete();
         DB::table('tratamento')->where('id', $request->id)->delete();
         return 'deletado';
     }

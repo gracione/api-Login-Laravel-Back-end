@@ -23,8 +23,9 @@ class Profissao extends Model
         ->select('profissao.nome as nome')
         ->where('id', $request->id)
         ->get();
+        $result = $select->toArray();
 
-        return $select;
+        return $result;
     }
 
     public function excluir($request)

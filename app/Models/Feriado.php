@@ -13,6 +13,7 @@ class Feriado extends Model
     {
         $select = DB::table('feriados')
             ->select(
+                'feriados.id as id',
                 'feriados.nome as nome',
                 'feriados.data as data'
             )
@@ -48,7 +49,7 @@ class Feriado extends Model
     {
         $data = explode('-', $request->data);
         $select = DB::table('feriados')
-            ->select(DB::raw('DAY(data) as dia, nome'))
+            ->select(DB::raw('DAY(data) as dia, nome','feriados as feriados.id'))
             ->whereMonth('feriados.data', $data[1])
             ->whereYear('feriados.data', $data[0])
             ->whereDay('feriados.data', $data[2])

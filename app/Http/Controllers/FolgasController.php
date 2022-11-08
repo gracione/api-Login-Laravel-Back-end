@@ -22,5 +22,9 @@ class FolgasController extends Controller
     public function excluir (Request $request) {
         return Folgas::excluir($request);
     }
+    public function alterar (Request $request) {
+        return Folgas::alterar($request);
+    }
+
 
 }
