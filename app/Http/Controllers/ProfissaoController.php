@@ -31,4 +31,8 @@ class ProfissaoController extends Controller
     {
         return Profissao::listarById($request);
     }
+    public function listarByIdFuncionario(Request $request)
+    {
+        return Profissao::listarByIdFuncionario($request);
+    }
 }

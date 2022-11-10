@@ -39,8 +39,11 @@ class Funcionarios extends Model
                     'profissao.id as id_profissao')
         ->where('funcionario.id',$request->id)
         ->get();
-        return $ar;
+        $result = $ar->toArray();
+
+        return $result[0];
     }
+    
     public function inserir ($request) {
         $validator = Validator::make($request->all(),[
             'nome' => 'required|string|max:255',

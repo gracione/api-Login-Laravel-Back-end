@@ -19,7 +19,8 @@ class Folgas extends Model
             ->select(
                 'users.nome as funcionario',
                 'semana.nome as folga',
-                'folga.id as id'
+                'folga.id as id',
+                'folga.dia_semana as dia_semana'
             )
             ->get();
         return $select;
@@ -33,7 +34,8 @@ class Folgas extends Model
             ->select(
                 'users.nome as funcionario',
                 'semana.nome as folga',
-                'folga.id as id'
+                'folga.id as id',
+                'folga.dia_semana as dia_semana'
             )
             ->where('folga.id', $request->id)
             ->get();
