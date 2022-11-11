@@ -19,12 +19,28 @@ class Funcionarios extends Model
             ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
             ->select(
                 DB::raw(
-            'users.nome as nome,
-            users.id as id_usuario, 
-            GROUP_CONCAT(profissao.nome) as profissão'
+                    'users.nome as nome,
+                    users.id as id, 
+                    GROUP_CONCAT(profissao.nome) as profissão'
                 )
             )
             ->groupBy('users.id')
+            ->get();
+        $funcionarios = $select->toArray();
+        return $funcionarios;
+    }
+    public function listarFuncionariosEprofissao()
+    {
+        $select = DB::table('users')
+            ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
+            ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
+            ->select(
+                DB::raw(
+                    'users.nome as nome,
+                    users.id as id, 
+                    profissao.nome as profissão'
+                )
+            )
             ->get();
         $funcionarios = $select->toArray();
         return $funcionarios;
@@ -45,7 +61,7 @@ class Funcionarios extends Model
                 'profissao.nome as  ',
                 'profissao.id as id_profissao'
             )
-            ->where('funcionario.id', $request->id)
+            ->where('users.id', $request->id)
             ->get();
         $result = $ar->toArray();
 
