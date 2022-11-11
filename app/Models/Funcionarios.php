@@ -21,7 +21,7 @@ class Funcionarios extends Model
                 DB::raw(
             'users.nome as nome,
             users.id as id_usuario, 
-            GROUP_CONCAT(profissao.nome) as profissao'
+            GROUP_CONCAT(profissao.nome) as profissão'
                 )
             )
             ->groupBy('users.id')
