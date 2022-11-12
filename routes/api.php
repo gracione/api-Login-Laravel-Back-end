@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/expediente/listar', [App\Http\Controllers\HorarioTrabalhoController::class, 'listar']);
     Route::post('/expediente/listar-id', [App\Http\Controllers\HorarioTrabalhoController::class, 'listarById']);
+    Route::post('/expediente/listar-id-funcionario', [App\Http\Controllers\HorarioTrabalhoController::class, 'listarByIdFuncionario']);
     Route::post('/expediente/inserir', [App\Http\Controllers\HorarioTrabalhoController::class, 'inserir']);
     Route::post('/expediente/alterar', [App\Http\Controllers\HorarioTrabalhoController::class, 'alterar']);
     Route::post('/expediente/excluir', [App\Http\Controllers\HorarioTrabalhoController::class, 'excluir']);
