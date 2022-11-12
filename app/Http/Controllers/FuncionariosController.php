@@ -15,7 +15,7 @@ class FuncionariosController extends Controller
     {
         return Funcionarios::listarFuncionariosEprofissao();
     }
-    
+
     public function listarById(Request $request)
     {
         return Funcionarios::listarById($request);
@@ -24,11 +24,12 @@ class FuncionariosController extends Controller
     {
         return Funcionarios::inserir($request);
     }
-    public function excluir (Request $request) {
+    public function excluir(Request $request)
+    {
         return Funcionarios::excluir($request);
     }
-    public function alterar (Request $request) {
+    public function alterar(Request $request)
+    {
         return Funcionarios::alterar($request);
     }
-
 }

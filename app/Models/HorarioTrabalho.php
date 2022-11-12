@@ -61,7 +61,7 @@ class HorarioTrabalho extends Model
             ->where('users.id', '=', $idFuncionario)
             ->get();
         $result = $select->toArray();
-        return $result[0] ?? 0;
+        return $result;
     }
 
     public function inserir($request)
