@@ -27,5 +27,8 @@ class FuncionariosController extends Controller
     public function excluir (Request $request) {
         return Funcionarios::excluir($request);
     }
+    public function alterar (Request $request) {
+        return Funcionarios::alterar($request);
+    }
 
 }

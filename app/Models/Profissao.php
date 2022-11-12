@@ -30,7 +30,7 @@ class Profissao extends Model
 
     public function listarByIdFuncionario($request) {
         $select = DB::table('profissao')
-        ->select('profissao.nome as nome','profissao.id as id')
+        ->select('profissao.nome as nome','profissao.id as id','funcionario.id_usuario','funcionario.id as id_funcionario')
         ->join('funcionario', 'funcionario.id_profissao', '=', 'profissao.id')
         ->where('funcionario.id_usuario', $request->id)
         ->get();

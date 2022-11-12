@@ -26,8 +26,8 @@ class Funcionarios extends Model
             )
             ->groupBy('users.id')
             ->get();
-        $funcionarios = $select->toArray();
-        return $funcionarios;
+        
+        return $select->toArray();
     }
     public function listarFuncionariosEprofissao()
     {
@@ -48,6 +48,8 @@ class Funcionarios extends Model
 
     public function listarById($request)
     {
+        $id = !empty($request->id) ? $request->id : $request;
+
         $ar = DB::table('users')
             ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
             ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
@@ -61,11 +63,11 @@ class Funcionarios extends Model
                 'profissao.nome as  ',
                 'profissao.id as id_profissao'
             )
-            ->where('users.id', $request->id)
+            ->where('users.id', $id)
             ->get();
-        $result = $ar->toArray();
+        
 
-        return $result[0];
+        return $ar->toArray();
     }
 
     public function inserir($request)
@@ -109,5 +111,47 @@ class Funcionarios extends Model
     {
         DB::table('funcionario')->where('id', $request->id)->delete();
         return 'deletado';
+    }
+    public function alterar($request)
+    {
+        foreach ($request->request as $key => $value) {
+            if (!empty($value)) {
+                $ar[$key] = $value;
+            }
+        }
+
+        if (!empty($ar['profissoesAlteradas'])) {
+            foreach ($ar['profissoesAlteradas'] as $key => $value) {
+                if (!empty($value)) {
+                    if ($value == '-1') {
+
+                        if (count(Funcionarios::listarById($ar['id'])) > 1) {
+                            DB::table('funcionario')
+                                ->where('id', $key)
+                                ->delete();
+                        }
+                    } else if ($value != '-1') {
+                        DB::table('funcionario')
+                            ->where('id', $key)
+                            ->update(['id_profissao' => $value]);
+                    }
+                }
+            }
+        }
+
+        if (!empty($ar['profissoesCadastradas'])) {
+            foreach ($ar['profissoesCadastradas'] as $key => $value) {
+                if (!empty($value)) {
+                    DB::table('funcionario')
+                        ->insert(['id_usuario' => $ar['id'], 'id_profissao' => $value]);
+                }
+            }
+        }
+
+        DB::table('users')
+            ->where('id', $request->id)
+            ->update(array_filter($ar));
+
+        return 'alterado';
     }
 }
