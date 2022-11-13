@@ -39,6 +39,7 @@ class Funcionarios extends Model
                 DB::raw(
                     'users.nome as nome,
                     users.id as id, 
+                    funcionario.id as id_funcionario, 
                     profissao.nome as profissão'
                 )
             )
@@ -110,7 +111,11 @@ class Funcionarios extends Model
     }
     public function excluir($request)
     {
-        DB::table('funcionario')->where('id', $request->id)->delete();
+        DB::table('folga')->where('id_usuario', $request->id)->delete();
+        DB::table('funcionario')->where('id_usuario', $request->id)->delete();
+        DB::table('horario_trabalho')->where('id_usuario', $request->id)->delete();
+        DB::table('users')->where('id', $request->id)->delete();
+    
         return 'deletado';
     }
     public function alterar($request)

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\Util;
+
 
 class Folgas extends Model
 {
@@ -75,9 +77,12 @@ class Folgas extends Model
 
     public function inserir($request)
     {
+        $dados = Util::separarPorHashtag($request->dados);
+
         DB::table('folga')->insert([
             'dia_semana' => $request->diaSemana,
-            'id_funcionario' => $request->idFuncionario
+            'id_funcionario' => $dados[0],
+            'id_usuario' => $dados[1]
         ]);
 
         return 'cadastrado';
