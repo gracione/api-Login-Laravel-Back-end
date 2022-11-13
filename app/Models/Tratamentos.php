@@ -43,13 +43,17 @@ class Tratamentos extends Model
     }
     public function listarById($request)
     {
-        $id = !empty($request->dados['id']) ? $request->dados['id'] : $request;
+        $id = !empty($request->id) ? $request->id : $request;
 
         $select = DB::table('tratamento')
-            ->select(DB::raw('tratamento.nome as nome,tratamento.tempo_gasto as tempo_gasto,tratamento.id as id'))
+            ->select(DB::raw('tratamento.nome as nome,tratamento.tempo_gasto as tempo_gasto,tratamento.id as id,tratamento.id_profissao as id_profissao'))
             ->where('tratamento.id', '=', $id)
             ->get();
         $result = $select->toArray();
+        if(!empty($result[0])){
+            $result[0]->tempo_gasto = Util::converterMinutosParaHora($result[0]->tempo_gasto);
+            $result[0]->id_profissao = (int)$result[0]->id_profissao;
+        }
         return $result[0];
     }
 
