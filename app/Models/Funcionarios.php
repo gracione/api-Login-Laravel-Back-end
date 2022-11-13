@@ -147,21 +147,17 @@ class Funcionarios extends Model
             }
         }
 
-        DB::table('users')
-            ->where('id', $request->id)
-            ->update(array_filter($ar));
-
         if(!empty($ar['expediente'])){
+
             DB::table('horario_trabalho')
             ->where('horario_trabalho.id_usuario', '=', $ar['id'])
-            ->update([
-                'inicio1' => $ar['expediente']->inicioExpediente . ":00",
-                'fim1' => $ar['expediente']->inicioAlmoco . ":00",
-                'inicio2' => $ar['expediente']->fimAlmoco . ":00",
-                'fim2' => $ar['expediente']->fimExpediente . ":00",
-            ]);
+            ->update(array_filter($ar['expediente']));
     
         }
+
+        DB::table('users')
+        ->where('id', $request->id)
+        ->update(array_filter($ar));
 
         return 'alterado';
     }
