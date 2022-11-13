@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\Util;
+use App\Models\FiltroTipo;
 
 class Tratamentos extends Model
 {
@@ -54,6 +55,14 @@ class Tratamentos extends Model
             $result[0]->tempo_gasto = Util::converterMinutosParaHora($result[0]->tempo_gasto);
             $result[0]->id_profissao = (int)$result[0]->id_profissao;
         }
+        $ar = FiltroTipo::listarByIdTratamento($id);
+        foreach ($ar as $key => $value) {
+            foreach ($value as $indice => $valor) {
+                $result[0]->filtro[$value->id_filtro_tipo][$value->id][$indice] = $valor;
+            }    
+        }
+
+
         return $result[0];
     }
 
