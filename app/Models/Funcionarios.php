@@ -29,6 +29,7 @@ class Funcionarios extends Model
         
         return $select->toArray();
     }
+
     public function listarFuncionariosEprofissao()
     {
         $select = DB::table('users')
@@ -115,9 +116,7 @@ class Funcionarios extends Model
     public function alterar($request)
     {
         foreach ($request->request as $key => $value) {
-            if (!empty($value)) {
-                $ar[$key] = $value;
-            }
+            if (!empty($value)) {$ar[$key] = $value;}
         }
 
         if (!empty($ar['profissoesAlteradas'])) {
@@ -153,13 +152,14 @@ class Funcionarios extends Model
             ->update(array_filter($ar));
 
         if(!empty($ar['expediente'])){
-            DB::table('horario_trabalho')->update([
+            DB::table('horario_trabalho')
+            ->where('horario_trabalho.id_usuario', '=', $ar['id'])
+            ->update([
                 'inicio1' => $ar['expediente']->inicioExpediente . ":00",
                 'fim1' => $ar['expediente']->inicioAlmoco . ":00",
                 'inicio2' => $ar['expediente']->fimAlmoco . ":00",
                 'fim2' => $ar['expediente']->fimExpediente . ":00",
-            ])
-            ->where('horario_trabalho.id_usuario', '=', $ar['id'])
+            ]);
     
         }
 
