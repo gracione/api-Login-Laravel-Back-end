@@ -101,14 +101,30 @@ class Tratamentos extends Model
     public function alterar($request)
     {
         $dadosParaAlterar['nome'] = !empty($request->nomeTratamento) ? $request->nomeTratamento : null;
-        $dadosParaAlterar['tempoGasto'] = !empty($request->tempoGasto) ? $request->tempoGasto : null;
-        $dadosParaAlterar['id_profissao'] = !empty($request->Profissao) ? $request->Profissao : null;
+        $dadosParaAlterar['tempo_gasto'] = !empty($request->tempoGasto) ? Util::converterHoraToMinuto($request->tempoGasto) : null;
+        $dadosParaAlterar['id_profissao'] = !empty($request->profissao) ? $request->profissao : null;
         
+
         $filtroTipo = !empty($request->filtroTipo) ? $request->filtroTipo: [];
+
+        foreach ($filtroTipo as $key => $value) {
+            if(!empty($value['id'])) {
+                DB::table('filtro_tipo')
+                ->where('id',$value['id'])
+                ->update(array_filter(['nome'=> $value['nome']]));
+            }
+        }
         $filtro = !empty($request->filtro) ? $request->filtro: [];
+        foreach ($filtro as $key => $value) {
+            if(!empty($value['id'])) {
+                DB::table('filtro')
+                ->where('id',$value['id'])
+                ->update(array_filter($value));
+            }
+
+        }
         
-        
-        if(!empty($request->nome)){
+        if(!empty($dadosParaAlterar)) {
             DB::table('tratamento')
             ->where('id',$request->id)
             ->update(array_filter($dadosParaAlterar));
