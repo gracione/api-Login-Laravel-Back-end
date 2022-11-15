@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
     Route::post('/filtro', [App\Http\Controllers\FiltroController::class, 'listar']);
     Route::post('/filtro/listar', [App\Http\Controllers\FiltroController::class, 'listarFiltro']);
+    Route::post('/filtro-tipo/listar-id', [App\Http\Controllers\FiltroController::class, 'listarFiltroTipoById']);
 
     Route::post('/horarios-marcados', [App\Http\Controllers\HorarioController::class, 'horariosMarcados']);
     Route::post('/horarios-disponivel', [App\Http\Controllers\HorarioController::class, 'horariosDiponivel']);

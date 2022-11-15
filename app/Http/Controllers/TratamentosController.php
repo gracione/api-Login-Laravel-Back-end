@@ -20,4 +20,9 @@ class TratamentosController extends Controller
         return Tratamentos::excluir($request);
     }
 
+    public function alterar(Request $request)
+    {
+        return Tratamentos::alterar($request);
+    }
+
 }

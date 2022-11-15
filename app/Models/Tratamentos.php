@@ -54,14 +54,8 @@ class Tratamentos extends Model
         if(!empty($result[0])){
             $result[0]->tempo_gasto = Util::converterMinutosParaHora($result[0]->tempo_gasto);
             $result[0]->id_profissao = (int)$result[0]->id_profissao;
+            $result[0]->filtro = FiltroTipo::listarByIdTratamento($id);
         }
-        $ar = FiltroTipo::listarByIdTratamento($id);
-        foreach ($ar as $key => $value) {
-            foreach ($value as $indice => $valor) {
-                $result[0]->filtro[$value->id_filtro_tipo][$value->id][$indice] = $valor;
-            }    
-        }
-
 
         return $result[0];
     }
@@ -103,4 +97,24 @@ class Tratamentos extends Model
         DB::table('tratamento')->where('id', $request->id)->delete();
         return 'deletado';
     }
+
+    public function alterar($request)
+    {
+        $dadosParaAlterar['nome'] = !empty($request->nomeTratamento) ? $request->nomeTratamento : null;
+        $dadosParaAlterar['tempoGasto'] = !empty($request->tempoGasto) ? $request->tempoGasto : null;
+        $dadosParaAlterar['id_profissao'] = !empty($request->Profissao) ? $request->Profissao : null;
+        
+        $filtroTipo = !empty($request->filtroTipo) ? $request->filtroTipo: [];
+        $filtro = !empty($request->filtro) ? $request->filtro: [];
+        
+        
+        if(!empty($request->nome)){
+            DB::table('tratamento')
+            ->where('id',$request->id)
+            ->update(array_filter($dadosParaAlterar));
+        }
+
+        return 'cadastrado';
+    }
+
 }
