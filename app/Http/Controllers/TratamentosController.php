@@ -13,6 +13,9 @@ class TratamentosController extends Controller
     public function listarById (Request $request) {
         return Tratamentos::listarById($request);
     }
+    public function listarByIdProfissao (Request $request) {
+        return Tratamentos::listarByIdProfissao($request);
+    }
     public function inserir (Request $request) {
         return Tratamentos::inserir($request);
     }

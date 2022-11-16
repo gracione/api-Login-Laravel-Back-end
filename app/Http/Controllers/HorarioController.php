@@ -39,7 +39,7 @@ class HorarioController extends Controller
     public function tempoGasto(Request $request)
     {
         return $request->filtros == 0 && $request->tratamento == 0 ? 0 :
-            Util::converterMinutosParaHora(Util::calcularTempoGasto($request->filtros, $request->tratamento));
+            Util::calcularTempoGasto($request->filtros, $request->tratamento);
     }
 
     public function horariosDiponivel(Request $request)
