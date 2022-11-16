@@ -21,10 +21,10 @@ class Funcionarios extends Model
                 DB::raw(
                     'users.nome as nome,
                     users.id as id, 
-                    GROUP_CONCAT(profissao.nome) as profissão'
+                    profissao.nome as profissão,
+                    profissao.id as id_profissao'
                 )
             )
-            ->groupBy('users.id')
             ->get();
         
         return $select->toArray();
