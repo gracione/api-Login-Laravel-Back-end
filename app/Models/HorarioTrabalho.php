@@ -46,7 +46,7 @@ class HorarioTrabalho extends Model
     }
     public function listarByIdUsuario($request)
     {
-        $idFuncionario = !empty($request->id) ? $request->id : $request;
+        $idUsuario = !empty($request->id) ? $request->id : $request;
 
         $select = DB::table('horario_trabalho')
             ->select(
@@ -58,11 +58,11 @@ class HorarioTrabalho extends Model
                 'horario_trabalho.fim2 as fim_de_expediente'
             )
             ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
-            ->where('users.id', '=', $idFuncionario)
+            ->where('users.id', '=', $idUsuario)
             ->get();
-        $result = $select->toArray();
-        return $result;
-    }
+            $result = $select->toArray();
+            return $result[0] ?? 0;
+        }
 
     public function inserir($request)
     {

@@ -49,7 +49,7 @@ class HorarioController extends Controller
             return false;
         }
 
-        $entradaSaida = HorarioTrabalho::listarById($request->idFuncionario);
+        $entradaSaida = HorarioTrabalho::listarByIdUsuario($request->idFuncionario);
         $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
         $saida1 = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
         $entrada2 = Util::converterHoraToMinuto($entradaSaida->fim_horario_de_almoco);
@@ -57,7 +57,7 @@ class HorarioController extends Controller
 
         $horariosDisponivel = [];
         $tempoContado = $entrada1;
-        $tempoGasto =  Util::calcularTempoGasto($request->idFiltro, $request->idTratamento);
+        $tempoGasto =  Util::converterHoraToMinuto(Util::calcularTempoGasto($request->idFiltro, $request->idTratamento));
         $horariosMarcados = Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
         $horariosMarcadosMinutos = [];
 
