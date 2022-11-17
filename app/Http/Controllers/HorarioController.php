@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Horario;
-use App\Models\Tratamentos;
-use App\Models\Filtro;
 use App\Models\HorarioTrabalho;
 use App\Models\Util;
 use App\Models\Feriado;

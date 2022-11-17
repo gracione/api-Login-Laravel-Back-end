@@ -13,7 +13,7 @@ class HorarioTrabalhoController extends Controller
     }
     public function listarById(Request $request)
     {
-        return HorarioTrabalho::listarByIdUsuario($request);
+        return HorarioTrabalho::listarByIdUsuario($request->id);
     }
 
     public function inserir(Request $request)
