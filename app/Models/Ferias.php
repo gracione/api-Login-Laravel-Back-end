@@ -22,7 +22,7 @@ class Ferias extends Model
              'id_funcionario' => $request->id_funcionario
         ]);
 
-        return 'cadastrado';
+        return true;
     }
     public function excluir($request)
     {

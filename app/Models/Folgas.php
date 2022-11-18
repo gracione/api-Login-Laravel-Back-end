@@ -85,7 +85,7 @@ class Folgas extends Model
             'id_usuario' => $dados[1]
         ]);
 
-        return 'cadastrado';
+        return true;
     }
     public function excluir($request)
     {

@@ -107,7 +107,7 @@ class Funcionarios extends Model
             'id_usuario' => $user['id']
         ]);
 
-        return 'cadastrado';
+        return true;
     }
     public function excluir($request)
     {

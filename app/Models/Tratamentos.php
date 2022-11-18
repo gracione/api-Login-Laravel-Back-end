@@ -79,7 +79,7 @@ class Tratamentos extends Model
             }
         }
 
-        return 'cadastrado';
+        return true;
     }
 
     public function excluir($request)
@@ -130,7 +130,7 @@ class Tratamentos extends Model
             ->update(array_filter($dadosParaAlterar));
         }
 
-        return 'cadastrado';
+        return true;
     }
 
 }

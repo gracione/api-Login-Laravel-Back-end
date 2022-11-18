@@ -66,7 +66,7 @@ class Feriado extends Model
             'data' => $request->data
         ]);
 
-        return 'cadastrado';
+        return true;
     }
     public function excluir($request)
     {

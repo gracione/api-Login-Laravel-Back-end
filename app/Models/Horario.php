@@ -15,7 +15,7 @@ class Horario extends Model
 
         DB::table('horario')->insert($ar);
 
-        return 'cadastrado';
+        return true;
     }
 
     public function excluir($request)

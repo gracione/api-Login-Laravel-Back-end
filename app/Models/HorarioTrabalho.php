@@ -72,7 +72,7 @@ class HorarioTrabalho extends Model
             'id_funcionario' => $request->idFuncionario
         ]);
 
-        return 'cadastrado';
+        return true;
     }
     public function excluir($request)
     {

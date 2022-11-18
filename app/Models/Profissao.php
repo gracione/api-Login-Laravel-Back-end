@@ -12,28 +12,30 @@ class Profissao extends Model
 
     public function listar()
     {
-            $select = DB::table('profissao')
-            ->select('profissao.nome as profissão','profissao.id as id')
+        $select = DB::table('profissao')
+            ->select('profissao.nome as profissão', 'profissao.id as id')
             ->get();
         return $select;
     }
-    
-    public function listarById($request) {
+
+    public function listarById($request)
+    {
         $select = DB::table('profissao')
-        ->select('profissao.nome as nome')
-        ->where('id', $request->id)
-        ->get();
+            ->select('profissao.nome as nome')
+            ->where('id', $request->id)
+            ->get();
         $result = $select->toArray();
 
         return $result;
     }
 
-    public function listarByIdFuncionario($request) {
+    public function listarByIdFuncionario($request)
+    {
         $select = DB::table('profissao')
-        ->select('profissao.nome as nome','profissao.id as id','funcionario.id_usuario','funcionario.id as id_funcionario')
-        ->join('funcionario', 'funcionario.id_profissao', '=', 'profissao.id')
-        ->where('funcionario.id_usuario', $request->id)
-        ->get();
+            ->select('profissao.nome as nome', 'profissao.id as id', 'funcionario.id_usuario', 'funcionario.id as id_funcionario')
+            ->join('funcionario', 'funcionario.id_profissao', '=', 'profissao.id')
+            ->where('funcionario.id_usuario', $request->id)
+            ->get();
         $result = $select->toArray();
 
         return $result;
@@ -41,23 +43,25 @@ class Profissao extends Model
 
     public function excluir($request)
     {
+        if(empty($request->id)){
+            return false;
+        }
+            DB::table('profissao')->delete($request->id);
 
-        DB::table('profissao')->delete($request->id);
-
-        return 'excluido';
+        return true ;
     }
 
 
 
     public function alterar($request)
     {
-        if(!empty($request->nome)){
+        if (!empty($request->nome)) {
             DB::table('profissao')
-            ->where('id',$request->id)
-            ->update(['nome'=> $request->nome]);
+                ->where('id', $request->id)
+                ->update(['nome' => $request->nome]);
         }
 
-        return 'cadastrado';
+        return true;
     }
 
     public function inserir($request)
@@ -69,5 +73,4 @@ class Profissao extends Model
         DB::table('profissao')->insert($dados);
         return 'inserido';
     }
-
 }
