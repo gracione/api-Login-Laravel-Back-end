@@ -20,7 +20,7 @@ class Funcionarios extends Model
             ->select(
                 DB::raw(
                     'users.nome as nome,
-                    users.id as id, 
+                    funcionario.id as id, 
                     profissao.nome as profissão,
                     profissao.id as id_profissao'
                 )
