@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -12,8 +13,11 @@ class Horario extends Model
 
     public function inserir($ar)
     {
-
-        DB::table('horario')->insert($ar);
+        try {
+            DB::table('horario')->insert($ar);
+        } catch (Exception $e) {
+            return false;
+        }
 
         return true;
     }
