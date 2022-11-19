@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -48,4 +51,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function alterar($request)
+    {
+        try {
+            $ar['nome'] = !empty($request->nome) ? $request->nome : null;
+            $ar['numero'] = !empty($request->numero) ? $request->numero : null;
+            $ar['password'] = !empty($request->senha) ? Hash::make($request->senha) : null;
+            $ar['email'] = !empty($request->email) ? $request->email : null;
+
+            DB::table('users')
+                ->where('id', $request->id)
+                ->update(array_filter($ar));
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
@@ -14,9 +15,13 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
+    public function listarById(Request $request)
+    {
+        return auth()->user();
+    }
     public function registrarCliente(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:255',
             'numero' => 'required|string|max:255',
             'id_sexo' => 'required|string|max:255',
@@ -24,8 +29,8 @@ class AuthController extends Controller
             'password' => 'required|string|min:3'
         ]);
 
-        if($validator->fails()){
-            return $validator->errors();       
+        if ($validator->fails()) {
+            return $validator->errors();
         }
 
         $user = User::create([
@@ -35,35 +40,34 @@ class AuthController extends Controller
             'id_sexo' => $request->id_sexo,
             'email' => $request->email,
             'password' => Hash::make($request->password)
-         ]);
+        ]);
 
-         DB::table('cliente')->insert([
+        DB::table('cliente')->insert([
             'id_usuario' => $user['id']
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()
-            ->json(['data' => $user,'token' => $token, 'token_type' => 'Bearer', ]);
+            ->json(['data' => $user, 'token' => $token, 'token_type' => 'Bearer',]);
     }
 
     public function login(Request $request)
     {
-        if (!Auth::attempt($request->only('email', 'password')))
-        {
+        if (!Auth::attempt($request->only('email', 'password'))) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
         }
 
         $user = User::where('email', $request['email'])->firstOrFail();
 
-        if($user['tipo_usuario'] == Constantes::ADMINISTRADOR) {
+        if ($user['tipo_usuario'] == Constantes::ADMINISTRADOR) {
             //print("administrativo");
         };
-        if($user['tipo_usuario'] == Constantes::FUNCIONARIO) {
+        if ($user['tipo_usuario'] == Constantes::FUNCIONARIO) {
             //print("funcionario");
         };
-        if($user['tipo_usuario'] == Constantes::CLIENTE) {
+        if ($user['tipo_usuario'] == Constantes::CLIENTE) {
             //print("cliente");
         };
 
@@ -75,10 +79,14 @@ class AuthController extends Controller
     // method for user logout and delete token
     public function logout()
     {
-        auth()->user()->tokens()->delete(); 
+        auth()->user()->tokens()->delete();
 
         return [
             'message' => 'You have successfully logged out and the token was successfully deleted'
         ];
+    }
+    public function alterar(Request $request)
+    {
+        return User::alterar($request);
     }
 }

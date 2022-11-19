@@ -82,6 +82,6 @@ class Feriado extends Model
             ->where('id', $request->id)
             ->update(array_filter($ar));
 
-        return 'alterado';
+        return true;
     }
 }

@@ -85,6 +85,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/expediente/alterar', [App\Http\Controllers\HorarioTrabalhoController::class, 'alterar']);
     Route::post('/expediente/excluir', [App\Http\Controllers\HorarioTrabalhoController::class, 'excluir']);
 
+    Route::post('/configuracao/listar-id', [App\Http\Controllers\API\AuthController::class, 'listarById']);
+    Route::post('/configuracoes', [App\Http\Controllers\API\AuthController::class, 'alterar']);
+
 });
 
 Route::post('/verificar-tipo-perfil', [App\Http\Controllers\Controller::class, 'verificarTipoPerfil']);
