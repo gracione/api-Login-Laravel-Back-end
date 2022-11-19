@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Funcionario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +47,7 @@ class Profissao extends Model
         if(empty($request->id)){
             return false;
         }
-            DB::table('profissao')->delete($request->id);
+        DB::table('profissao')->delete($request->id);
 
         return true ;
     }
