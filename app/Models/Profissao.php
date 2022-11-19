@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Funcionario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,11 +44,12 @@ class Profissao extends Model
     }
 
     public function excluir($request)
-    {
-        if(empty($request->id)){
+    {        
+        try {
+            DB::table('profissao')->delete($request->id);
+        } catch (Exception $e) {
             return false;
         }
-        DB::table('profissao')->delete($request->id);
 
         return true ;
     }
