@@ -62,6 +62,25 @@ class HorarioTrabalho extends Model
             return $result[0] ?? 0;
     }
 
+    public function listarByIdFuncionario($id)
+    {
+        $select = DB::table('horario_trabalho')
+            ->select(
+                'users.nome as nome',
+                'horario_trabalho.id as id',
+                'horario_trabalho.inicio1 as inicio_de_expediente',
+                'horario_trabalho.fim1 as inicio_horario_de_almoco',
+                'horario_trabalho.inicio2 as fim_horario_de_almoco',
+                'horario_trabalho.fim2 as fim_de_expediente'
+            )
+            ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
+            ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
+            ->where('funcionario.id', '=', $id)
+            ->get();
+            $result = $select->toArray();
+            return $result[0] ?? 0;
+    }
+
     public function inserir($request)
     {
         DB::table('horario_trabalho')->insert([
@@ -76,7 +95,6 @@ class HorarioTrabalho extends Model
     }
     public function excluir($request)
     {
-
         DB::table('horario_trabalho')->delete($request->id);
 
         return 'excluido';
