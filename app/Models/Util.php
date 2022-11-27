@@ -47,4 +47,10 @@ class Util
 
         return $tempoTratamento;
     }
+
+    public function converterHorasEmSegundos($horario)
+    {
+        return strtotime('1970-01-01 ' . $horario . 'UTC');
+    }
+
 }

@@ -48,7 +48,7 @@ class Funcionarios extends Model
         return $funcionarios;
     }
 
-    public function listarById($request)
+    public function listarByIdUsuario($request)
     {
         $id = !empty($request->id) ? $request->id : $request;
 
@@ -70,6 +70,28 @@ class Funcionarios extends Model
         
 
         return $ar->toArray();
+    }
+
+    public function listarByIdFuncionario($request)
+    {
+        $id = !empty($request->id) ? $request->id : $request;
+
+        $ar = DB::table('users')
+            ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
+            ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
+            ->select(
+                'users.nome as nome',
+                'funcionario.id as id',
+                'users.id as id_usuario',
+                'users.numero as numero',
+                'users.email as email',
+                'users.id_sexo as id_sexo',
+                'profissao.nome as  ',
+                'profissao.id as id_profissao'
+            )
+            ->where('funcionario.id', $id)
+            ->get();
+        return $ar->toArray()[0];
     }
 
     public function inserir($request)
@@ -129,7 +151,7 @@ class Funcionarios extends Model
                 if (!empty($value)) {
                     if ($value == '-1') {
 
-                        if (count(Funcionarios::listarById($ar['id'])) > 1) {
+                        if (count(Funcionarios::listarByIdUsuario($ar['id'])) > 1) {
                             DB::table('funcionario')
                                 ->where('id', $key)
                                 ->delete();

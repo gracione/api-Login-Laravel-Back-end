@@ -30,6 +30,20 @@ class Horario extends Model
         return 'excluido';
     }
 
+    public function confirmar($request)
+    {
+        if (!empty($request->nome)) {
+            DB::table('horario')
+                ->where('id', $request->id)
+                ->update(['nome' => true]);
+        }
+
+        return true;
+    }
+
+    public function alterar($request)
+    {
+    }
     public function horarioPorDia($request)
     {
         $mes = empty($request->mes) ? date('m') : $request->mes;

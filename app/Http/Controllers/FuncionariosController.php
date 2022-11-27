@@ -18,7 +18,7 @@ class FuncionariosController extends Controller
 
     public function listarById(Request $request)
     {
-        return Funcionarios::listarById($request);
+        return Funcionarios::listarByIdFuncionario($request);
     }
     public function inserir(Request $request)
     {

@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/feriados/inserir', [App\Http\Controllers\FeriadoController::class, 'inserir']);
     Route::post('/feriados/alterar', [App\Http\Controllers\FeriadoController::class, 'alterar']);
     Route::post('/feriados/excluir', [App\Http\Controllers\FeriadoController::class, 'excluir']);
-    
+
     Route::post('/folgas/listar', [App\Http\Controllers\FolgasController::class, 'listar']);
     Route::post('/folgas/listar-id', [App\Http\Controllers\FolgasController::class, 'listarById']);
     Route::post('/folgas/listar-id-funcionario', [App\Http\Controllers\FolgasController::class, 'listarByIdFuncionario']);
@@ -87,7 +87,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/configuracao/listar-id', [App\Http\Controllers\API\AuthController::class, 'listarById']);
     Route::post('/configuracoes/alterar', [App\Http\Controllers\API\AuthController::class, 'alterar']);
-
 });
 
 Route::post('/verificar-tipo-perfil', [App\Http\Controllers\Controller::class, 'verificarTipoPerfil']);

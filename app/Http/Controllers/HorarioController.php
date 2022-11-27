@@ -25,10 +25,22 @@ class HorarioController extends Controller
 
         return Horario::inserir($ar);
     }
+
     public function desmarcar(Request $request)
     {
         return Horario::excluir($request);
     }
+
+    public function confirmar(Request $request)
+    {
+        return Horario::confirmar($request);
+    }
+
+    public function alterar(Request $request)
+    {
+        return Horario::alterar($request);
+    }
+
     public function horariosMarcados(Request $request)
     {
         return Horario::horarioPorDia($request);
@@ -43,8 +55,10 @@ class HorarioController extends Controller
 
     public function horariosDiponivel(Request $request)
     {
-        if(Feriado::verificarFeriado($request) ||
-            Folgas::verificarFolga($request)){
+        if (
+            Feriado::verificarFeriado($request) ||
+            Folgas::verificarFolga($request)
+        ) {
             return false;
         }
 
@@ -99,17 +113,13 @@ class HorarioController extends Controller
         return $horariosDisponivel;
     }
 
-    public function converterHorasEmSegundos($horario)
-    {
-        return strtotime('1970-01-01 ' . $horario . 'UTC');
-    }
     public function verificarHorario($tempo, $horario)
     {
 
         foreach ($horario as $key => $value) {
-            $tempoSeg = $this->converterHorasEmSegundos($tempo);
-            $inicio = $this->converterHorasEmSegundos($value['horario_inicio']);
-            $fim = $this->converterHorasEmSegundos($value['horario_fim']);
+            $tempoSeg = Util::converterHorasEmSegundos($tempo);
+            $inicio = Util::converterHorasEmSegundos($value['horario_inicio']);
+            $fim = Util::converterHorasEmSegundos($value['horario_fim']);
             if ($inicio <= $tempoSeg and $fim >= $tempoSeg) {
                 return false;
             }

@@ -24,6 +24,7 @@ class Horario extends Migration
             $table->foreign('id_tratamento')->references('id')->on('tratamento');
             $table->integer('id_funcionario')->unsigned();
             $table->foreign('id_funcionario')->references('id')->on('funcionario');
+            $table->boolean('confirmado');
         });
         if (true) {
             DB::table('semana')->insert([
