@@ -32,10 +32,12 @@ class Horario extends Model
 
     public function confirmar($request)
     {
-        if (!empty($request->nome)) {
+        try {
             DB::table('horario')
                 ->where('id', $request->id)
-                ->update(['nome' => true]);
+                ->update(['confirmado' => true]);
+        } catch (Exception $e) {
+            return false;
         }
 
         return true;
@@ -69,14 +71,12 @@ class Horario extends Model
                 users.numero as telefone,
                 func.nome as funcionario,
                 t.nome as tratamento,
+                horario.confirmado as confirmado,
                 horario.id as idHorario',
                 ))
                 ->join('users', 'users.id', '=', 'horario.id_cliente')
                 ->join('users as func', 'func.id', '=', 'horario.id_funcionario')
                 ->join('tratamento as t', 't.id', '=', 'horario.id_tratamento')
-
-                //            ->where('horario.horario_inicio',$mes)
-                //            ->whereYear('horario.horario_inicio',$ano)
                 ->get();
         }
 
