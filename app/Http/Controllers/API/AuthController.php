@@ -48,7 +48,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['id_usuario'=>$user['id'],'data' => $user, 'token' => $token, 'token_type' => 'Bearer',]);
+        return response()->json(['nome' => $user['nome'], 'id_usuario' => $user['id'], 'data' => $user, 'token' => $token, 'token_type' => 'Bearer',]);
     }
 
     public function login(Request $request)
@@ -63,16 +63,18 @@ class AuthController extends Controller
         if ($user['tipo_usuario'] == Constantes::ADMINISTRADOR) {
             //print("administrativo");
         };
+
         if ($user['tipo_usuario'] == Constantes::FUNCIONARIO) {
             //print("funcionario");
         };
+
         if ($user['tipo_usuario'] == Constantes::CLIENTE) {
             //print("cliente");
         };
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['id_usuario' => $user['id'], 'token' => $token]);
+        return response()->json(['nome' => $user['nome'], 'id_usuario' => $user['id'], 'token' => $token]);
     }
 
     // method for user logout and delete token
