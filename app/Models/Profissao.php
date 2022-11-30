@@ -41,7 +41,7 @@ class Profissao extends Model
         $result = $select->toArray();
 
         return $result;
-    }
+    }   
 
     public function excluir($request)
     {        

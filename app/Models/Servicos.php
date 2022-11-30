@@ -11,11 +11,12 @@ class Servicos extends Model
     use HasFactory;
     public function listar($request)
     {
-        $select = DB::table('servicos')
+        $select = DB::table('servico')
             ->select('*')
-            ->join('users', 'users.tipo_usuario', '=', 'servicos.id_tipo_usuario')
-            ->where('users.tipo_usuario',$request->idUsuario)
+            ->join('users', 'users.tipo_usuario', '=', 'servico.id_tipo_usuario')
+            ->where('users.id',$request->idUsuario)
             ->get();
+
         return $select;
     }
 
