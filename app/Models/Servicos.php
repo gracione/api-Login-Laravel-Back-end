@@ -13,7 +13,8 @@ class Servicos extends Model
     {
         $select = DB::table('servicos')
             ->select('*')
-            ->where('id_tipo_usuario',$request->id)
+            ->join('users', 'users.tipo_usuario', '=', 'servicos.id_tipo_usuario')
+            ->where('users.tipo_usuario',$request->idUsuario)
             ->get();
         return $select;
     }
