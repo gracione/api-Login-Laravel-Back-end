@@ -18,6 +18,14 @@ class TipoFuncionario extends Migration
             $table->increments('id');
             $table->string('nome');
         });
+
+        Schema::create('servico', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nome');
+            $table->integer('id_tipo_usuario')->unsigned();
+            $table->foreign('id_tipo_usuario')->references('id')->on('tipo_usuario');
+        });
+
     }
 
     /**
