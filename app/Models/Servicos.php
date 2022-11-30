@@ -12,9 +12,9 @@ class Servicos extends Model
     public function listar($request)
     {
         $select = DB::table('servico')
-            ->select('*')
+            ->select('servico.*')
             ->join('users', 'users.tipo_usuario', '=', 'servico.id_tipo_usuario')
-            ->where('users.id',$request->idUsuario)
+            ->where('users.id',$request->dados['idUsuario'])
             ->get();
 
         return $select;
