@@ -76,6 +76,43 @@ class Horario extends Migration
                 'id' => '2',
                 'nome' => 'feminino'
             ]);
+
+            DB::table('servico')->insert([
+                'id' => '2',
+                'nome' => 'funcionários',
+                'id_tipo_usuario' => '1'
+            ]);
+
+            DB::table('servico')->insert([
+                'id' => '3',
+                'nome' => 'feriados',
+                'id_tipo_usuario' => '1'
+            ]);
+
+            DB::table('servico')->insert([
+                'id' => '4',
+                'nome' => 'folgas',
+                'id_tipo_usuario' => '1'
+            ]);
+
+            DB::table('servico')->insert([
+                'id' => '5',
+                'nome' => 'expediente',
+                'id_tipo_usuario' => '1'
+            ]);
+
+            DB::table('servico')->insert([
+                'id' => '6',
+                'nome' => 'tratamentos',
+                'id_tipo_usuario' => '1'
+            ]);
+
+            DB::table('servico')->insert([
+                'id' => '7',
+                'nome' => 'profissões',
+                'id_tipo_usuario' => '1'
+            ]);
+
             //            DB::table('users')->insert([
             //                'id' => '1',
             //                'nome_estabelecimento' => 'null',
