@@ -25,6 +25,7 @@ class Horario extends Migration
             $table->integer('id_funcionario')->unsigned();
             $table->foreign('id_funcionario')->references('id')->on('funcionario');
             $table->boolean('confirmado');
+            $table->string('nome_cliente');
         });
         if (true) {
             DB::table('semana')->insert([

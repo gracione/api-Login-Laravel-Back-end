@@ -69,13 +69,15 @@ class Tratamentos extends Model
         $idTratamento = DB::table('tratamento')->insertGetId($tratamento);
 
         foreach ($request->tipoDeFiltro as $key => $value) {
-            $nomeFiltro = $request->tipoFiltro[$key];
-            $filtroTipo = ['nome' => $nomeFiltro, 'id_tratamento' => $idTratamento];
-            $idTipoFiltro = DB::table('filtro_tipo')->insertGetId($filtroTipo);
-
-            foreach ($value as $valor) {
-                $filtro = ['nome' => $valor[0], 'porcentagem_tempo' => $valor[1], 'id_filtro_tipo' => $idTipoFiltro];
-                DB::table('filtro')->insert($filtro);
+            if($value[0]){
+                $nomeFiltro = $request->tipoFiltro[$key];
+                $filtroTipo = ['nome' => $nomeFiltro, 'id_tratamento' => $idTratamento];
+                $idTipoFiltro = DB::table('filtro_tipo')->insertGetId($filtroTipo);
+    
+                foreach ($value as $valor) {
+                    $filtro = ['nome' => $valor[0], 'porcentagem_tempo' => $valor[1], 'id_filtro_tipo' => $idTipoFiltro];
+                    DB::table('filtro')->insert($filtro);
+                }
             }
         }
 
