@@ -7,9 +7,9 @@ use App\Models\Funcionarios;
 
 class FuncionariosController extends Controller
 {
-    public function listar()
+    public function listar(Request $request)
     {
-        return Funcionarios::listar();
+        return Funcionarios::listar($request);
     }
     public function listarFuncionariosEprofissao()
     {

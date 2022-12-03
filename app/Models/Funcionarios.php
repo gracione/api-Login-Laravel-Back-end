@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\API\Constantes;
 
 class Funcionarios extends Model
 {
     use HasFactory;
 
-    public function listar()
+    public function listar($request)
     {
         $select = DB::table('users')
             ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
@@ -24,8 +25,15 @@ class Funcionarios extends Model
                     profissao.nome as profissão,
                     profissao.id as id_profissao'
                 )
-            )
-            ->get();
+                );
+
+             if($request->dados['tipoUsuario'] == Constantes::FUNCIONARIO) {
+                $select = $select
+                ->where('funcionario.id_usuario',$request->dados['idUsuario'])->get();
+    
+            }else{
+                $select = $select->get();
+            }
         
         return $select->toArray();
     }
