@@ -27,7 +27,7 @@ class Funcionarios extends Model
                 )
                 );
 
-             if($request->dados['tipoUsuario'] == Constantes::FUNCIONARIO) {
+             if(!empty($request->dados['tipoUsuario']) && $request->dados['tipoUsuario'] == Constantes::FUNCIONARIO) {
                 $select = $select
                 ->where('funcionario.id_usuario',$request->dados['idUsuario'])->get();
     
