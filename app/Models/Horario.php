@@ -46,9 +46,9 @@ class Horario extends Model
     public function alterar($request)
     {
     }
+
     public function horarioPorDia($request)
-    {
-        
+    {   
         $select = DB::table('horario')
             ->select(DB::raw(
                 'TIME_FORMAT(horario.horario_inicio, "%h:%i") as horario,
@@ -63,7 +63,8 @@ class Horario extends Model
                 horario.id as idHorario',
                 ))
             ->join('users', 'users.id', '=', 'horario.id_cliente')
-            ->join('users as func', 'func.id', '=', 'horario.id_funcionario')
+            ->join('funcionario', 'funcionario.id', '=', 'horario.id_funcionario')
+            ->join('users as func', 'func.id', '=', 'funcionario.id_usuario')
             ->join('tratamento as t', 't.id', '=', 'horario.id_tratamento');
 
             if($request->tipoUsuario == Constantes::CLIENTE) {
