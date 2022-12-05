@@ -92,7 +92,9 @@ class Tratamentos extends Model
             ->get();
 
         foreach ($filtroTipo as $value) {
-            DB::table('filtro')->where('id_filtro_tipo', $value->id)->delete();
+            if(!empty($value->id)) {
+                DB::table('filtro')->where('id_filtro_tipo', $value->id)->delete();
+            }
         }
 
         DB::table('filtro_tipo')->where('id_tratamento', $request->id)->delete();

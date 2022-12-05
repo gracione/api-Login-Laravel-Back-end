@@ -11,6 +11,11 @@ class FuncionariosController extends Controller
     {
         return Funcionarios::listar($request);
     }
+    public function listarFuncionarios(Request $request)
+    {
+        return Funcionarios::listarFuncionarios($request);
+    }
+    
     public function listarFuncionariosEprofissao()
     {
         return Funcionarios::listarFuncionariosEprofissao();

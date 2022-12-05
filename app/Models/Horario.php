@@ -25,7 +25,6 @@ class Horario extends Model
 
     public function excluir($request)
     {
-
         DB::table('horario')->delete($request->id);
 
         return 'excluido';

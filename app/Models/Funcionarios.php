@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -20,8 +21,27 @@ class Funcionarios extends Model
             ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
             ->select(
                 DB::raw(
+                    '
+                    users.nome as nome,
+                    users.id as id,
+                    group_concat(profissao.nome) as profissão
+                    '
+                )
+                )
+                ->groupBy('nome','id')->get();
+        
+        return $select->toArray();
+    }
+
+    public function listarFuncionarios($request)
+    {
+        $select = DB::table('users')
+            ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
+            ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
+            ->select(
+                DB::raw(
                     'users.nome as nome,
-                    funcionario.id as id, 
+                    funcionario.id as id,
                     profissao.nome as profissão,
                     profissao.id as id_profissao'
                 )
@@ -115,7 +135,7 @@ class Funcionarios extends Model
             return response()->json($validator->errors());
         }
 
-        $user = User::create([
+         $user = User::create([
             'nome' => $request->nome,
             'numero' => $request->numero,
             'tipo_usuario' => '2',
@@ -141,12 +161,16 @@ class Funcionarios extends Model
     }
     public function excluir($request)
     {
-        DB::table('folga')->where('id_usuario', $request->id)->delete();
-        DB::table('funcionario')->where('id_usuario', $request->id)->delete();
-        DB::table('horario_trabalho')->where('id_usuario', $request->id)->delete();
-        DB::table('users')->where('id', $request->id)->delete();
+        try {
+            DB::table('folga')->where('id_usuario', $request->id)->delete();
+            DB::table('funcionario')->where('id_usuario', $request->id)->delete();
+            DB::table('horario_trabalho')->where('id_usuario', $request->id)->delete();
+            DB::table('users')->where('id', $request->id)->delete();
+        } catch (Exception $e) {
+            return false;
+        }
     
-        return 'deletado';
+        return true;
     }
     public function alterar($request)
     {
