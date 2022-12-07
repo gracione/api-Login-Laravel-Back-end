@@ -16,7 +16,7 @@ class HorarioController extends Controller
         $tempoGastoEmHora =  Util::calcularTempoGasto($request->idFiltro, $request->idTratamento);
         $tempoGastoEmMinutos = Util::converterHoraToMinuto($tempoGastoEmHora);
         $horarioInicioMinutos = Util::converterHoraToMinuto($request->horario);
-        $horarioFim = Util::converterMinutosParaHora($horarioInicioMinutos + $tempoGastoEmMinutos);
+        $horarioFim = Util::converterMinutosParaHora($horarioInicioMinutos + $tempoGastoEmMinutos - 1);
         $ar['horario_inicio'] = $request->data . " " . $request->horario . ":00";
         $ar['horario_fim'] = $request->data . " " . $horarioFim . ":00";
         $ar['id_cliente'] = $request->idCliente;
@@ -66,8 +66,8 @@ class HorarioController extends Controller
 
         $entradaSaida = HorarioTrabalho::listarByIdFuncionario($request->idFuncionario);
         $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
-        $saida1 = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
-        $entrada2 = Util::converterHoraToMinuto($entradaSaida->fim_horario_de_almoco);
+        $inicioHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
+        $fimHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->fim_horario_de_almoco);
         $saida2 = Util::converterHoraToMinuto($entradaSaida->fim_de_expediente);
 
         $horariosDisponivel = [];
@@ -87,19 +87,17 @@ class HorarioController extends Controller
         for ($tempoContado = $entrada1; $tempoContado < $saida2; $tempoContado += $tempoGasto) {
             $inicio = $tempoContado;
             $fim = $tempoContado + $tempoGasto;
+
+            //expediente
+            if ($inicio >= $inicioHorarioAlmoco && $fimHorarioAlmoco > $inicio) {
+                $verificarDisponibilidade = false;
+            }
+
             foreach ($horariosMarcadosMinutos as $valueMarcados) {
-                $inicio = $tempoContado;
-                $fim = $tempoContado + $tempoGasto;
-                if ($valueMarcados['inicio'] < $inicio && $valueMarcados['fim'] > $inicio) {
+                if ($valueMarcados['inicio'] >= $inicio && $valueMarcados['inicio'] < $fim) {
                     $verificarDisponibilidade = false;
                 }
-                if ($valueMarcados['inicio'] < $fim && $valueMarcados['fim'] >= $fim) {
-                    $verificarDisponibilidade = false;
-                }
-                if ($saida1 < $inicio && $entrada2 > $inicio) {
-                    $verificarDisponibilidade = false;
-                }
-                if ($saida1 < $fim && $entrada2 > $fim) {
+                if ($valueMarcados['fim'] >= $inicio && $valueMarcados['fim'] < $fim) {
                     $verificarDisponibilidade = false;
                 }
             }
@@ -107,8 +105,15 @@ class HorarioController extends Controller
             if ($verificarDisponibilidade) {
                 $horariosDisponivel[] = [
                     'inicio' => Util::converterMinutosParaHora($inicio),
-                    'fim' => Util::converterMinutosParaHora($fim)
+                    //'fim' => Util::converterMinutosParaHora($fim),
+                    'marcado' => 'nao'
                 ];
+            } else {
+                //                $horariosDisponivel[] = [
+                //                    'inicio' => Util::converterMinutosParaHora($inicio),
+                //                    //'fim' => Util::converterMinutosParaHora($fim),
+                //                    'marcado' => 'sim'
+                //                ];
             }
             $verificarDisponibilidade = true;
         }
