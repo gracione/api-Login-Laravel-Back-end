@@ -32,7 +32,7 @@ class HorarioController extends Controller
     {
         return Horario::excluir($request);
     }
-
+    
     public function confirmar(Request $request)
     {
         return Horario::confirmar($request);

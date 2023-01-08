@@ -26,9 +26,13 @@ class Horario extends Model
 
     public function excluir($request)
     {
-        DB::table('horario')->delete($request->id);
+        try {
+            DB::table('horario')->delete($request->id);
+        } catch (Exception $e) {
+            return false ;
+        }
 
-        return 'excluido';
+        return true;
     }
 
     public function confirmar($request)
@@ -49,7 +53,7 @@ class Horario extends Model
     }
 
     public function horarioPorDia($request)
-    {   
+    {
         $select = DB::table('horario')
             ->select(DB::raw(
                 'TIME_FORMAT(horario.horario_inicio, "%h:%i") as horario,
@@ -62,23 +66,21 @@ class Horario extends Model
                 horario.confirmado as confirmado,
                 horario.nome_cliente as nome_cliente,
                 horario.id as idHorario',
-                ))
+            ))
             ->join('users', 'users.id', '=', 'horario.id_cliente')
             ->join('funcionario', 'funcionario.id', '=', 'horario.id_funcionario')
             ->join('users as func', 'func.id', '=', 'funcionario.id_usuario')
             ->join('tratamento as t', 't.id', '=', 'horario.id_tratamento');
 
-            if($request->tipoUsuario == Constantes::CLIENTE) {
-                $select = $select
-                ->where('horario.id_cliente',$request->idUsuario)->get();
-            }
-            else if($request->tipoUsuario == Constantes::FUNCIONARIO) {
-                $select = $select
-                ->where('func.id',$request->idUsuario)->get();
-    
-            }else{
-                $select = $select->get();
-            }
+        if ($request->tipoUsuario == Constantes::CLIENTE) {
+            $select = $select
+                ->where('horario.id_cliente', $request->idUsuario)->get();
+        } else if ($request->tipoUsuario == Constantes::FUNCIONARIO) {
+            $select = $select
+                ->where('func.id', $request->idUsuario)->get();
+        } else {
+            $select = $select->get();
+        }
         return $select;
     }
 
