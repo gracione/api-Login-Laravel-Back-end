@@ -75,9 +75,11 @@ class Feriado extends Model
     }
     public function alterar($request)
     {
-        $ar['nome'] = $request->nome;
-        $ar['data'] = $request->data;
-
+        foreach ($request->request as $key => $value) {
+            if($value){
+                $ar[$key] = $value;
+            }
+        }
         DB::table('feriados')
             ->where('id', $request->id)
             ->update(array_filter($ar));
