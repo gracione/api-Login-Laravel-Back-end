@@ -101,20 +101,13 @@ class Horario extends Migration
 
             DB::table('servico')->insert([
                 'id' => '5',
-                'nome' => 'expediente',
-                'url' => 'expediente',
-                'id_tipo_usuario' => '1'
-            ]);
-
-            DB::table('servico')->insert([
-                'id' => '6',
                 'nome' => 'tratamentos',
                 'url' => 'tratamentos',
                 'id_tipo_usuario' => '1'
             ]);
 
             DB::table('servico')->insert([
-                'id' => '7',
+                'id' => '6',
                 'nome' => 'profissão',
                 'url' => 'profissao',
                 'id_tipo_usuario' => '1'

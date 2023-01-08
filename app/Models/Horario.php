@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\API\Constantes;
+use App\Models\Funcionarios;
 
 class Horario extends Model
 {
@@ -80,13 +81,16 @@ class Horario extends Model
             }
         return $select;
     }
+
     public function buscarHorariosDisponivel($tempoGasto, $idFuncionario, $data = "21/8/2022")
     {
+        $idUsuario = Funcionarios::getIdUsuarioByIdFuncionario($idFuncionario);
         $dataExplode = explode('-', $data);
         $select = DB::table('horario')
             ->select(DB::raw('TIME_FORMAT(horario.horario_inicio, "%H:%i") as horario_inicio,
         TIME_FORMAT(horario.horario_fim, "%H:%i") as horario_fim'))
-            //            ->where(DB::raw('TIME_TO_SEC(time(horario_fim) -time(horario_inicio))/60'), '>=', $tempoGasto)
+            ->join('funcionario', 'funcionario.id', '=', 'horario.id_funcionario')
+            ->where('funcionario.id_usuario', $idUsuario)
             ->whereDay('horario.horario_inicio', $dataExplode[2])
             ->whereMonth('horario.horario_inicio', $dataExplode[1])
             ->whereYear('horario.horario_inicio', $dataExplode[0])

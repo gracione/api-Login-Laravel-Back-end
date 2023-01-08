@@ -27,9 +27,9 @@ class Funcionarios extends Model
                     group_concat(profissao.nome) as profissão
                     '
                 )
-                )
-                ->groupBy('nome','id')->get();
-        
+            )
+            ->groupBy('nome', 'id')->get();
+
         return $select->toArray();
     }
 
@@ -45,16 +45,15 @@ class Funcionarios extends Model
                     profissao.nome as profissão,
                     profissao.id as id_profissao'
                 )
-                );
+            );
 
-             if(!empty($request->dados['tipoUsuario']) && $request->dados['tipoUsuario'] == Constantes::FUNCIONARIO) {
-                $select = $select
-                ->where('funcionario.id_usuario',$request->dados['idUsuario'])->get();
-    
-            }else{
-                $select = $select->get();
-            }
-        
+        if (!empty($request->dados['tipoUsuario']) && $request->dados['tipoUsuario'] == Constantes::FUNCIONARIO) {
+            $select = $select
+                ->where('funcionario.id_usuario', $request->dados['idUsuario'])->get();
+        } else {
+            $select = $select->get();
+        }
+
         return $select->toArray();
     }
 
@@ -95,9 +94,19 @@ class Funcionarios extends Model
             )
             ->where('users.id', $id)
             ->get();
-        
+
 
         return $ar->toArray();
+    }
+
+    public function getIdUsuarioByIdFuncionario($id)
+    {
+        $ar = DB::table('funcionario')
+            ->select('funcionario.id_usuario as id',)
+            ->where('funcionario.id', $id)
+            ->get();
+
+        return $ar->toArray()[0]->id??null;
     }
 
     public function listarByIdFuncionario($request)
@@ -135,7 +144,7 @@ class Funcionarios extends Model
             return response()->json($validator->errors());
         }
 
-         $user = User::create([
+        $user = User::create([
             'nome' => $request->nome,
             'numero' => $request->numero,
             'tipo_usuario' => '2',
@@ -169,13 +178,15 @@ class Funcionarios extends Model
         } catch (Exception $e) {
             return false;
         }
-    
+
         return true;
     }
     public function alterar($request)
     {
         foreach ($request->request as $key => $value) {
-            if (!empty($value)) {$ar[$key] = $value;}
+            if (!empty($value)) {
+                $ar[$key] = $value;
+            }
         }
 
         if (!empty($ar['profissoesAlteradas'])) {
@@ -206,17 +217,16 @@ class Funcionarios extends Model
             }
         }
 
-        if(!empty($ar['expediente'])){
+        if (!empty($ar['expediente'])) {
 
             DB::table('horario_trabalho')
-            ->where('horario_trabalho.id_usuario', '=', $ar['id'])
-            ->update(array_filter($ar['expediente']));
-    
+                ->where('horario_trabalho.id_usuario', '=', $ar['id'])
+                ->update(array_filter($ar['expediente']));
         }
 
         DB::table('users')
-        ->where('id', $request->id)
-        ->update(array_filter($ar));
+            ->where('id', $request->id)
+            ->update(array_filter($ar));
 
         return true;
     }
