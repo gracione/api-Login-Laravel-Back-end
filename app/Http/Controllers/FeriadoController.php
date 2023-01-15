@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Feriado;
+use Illuminate\Support\Facades\App;
 
 class FeriadoController extends Controller
 {
+    public $feriado;
+    
+    public function init() {
+        $this->feriado = new Feriado();
+    } 
+
     public function listar()
     {
         return Feriado::listar();
