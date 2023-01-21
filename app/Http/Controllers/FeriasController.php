@@ -7,6 +7,12 @@ use App\Models\Ferias;
 
 class FeriasController extends Controller
 {
+    public $ferias;
+    
+    public function init() {
+        $this->ferias = new Ferias();
+    }
+
     public function listar()
     {
         return Ferias::listar();

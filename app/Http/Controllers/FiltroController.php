@@ -8,6 +8,12 @@ use App\Models\FiltroTipo;
 
 class FiltroController extends Controller
 {
+    public $filtro;
+    
+    public function init() {
+        $this->filtro = new Filtro();
+    }
+
     public function listar () {
         return Filtro::listar();
     }
