@@ -17,9 +17,11 @@ class FiltroController extends Controller
     public function listar () {
         return Filtro::listar();
     }
+
     public function listarFiltro (Request $request) {
         return Filtro::listarFiltro($request);
     }
+
     public function listarFiltroTipoById (Request $request) {
         return FiltroTipo::listarByIdTratamento($request);
     }

@@ -14,7 +14,7 @@ class Funcionarios extends Model
 {
     use HasFactory;
 
-    public function listar($request)
+    public function listar()
     {
         $select = DB::table('users')
             ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
@@ -28,9 +28,11 @@ class Funcionarios extends Model
                     '
                 )
             )
-            ->groupBy('nome', 'id')->get();
+            ->groupBy('nome', 'id');
+            
+        $result = $select->get();
 
-        return $select->toArray();
+        return $result->toArray();
     }
 
     public function listarFuncionarios($request)

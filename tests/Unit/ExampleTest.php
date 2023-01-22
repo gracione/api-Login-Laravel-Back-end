@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Http\Controllers\FuncionariosController;
 use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
@@ -11,8 +12,15 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public $funcionarios;
+
+    public function test_funcionario()
     {
-        $this->assertTrue(true);
+        $this->funcionarios = new FuncionariosController();
+        $listar = $this->funcionarios->listar();
+
+        $this->assertIsArray($listar);
+//        $this->assertTrue(true);
     }
 }
+//./vendor/bin/phpunit
