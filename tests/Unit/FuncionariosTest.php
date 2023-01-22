@@ -3,9 +3,10 @@
 namespace Tests\Unit;
 
 use App\Http\Controllers\FuncionariosController;
-use PHPUnit\Framework\TestCase;
+//use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class FuncionariosTest extends TestCase
 {
     /**
      * A basic test example.
@@ -20,7 +21,6 @@ class ExampleTest extends TestCase
         $listar = $this->funcionarios->listar();
 
         $this->assertIsArray($listar);
-//        $this->assertTrue(true);
     }
 }
 //./vendor/bin/phpunit
