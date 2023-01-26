@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\API\Constantes;
 use App\Models\Funcionarios;
+use App\Models\HorarioTrabalho;
+use App\Models\Util;
+use App\Models\Feriado;
+use App\Models\Folgas;
 
 class Horario extends Model
 {
@@ -50,6 +54,66 @@ class Horario extends Model
 
     public function alterar($request)
     {
+    }
+    public function horarios($request){
+        if (Feriado::verificarFeriado($request) || Folgas::verificarFolga($request)) {
+            return false;
+        }
+
+        $entradaSaida = HorarioTrabalho::listarByIdFuncionario($request->idFuncionario);
+        $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
+        $inicioHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
+        $fimHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->fim_horario_de_almoco);
+        $saida2 = Util::converterHoraToMinuto($entradaSaida->fim_de_expediente);
+
+        $horariosDisponivel = [];
+        $tempoContado = $entrada1;
+        $tempoGasto =  Util::converterHoraToMinuto(Util::calcularTempoGasto($request->idFiltro, $request->idTratamento));
+        $horariosMarcados = Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
+        $horariosMarcadosMinutos = [];
+
+        foreach ($horariosMarcados as $value) {
+            $horariosMarcadosMinutos[] = [
+                'inicio' => Util::converterHoraToMinuto($value->horario_inicio),
+                'fim' => Util::converterHoraToMinuto($value->horario_fim)
+            ];
+        }
+
+        $verificarDisponibilidade = true;
+        for ($tempoContado = $entrada1; $tempoContado < $saida2; $tempoContado += $tempoGasto) {
+            $inicio = $tempoContado;
+            $fim = $tempoContado + $tempoGasto;
+
+            //expediente
+            if ($inicio >= $inicioHorarioAlmoco && $fimHorarioAlmoco > $inicio) {
+                $verificarDisponibilidade = false;
+            }
+
+            foreach ($horariosMarcadosMinutos as $valueMarcados) {
+                if ($valueMarcados['inicio'] >= $inicio && $valueMarcados['inicio'] < $fim) {
+                    $verificarDisponibilidade = false;
+                }
+                if ($valueMarcados['fim'] >= $inicio && $valueMarcados['fim'] < $fim) {
+                    $verificarDisponibilidade = false;
+                }
+            }
+
+            if ($verificarDisponibilidade) {
+                $horariosDisponivel[] = [
+                    'inicio' => Util::converterMinutosParaHora($inicio),
+                    //'fim' => Util::converterMinutosParaHora($fim),
+                    'marcado' => 'nao'
+                ];
+            } else {
+                //                $horariosDisponivel[] = [
+                //                    'inicio' => Util::converterMinutosParaHora($inicio),
+                //                    //'fim' => Util::converterMinutosParaHora($fim),
+                //                    'marcado' => 'sim'
+                //                ];
+            }
+            $verificarDisponibilidade = true;
+        }
+        return $horariosDisponivel;
     }
 
     public function horarioPorDia($request)
