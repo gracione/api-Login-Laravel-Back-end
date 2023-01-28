@@ -74,7 +74,8 @@ class HorarioTrabalho extends Model
                 'horario_trabalho.fim2 as fim_de_expediente'
             )
             ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
-            ->where('users.id', '=', $id)
+            ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
+            ->where('funcionario.id', '=', $id)
             ->get();
             $result = $select->toArray();
             return $result[0] ?? 0;
