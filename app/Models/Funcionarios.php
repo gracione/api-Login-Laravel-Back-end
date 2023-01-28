@@ -207,6 +207,7 @@ class Funcionarios extends Model
                     }
                 }
             }
+            unset($ar['profissoesAlteradas']);
         }
 
         if (!empty($ar['profissoesCadastradas'])) {
@@ -216,6 +217,7 @@ class Funcionarios extends Model
                         ->insert(['id_usuario' => $ar['id'], 'id_profissao' => $value]);
                 }
             }
+            unset($ar['profissoesCadastradas']);
         }
 
         
@@ -224,11 +226,12 @@ class Funcionarios extends Model
             ->where('horario_trabalho.id_usuario', '=', $ar['id'])
             ->update(array_filter($ar['expediente']));
         }
-        
+        unset($ar['expediente']);
         
         if(!empty($ar['nome']) || !empty($ar['numero'])) {
+
             DB::table('users')
-                ->where('id', $ar['id'])
+                ->where('id','=', $ar['id'])
                 ->update(array_filter($ar));
         }
 
