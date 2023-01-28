@@ -118,7 +118,7 @@ class Tratamentos extends Model
                 ->update(array_filter(['nome'=> $value['nome']]));
             }
         }
-        $filtro = !empty($request->filtro) ? $request->filtro: [];
+        $filtro = !empty($request->filtro) ? array_filter($request->filtro): [];
         foreach ($filtro as $key => $value) {
             if(!empty($value['id'])) {
                 DB::table('filtro')
@@ -128,7 +128,7 @@ class Tratamentos extends Model
 
         }
         
-        if(!empty($dadosParaAlterar)) {
+        if(!empty(array_filter($dadosParaAlterar))) {
             DB::table('tratamento')
             ->where('id',$request->id)
             ->update(array_filter($dadosParaAlterar));
