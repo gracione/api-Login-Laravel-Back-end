@@ -30,7 +30,7 @@ class Funcionarios extends Model
                 )
             )
             ->groupBy('nome', 'id');
-            
+
         $result = $select->get();
 
         return $result->toArray();
@@ -109,7 +109,7 @@ class Funcionarios extends Model
             ->where('funcionario.id', $id)
             ->get();
 
-        return $ar->toArray()[0]->id??null;
+        return $ar->toArray()[0]->id ?? null;
     }
 
     public function listarByIdFuncionario($request)
@@ -138,7 +138,11 @@ class Funcionarios extends Model
             'nome' => 'required|string|max:255',
             'numero' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:3'
+            'password' => 'required|string|min:3',
+            'inicioExpediente' => 'required|string|min:3',
+            'inicioAlmoco' => 'required|string|min:3',
+            'fimAlmoco' => 'required|string|min:3',
+            'fimExpediente' => 'required|string|min:3'
         ]);
 
         if ($validator->fails()) {
@@ -220,18 +224,18 @@ class Funcionarios extends Model
             unset($ar['profissoesCadastradas']);
         }
 
-        
+
         if (!empty(array_filter($ar['expediente']))) {
             DB::table('horario_trabalho')
-            ->where('horario_trabalho.id_usuario', '=', $ar['id'])
-            ->update(array_filter($ar['expediente']));
+                ->where('horario_trabalho.id_usuario', '=', $ar['id'])
+                ->update(array_filter($ar['expediente']));
         }
         unset($ar['expediente']);
-        
-        if(!empty($ar['nome']) || !empty($ar['numero'])) {
+
+        if (!empty($ar['nome']) || !empty($ar['numero'])) {
 
             DB::table('users')
-                ->where('id','=', $ar['id'])
+                ->where('id', '=', $ar['id'])
                 ->update(array_filter($ar));
         }
 
