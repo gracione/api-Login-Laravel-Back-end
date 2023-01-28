@@ -118,20 +118,18 @@ class Funcionarios extends Model
 
         $ar = DB::table('users')
             ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
-            ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
             ->select(
                 'users.nome as nome',
                 'funcionario.id as id',
                 'users.id as id_usuario',
                 'users.numero as numero',
                 'users.email as email',
-                'users.id_sexo as id_sexo',
-                'profissao.nome as  ',
-                'profissao.id as id_profissao'
+                'users.id_sexo as id_sexo'
             )
-            ->where('funcionario.id', $id)
+            ->where('funcionario.id_usuario', $id)
             ->get();
-        return $ar->toArray()[0];
+        $result = $ar->toArray();
+        return $result[0];
     }
 
     public function inserir($request)
@@ -220,16 +218,19 @@ class Funcionarios extends Model
             }
         }
 
-        if (!empty($ar['expediente'])) {
-
+        
+        if (!empty(array_filter($ar['expediente']))) {
             DB::table('horario_trabalho')
-                ->where('horario_trabalho.id_usuario', '=', $ar['id'])
-                ->update(array_filter($ar['expediente']));
+            ->where('horario_trabalho.id_usuario', '=', $ar['id'])
+            ->update(array_filter($ar['expediente']));
         }
-
-        DB::table('users')
-            ->where('id', $request->id)
-            ->update(array_filter($ar));
+        
+        
+        if(!empty($ar['nome']) || !empty($ar['numero'])) {
+            DB::table('users')
+                ->where('id', $ar['id'])
+                ->update(array_filter($ar));
+        }
 
         return true;
     }

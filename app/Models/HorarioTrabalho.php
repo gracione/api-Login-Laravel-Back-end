@@ -75,7 +75,7 @@ class HorarioTrabalho extends Model
             )
             ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
             ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
-            ->where('funcionario.id', '=', $id)
+            ->where('users.id', '=', $id)
             ->get();
             $result = $select->toArray();
             return $result[0] ?? 0;

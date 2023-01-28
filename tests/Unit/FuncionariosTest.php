@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Http\Controllers\FuncionariosController;
+use App\Models\Funcionarios;
 use Tests\TestCase;
 
 class FuncionariosTest extends TestCase
