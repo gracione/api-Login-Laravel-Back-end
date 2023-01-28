@@ -146,7 +146,8 @@ class Funcionarios extends Model
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return false;
+            //return response()->json($validator->errors());
         }
 
         $user = User::create([
