@@ -32,7 +32,11 @@ class HorarioController extends Controller
         $ar['id_tratamento'] = $request->idTratamento;
         $ar['id_funcionario'] = $request->idFuncionario;
         $ar['confirmado'] = false;
-        $ar['nome_cliente'] = !empty($request->nomeCliente) ? $request->nomeCliente : null;
+        $ar['nome_cliente'] = null;
+        if(!empty($request->nomeCliente)){
+            $ar['nome_cliente'] = $request->nomeCliente;
+            $ar['confirmado'] = true;
+        }
 
         return Horario::inserir($ar);
     }
