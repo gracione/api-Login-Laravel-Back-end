@@ -13,19 +13,33 @@ class HorariosTest extends TestCase
      *
      * @return void
      */
-    public $auth;
+    public $horarios;
 
     public function testHorarios()
     {
-        $this->auth = new Horario();
+        $this->horarios = new Horario();
         $request = [
         'data' => '2023-11-25',
         'idFuncionario' => '5'
         ,'idFiltro' => '0'
         ,'idTratamento' => '5'];
     
-        $horarios = $this->auth->horarios((object) $request);
-
+        $horarios = $this->horarios->horarios((object) $request);
         $this->assertIsArray($horarios,'O sistema esta pegando os horarios disponivel');
+    }
+
+    public function testModoTradicional(){
+        $this->horarios = new Horario();
+        $request = [
+            'data' => '2023-01-28',
+            'idFuncionario' => '5'
+            ,'idFiltro' => '0'
+            ,'idTratamento' => '5'
+            ,'modoTradicional' => '19:10'
+        ];
+    
+        $horarios = $this->horarios->verificarHorarioModoTradicional($request);
+        $this->isTrue($horarios,'O sistema verificando si o horario esta diponivel no modo tradicional');
+
     }
 }

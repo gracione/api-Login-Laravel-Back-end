@@ -52,10 +52,16 @@ class Horario extends Model
         return true;
     }
 
-    public function alterar($request)
-    {
+
+    public function verificarHorarioModoTradicional($request)
+    {           
+        foreach (Horario::horarios((object)$request) as $key => $value) {
+            return true;
+        }
+        return false;
     }
-    public function horarios($request){
+    public function horarios($request)
+    {
         if (Feriado::verificarFeriado($request) || Folgas::verificarFolga($request)) {
             return false;
         }
@@ -71,6 +77,11 @@ class Horario extends Model
         $tempoGasto =  Util::converterHoraToMinuto(Util::calcularTempoGasto($request->idFiltro, $request->idTratamento));
         $horariosMarcados = Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
         $horariosMarcadosMinutos = [];
+
+        if(!empty($request->modoTradicional)){
+            $horarioTradicionalInicio = Util::converterHoraToMinuto($request->modoTradicional);
+            $horarioTradicionalFim = $horarioTradicionalInicio+$tempoGasto-1;
+        }
 
         foreach ($horariosMarcados as $value) {
             $horariosMarcadosMinutos[] = [
@@ -98,19 +109,24 @@ class Horario extends Model
                 }
             }
 
+            if(!empty($request->modoTradicional) && $verificarDisponibilidade){
+                $verificarDisponibilidade = false;
+                if ($horarioTradicionalInicio >= $inicio && $horarioTradicionalInicio < $fim) {
+                    $verificarDisponibilidade = true;
+                }
+                if ($horarioTradicionalFim >= $inicio && $horarioTradicionalFim < $fim) {
+                    $verificarDisponibilidade = true;
+                }
+            }
+
             if ($verificarDisponibilidade) {
                 $horariosDisponivel[] = [
                     'inicio' => Util::converterMinutosParaHora($inicio),
-                    //'fim' => Util::converterMinutosParaHora($fim),
                     'marcado' => 'nao'
                 ];
-            } else {
-                //                $horariosDisponivel[] = [
-                //                    'inicio' => Util::converterMinutosParaHora($inicio),
-                //                    //'fim' => Util::converterMinutosParaHora($fim),
-                //                    'marcado' => 'sim'
-                //                ];
+
             }
+
             $verificarDisponibilidade = true;
         }
         return $horariosDisponivel;

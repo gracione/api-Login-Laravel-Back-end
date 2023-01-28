@@ -13,11 +13,20 @@ class HorarioController extends Controller
 {
     public function inserir(Request $request)
     {
+        $horario = $request->horario;
+        if(!empty($request->modoTradicional)) {
+            if(Horario::verificarHorarioModoTradicional($request)){
+                $horario = $request->modoTradicional;
+            } else {
+                return false;
+            }
+        }
+
         $tempoGastoEmHora =  Util::calcularTempoGasto($request->idFiltro, $request->idTratamento);
         $tempoGastoEmMinutos = Util::converterHoraToMinuto($tempoGastoEmHora);
-        $horarioInicioMinutos = Util::converterHoraToMinuto($request->horario);
+        $horarioInicioMinutos = Util::converterHoraToMinuto($horario);
         $horarioFim = Util::converterMinutosParaHora($horarioInicioMinutos + $tempoGastoEmMinutos - 1);
-        $ar['horario_inicio'] = $request->data . " " . $request->horario . ":00";
+        $ar['horario_inicio'] = $request->data . " " . $horario . ":00";
         $ar['horario_fim'] = $request->data . " " . $horarioFim . ":00";
         $ar['id_cliente'] = $request->idCliente;
         $ar['id_tratamento'] = $request->idTratamento;
