@@ -152,7 +152,7 @@ class Horario extends Model
             ->join('users as func', 'func.id', '=', 'funcionario.id_usuario')
             ->join('tratamento as t', 't.id', '=', 'horario.id_tratamento');
 
-        if ($request->dados['tipoUsuario'] == Constantes::CLIENTE) {
+            if ($request->dados['tipoUsuario'] == Constantes::CLIENTE) {
             $select = $select
                 ->where('horario.id_cliente', $request->dados['idUsuario'])->get();
         } else if ($request->dados['tipoUsuario'] == Constantes::FUNCIONARIO) {

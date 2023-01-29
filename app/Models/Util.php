@@ -24,7 +24,10 @@ class Util
     }
     public function almentarPorcentagem($valor, $porcentagem)
     {
-        return $valor + ($valor / 100 * $porcentagem);
+        $valor = Util::converterHoraToMinuto($valor);
+        $valor = $valor + ($valor / 100 * $porcentagem);
+        
+        return Util::converterMinutosParaHora($valor);
     }
 
     public function separarPorHashtag($valor)
