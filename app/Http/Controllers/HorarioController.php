@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Horario;
-use App\Models\HorarioTrabalho;
 use App\Models\Util;
-use App\Models\Feriado;
-use App\Models\Folgas;
 
 class HorarioController extends Controller
 {
@@ -75,7 +72,6 @@ class HorarioController extends Controller
 
     public function verificarHorario($tempo, $horario)
     {
-
         foreach ($horario as $key => $value) {
             $tempoSeg = Util::converterHorasEmSegundos($tempo);
             $inicio = Util::converterHorasEmSegundos($value['horario_inicio']);
