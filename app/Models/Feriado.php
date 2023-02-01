@@ -33,8 +33,8 @@ class Feriado extends Model
     {
         $select = DB::table('feriados')
             ->select(DB::raw('DAY(data) as dia, nome'))
-            ->whereMonth('feriados.data', $request->dados['mes'])
-            ->whereYear('feriados.data', $request->dados['ano'])
+            ->whereMonth('feriados.data', $request['mes'])
+            ->whereYear('feriados.data', $request['ano'])
             ->get();
         $results = $select->toArray();
 
