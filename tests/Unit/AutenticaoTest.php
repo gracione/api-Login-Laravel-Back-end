@@ -19,12 +19,12 @@ class AutenticaoTest extends TestCase
     {
         $this->auth = new AuthController();
 
-        $response = $this->postJson('/api/login', ['email' => 'gracione@gmail.com', 'password' => '1234']);
+        $response = $this->postJson('/api/login', ['email' => 'adm@gmail.com', 'password' => '1234']);
         $data = !empty($response->baseResponse->original['token']) ? true : false;
 
         $this->assertNotTrue($data,'O sistema está validando a autenticação corretamente');
 
-        $response = $this->postJson('/api/login', ['email' => 'gracione@gmail.com', 'password' => '123']);
+        $response = $this->postJson('/api/login', ['email' => 'adm@gmail.com', 'password' => '123']);
         $data = !empty($response->baseResponse->original['token']) ? true : false;
 
         $this->assertTrue($data,'O sistema está autenticando corretamente');
