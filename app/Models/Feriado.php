@@ -18,7 +18,7 @@ class Feriado extends Model
                 'feriados.data as data'
             )
             ->get();
-        return $select;
+        return $select->toArray();
     }
     public function listarById($request)
     {

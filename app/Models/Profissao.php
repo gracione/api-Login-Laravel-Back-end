@@ -17,7 +17,7 @@ class Profissao extends Model
         $select = DB::table('profissao')
             ->select('profissao.nome as profissão', 'profissao.id as id')
             ->get();
-        return $select;
+        return $select->toArray();
     }
 
     public function listarById($request)

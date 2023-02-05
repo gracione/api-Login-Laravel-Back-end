@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Http\Controllers\FolgasController;
+use App\Models\Folgas;
 use Tests\TestCase;
 
 class FolgasTest extends TestCase
@@ -15,11 +15,11 @@ class FolgasTest extends TestCase
     public $folgas;
 
     public function test_folgas()
-    {
-        $this->folgas = new FolgasController();
+    {        
+        $this->folgas = new Folgas();
+        $this->folgas->listar();
         $listar = $this->folgas->listar();
 
-        $this->isTrue($listar);
+        $this->assertIsArray($listar, 'O sistema está listando as folgas corretamente');
     }
 }
-//./vendor/bin/phpunit

@@ -40,7 +40,7 @@ class Tratamentos extends Model
             ->select(DB::raw('tratamento.nome as nome,tratamento.id as id'))
             ->where('tratamento.id_profissao', '=', $id)
             ->get();
-        return $select;
+        return $select->toArray();
     }
     public function listarById($request)
     {

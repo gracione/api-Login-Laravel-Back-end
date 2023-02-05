@@ -25,7 +25,7 @@ class Folgas extends Model
                 'folga.dia_semana as dia_semana'
             )
             ->get();
-        return $select;
+        return $select->toArray();
     }
     public function listarById($request)
     {
