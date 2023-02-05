@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    public function listarById(Request $request)
-    {
-        return auth()->user();
-    }
     public function registrarCliente(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -65,7 +61,11 @@ class AuthController extends Controller
         return response()->json(['tipo_usuario' => $user['tipo_usuario'], 'nome' => $user['nome'], 'id_usuario' => $user['id'], 'token' => $token]);
     }
 
-    // method for user logout and delete token
+    public function dadosConfiguracao(Request $request)
+    {
+        return auth()->user();
+    }
+
     public function logout()
     {
         auth()->user()->tokens()->delete();
@@ -74,6 +74,7 @@ class AuthController extends Controller
             'message' => 'You have successfully logged out and the token was successfully deleted'
         ];
     }
+
     public function alterar(Request $request)
     {
         return User::alterar($request);

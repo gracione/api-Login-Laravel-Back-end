@@ -88,7 +88,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/expediente/alterar', [App\Http\Controllers\HorarioTrabalhoController::class, 'alterar']);
     Route::post('/expediente/excluir', [App\Http\Controllers\HorarioTrabalhoController::class, 'excluir']);
 
-    Route::post('/configuracao/listar-id', [App\Http\Controllers\API\AuthController::class, 'listarById']);
+    Route::post('/configuracao/dados-configuracao', [App\Http\Controllers\API\AuthController::class, 'dadosConfiguracao']);
     Route::post('/configuracoes/alterar', [App\Http\Controllers\API\AuthController::class, 'alterar']);
 });
 
