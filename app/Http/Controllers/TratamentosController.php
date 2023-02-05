@@ -11,7 +11,9 @@ class TratamentosController extends Controller
         return Tratamentos::listar();
     }
     public function listarById (Request $request) {
-        return Tratamentos::listarById($request);
+        $ar['profissoes'] = ProfissaoController::listar();
+        $ar['tratamentos'] = Tratamentos::listarById($request);
+        return $ar;
     }
     public function listarByIdProfissao (Request $request) {
         return Tratamentos::listarByIdProfissao($request);

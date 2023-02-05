@@ -23,7 +23,12 @@ class FuncionariosController extends Controller
 
     public function listarById(Request $request)
     {
-        return Funcionarios::listarByIdFuncionario($request);
+        $ar = [];
+        $ar['expediente'] = HorarioTrabalhoController::listarById($request);
+        $ar['funcionario'] = Funcionarios::listarByIdFuncionario($request);
+        $ar['profissao'] = ProfissaoController::listarByIdFuncionario($request);
+        $ar['profissoes'] = ProfissaoController::listar();
+        return $ar;
     }
     public function inserir(Request $request)
     {
