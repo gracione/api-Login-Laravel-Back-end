@@ -16,13 +16,15 @@ class Folgas extends Model
     {
         $select = DB::table('folga')
             ->join('funcionario', 'funcionario.id', '=', 'folga.id_funcionario')
+            ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
             ->join('users', 'users.id', '=', 'funcionario.id_usuario')
             ->join('semana', 'semana.id', '=', 'folga.dia_semana')
             ->select(
                 'users.nome as funcionario',
                 'semana.nome as folga',
                 'folga.id as id',
-                'folga.dia_semana as dia_semana'
+                'folga.dia_semana as dia_semana',
+                'profissao.nome as profissao'
             )
             ->get();
         return $select->toArray();
@@ -31,13 +33,15 @@ class Folgas extends Model
     {
         $select = DB::table('folga')
             ->join('funcionario', 'funcionario.id', '=', 'folga.id_funcionario')
+            ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
             ->join('users', 'users.id', '=', 'funcionario.id_usuario')
             ->join('semana', 'semana.id', '=', 'folga.dia_semana')
             ->select(
                 'users.nome as funcionario',
                 'semana.nome as folga',
                 'folga.id as id',
-                'folga.dia_semana as dia_semana'
+                'folga.dia_semana as dia_semana',
+                'profissao.nome as profissao'
             )
             ->where('folga.id', $request->id)
             ->get();
