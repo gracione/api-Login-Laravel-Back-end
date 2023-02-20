@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class FolgasController extends Controller
 {
+    public function __construct() {
+    }
     public function listar () {
         return Folgas::listar();
     }

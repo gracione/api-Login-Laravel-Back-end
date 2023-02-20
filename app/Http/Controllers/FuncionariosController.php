@@ -4,42 +4,54 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Funcionarios;
+use App\Models\HorarioTrabalho;
+use App\Models\Profissao;
 
 class FuncionariosController extends Controller
 {
+    public $funcionarios;
+    public $expediente;
+    public $profissao;
+
+    public function __construct() {
+        $this->funcionarios = new Funcionarios();
+        $this->expediente = new HorarioTrabalho();
+        $this->profissao = new Profissao();
+    }
+
     public function listar()
     {
-        return Funcionarios::listar();
+        return $this->funcionarios->listar();
     }
     public function listarFuncionarios(Request $request)
     {
-        return Funcionarios::listarFuncionarios($request);
+        return $this->funcionarios->listarFuncionarios($request);
     }
     
     public function listarFuncionariosEprofissao()
     {
-        return Funcionarios::listarFuncionariosEprofissao();
+        return $this->funcionarios->listarFuncionariosEprofissao();
     }
 
     public function listarById(Request $request)
     {
         $ar = [];
-        $ar['expediente'] = HorarioTrabalhoController::listarById($request);
-        $ar['funcionario'] = Funcionarios::listarByIdFuncionario($request);
-        $ar['profissao'] = ProfissaoController::listarByIdFuncionario($request);
-        $ar['profissoes'] = ProfissaoController::listar();
+        $ar['expediente'] = $this->expediente->listarById($request);
+        $ar['funcionario'] = $this->funcionarios->listarByIdFuncionario($request);
+        $ar['profissao'] = $this->profissao->listarByIdFuncionario($request);
+        $ar['profissoes'] = $this->profissao->listar();
         return $ar;
     }
     public function inserir(Request $request)
     {
-        return Funcionarios::inserir($request);
+        return $this->funcionarios->inserir($request);
     }
     public function excluir(Request $request)
     {
-        return Funcionarios::excluir($request);
+        return $this->funcionarios->excluir($request);
     }
     public function alterar(Request $request)
     {
-        return Funcionarios::alterar($request);
+        return $this->funcionarios->alterar($request);
     }
 }

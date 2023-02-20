@@ -7,32 +7,38 @@ use App\Models\Profissao;
 
 class ProfissaoController extends Controller
 {
+    public $profissao;
+
+    public function __construct() {
+        $this->profissao = new Profissao();
+    }
+
     public function inserir(Request $request)
     {
-        return Profissao::inserir($request);
+        return $this->profissao->inserir($request);
     }
 
     public function listar()
     {
-        return Profissao::listar();
+        return $this->profissao->listar();
     }
 
     public function excluir(Request $request)
     {
-        return Profissao::excluir($request);
+        return $this->profissao->excluir($request);
     }
 
     public function alterar(Request $request)
     {
-        return Profissao::alterar($request);
+        return $this->profissao->alterar($request);
     }
 
     public function listarById(Request $request)
     {
-        return Profissao::listarById($request);
+        return $this->profissao->listarById($request);
     }
     public function listarByIdFuncionario(Request $request)
     {
-        return Profissao::listarByIdFuncionario($request);
+        return $this->profissao->listarByIdFuncionario($request);
     }
 }

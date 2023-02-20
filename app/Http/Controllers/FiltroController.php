@@ -10,7 +10,7 @@ class FiltroController extends Controller
 {
     public $filtro;
     
-    public function init() {
+    public function __construct() {
         $this->filtro = new Filtro();
     }
 

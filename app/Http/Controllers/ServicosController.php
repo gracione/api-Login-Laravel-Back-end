@@ -8,9 +8,15 @@ use App\Models\Servicos;
 
 class ServicosController extends Controller
 {
+    public $servicos;
+
+    public function __construct() {
+        $this->servicos = new Servicos();
+    }
+
     public function listar(Request $request)
     {
-        return Servicos::listar($request);
+        return $this->servicos->listar($request);
     }
 
 }

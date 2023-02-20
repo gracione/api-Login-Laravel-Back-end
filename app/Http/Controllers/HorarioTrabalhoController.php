@@ -7,21 +7,27 @@ use App\Models\HorarioTrabalho;
 
 class HorarioTrabalhoController extends Controller
 {
+    public $expediente;
+
+    public function __construct() {
+        $this->expediente = new HorarioTrabalho();
+    }
+
     public function listar()
     {
-        return HorarioTrabalho::listar();
+        return $this->expediente->listar();
     }
     public function listarById(Request $request)
     {
-        return HorarioTrabalho::listarByIdUsuario($request->id);
+        return $this->expediente->listarByIdUsuario($request->id);
     }
 
     public function inserir(Request $request)
     {
-        return HorarioTrabalho::inserir($request);
+        return $this->expediente->inserir($request);
     }
     public function excluir(Request $request)
     {
-        return HorarioTrabalho::excluir($request);
+        return $this->expediente->excluir($request);
     }
 }
