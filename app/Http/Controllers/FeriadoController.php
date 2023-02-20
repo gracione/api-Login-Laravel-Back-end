@@ -11,35 +11,35 @@ class FeriadoController extends Controller
 {
     public $feriado;
     
-    public function init() {
+    public function __construct() {
         $this->feriado = new Feriado();
     } 
 
     public function listar()
     {
-        return Feriado::listar();
+        return $this->feriado->listar();
     }
     public function listarById(Request $request)
     {
-        return Feriado::listarById($request);
+        return $this->feriado->listarById($request);
     }
 
     public function listarFeriadoPorMes(Request $request)
     {
-        return Feriado::listarFeriadoPorMes($request);
+        return $this->feriado->listarFeriadoPorMes($request);
     }
     public function inserir(Request $request)
     {
-        return Feriado::inserir($request);
+        return $this->feriado->inserir($request);
     }
     public function excluir(Request $request)
     {
-        return Feriado::excluir($request);
+        return $this->feriado->excluir($request);
     }
     public function alterar(Request $request)
     {
         try {
-            Feriado::alterar($request);
+            $this->feriado->alterar($request);
         } catch (Exception $e) {
             return false;
         }
