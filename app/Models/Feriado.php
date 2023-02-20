@@ -29,7 +29,7 @@ class Feriado extends Model
         return $select;
     }
 
-    public function listarFeriadoPorMes($request)
+    public function listarByMesAno($request)
     {
         $select = DB::table('feriados')
             ->select(DB::raw('DAY(data) as dia, nome'))

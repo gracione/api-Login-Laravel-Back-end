@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/feriados/listar', [App\Http\Controllers\FeriadoController::class, 'listar']);
     Route::post('/feriados/listar-id', [App\Http\Controllers\FeriadoController::class, 'listarById']);
-    Route::post('/feriados/listarFeriadoPorMes', [App\Http\Controllers\FeriadoController::class, 'listarFeriadoPorMes']);
+    Route::post('/feriados/listar-mes-ano', [App\Http\Controllers\FeriadoController::class, 'listarByMesAno']);
     Route::post('/feriados/inserir', [App\Http\Controllers\FeriadoController::class, 'inserir']);
     Route::post('/feriados/alterar', [App\Http\Controllers\FeriadoController::class, 'alterar']);
     Route::post('/feriados/excluir', [App\Http\Controllers\FeriadoController::class, 'excluir']);

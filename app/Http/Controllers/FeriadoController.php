@@ -24,9 +24,9 @@ class FeriadoController extends Controller
         return $this->feriado->listarById($request);
     }
 
-    public function listarFeriadoPorMes(Request $request)
+    public function listarByMesAno(Request $request)
     {
-        return $this->feriado->listarFeriadoPorMes($request);
+        return $this->feriado->listarByMesAno($request);
     }
     public function inserir(Request $request)
     {
