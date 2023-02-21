@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\API\Constantes;
 use App\Models\Funcionarios;
 use App\Models\HorarioTrabalho;
+use App\Models\Horario;
 use App\Models\Util;
 use App\Models\Feriado;
 use App\Models\Folgas;
@@ -16,6 +17,66 @@ use App\Models\Folgas;
 class Horario extends Model
 {
     use HasFactory;
+    public $expediente;
+
+    public function __construct() {
+        $this->expediente = new HorarioTrabalho();
+    }
+    
+    public function listar($request)
+    {
+//        if (Feriado::verificarFeriado($request) || Folgas::verificarFolga($request)) {
+//            return false;
+//        }
+
+        $entradaSaida = $this->expediente->listarByIdFuncionario($request->idFuncionario);
+        $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
+        $inicioHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
+        $fimHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->fim_horario_de_almoco);
+        $saida2 = Util::converterHoraToMinuto($entradaSaida->fim_de_expediente);
+
+        $horariosDisponivel = [];
+        $tempoContado = $entrada1;
+        $tempoGasto =  Util::converterHoraToMinuto(Util::calcularTempoGasto($request->idFiltro, $request->idTratamento));
+        $horariosMarcados = $this->buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
+        $horariosMarcadosMinutos = [];
+
+        
+        $medida = 10;
+        for ($tempoContado = $entrada1; $tempoContado < $saida2; $tempoContado += $medida) {
+            $verificarDisponibilidade = true;
+            $inicio = $tempoContado;
+            $fim = $tempoContado+$tempoGasto;
+            foreach ($horariosMarcados as $value) {
+                $inicioMarcado = Util::converterHoraToMinuto($value->horario_inicio);
+                $fimMarcado = Util::converterHoraToMinuto($value->horario_fim);
+
+                if ($inicioMarcado >= $inicio
+                 || $inicioMarcado >= $fim) {
+                    if ($fimMarcado <= $inicio
+                    || $fimMarcado <= $fim) {
+                        $verificarDisponibilidade = false;
+                    }   
+                }
+
+                if ($fimMarcado >= $inicio
+                || $fimMarcado >= $fim) {
+                   if ($inicioMarcado <= $inicio
+                   || $inicioMarcado <= $fim) {
+                       $verificarDisponibilidade = false;
+                   }   
+               }
+            }
+
+            if($verificarDisponibilidade) {
+                $horariosDisponivel[]= [
+                'inicio' => Util::converterMinutosParaHora($inicio),
+                'fim' => Util::converterMinutosParaHora($fim)
+                ];
+            }
+        }
+        return $horariosDisponivel;
+    }
 
     public function inserir($ar)
     {
@@ -177,6 +238,6 @@ class Horario extends Model
             ->whereMonth('horario.horario_inicio', $dataExplode[1])
             ->whereYear('horario.horario_inicio', $dataExplode[0])
             ->get();
-        return $select;
+        return $select->toArray();
     }
 }

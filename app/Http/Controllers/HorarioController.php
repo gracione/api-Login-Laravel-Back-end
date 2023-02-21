@@ -73,7 +73,7 @@ class HorarioController extends Controller
 
     public function horariosDiponivel(Request $request)
     {
-        return $this->horario->horarios($request);
+        return $this->horario->listar($request);
     }
 
     public function verificarHorario($tempo, $horario)
