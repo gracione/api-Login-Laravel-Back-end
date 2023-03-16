@@ -20,7 +20,8 @@ class Feriado extends Model
             ->get();
         return $select->toArray();
     }
-    public function listarById($request)
+
+    public function getById($request)
     {
         $select = DB::table('feriados')
             ->select('*')

@@ -66,7 +66,7 @@ class Horario extends Model
             return false;
         }
 
-        $entradaSaida = HorarioTrabalho::listarByIdFuncionario($request->idFuncionario);
+        $entradaSaida = HorarioTrabalho::getByIdFuncionario($request->idFuncionario);
         $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
         $inicioHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
         $fimHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->fim_horario_de_almoco);

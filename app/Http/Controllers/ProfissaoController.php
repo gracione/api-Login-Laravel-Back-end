@@ -34,12 +34,12 @@ class ProfissaoController extends Controller
         return $this->profissao->alterar($request);
     }
 
-    public function listarById(Request $request)
+    public function getById(Request $request)
     {
-        return $this->profissao->listarById($request);
+        return $this->profissao->getById($request);
     }
-    public function listarByIdFuncionario(Request $request)
+    public function getByIdFuncionario(Request $request)
     {
-        return $this->profissao->listarByIdFuncionario($request);
+        return $this->profissao->getByIdFuncionario($request);
     }
 }

@@ -41,7 +41,7 @@ class Util
     public function calcularTempoGasto($filtros = 0, $tratamento = 0)
     {
         $filtros = Util::separarPorHashtag($filtros);
-        $tempoTratamento = Tratamentos::listarById($tratamento)->tempo_gasto;
+        $tempoTratamento = Tratamentos::getById($tratamento)->tempo_gasto;
         $porcentagemFiltro = Filtro::filtroById($filtros);
 
         foreach ($porcentagemFiltro as $value) {

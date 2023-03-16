@@ -32,7 +32,7 @@ class Tratamentos extends Model
         return $results;
     }
 
-    public function listarByIdProfissao($request)
+    public function getByIdProfissao($request)
     {
         $id = !empty($request->dados['id']) ? $request->dados['id'] : $request;
 
@@ -42,7 +42,7 @@ class Tratamentos extends Model
             ->get();
         return $select->toArray();
     }
-    public function listarById($request)
+    public function getById($request)
     {
         $id = !empty($request->id) ? $request->id : $request;
 
@@ -54,7 +54,7 @@ class Tratamentos extends Model
         if (!empty($result[0])) {
             $result[0]->tempo_gasto = Util::converterMinutosParaHora($result[0]->tempo_gasto);
             $result[0]->id_profissao = (int)$result[0]->id_profissao;
-            $result[0]->filtro = FiltroTipo::listarByIdTratamento($id);
+            $result[0]->filtro = FiltroTipo::getByIdTratamento($id);
         }
 
         return $result[0];

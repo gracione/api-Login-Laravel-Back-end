@@ -17,13 +17,13 @@ class FolgasController extends Controller
     {
         return $this->folgas->listar();
     }
-    public function listarById(Request $request)
+    public function getById(Request $request)
     {
-        return $this->folgas->listarById($request);
+        return $this->folgas->getById($request);
     }
-    public function listarByIdFuncionario(Request $request)
+    public function getByIdFuncionario(Request $request)
     {
-        return $this->folgas->listarByIdFuncionario($request);
+        return $this->folgas->getByIdFuncionario($request);
     }
     public function inserir(Request $request)
     {

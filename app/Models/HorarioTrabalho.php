@@ -24,7 +24,7 @@ class HorarioTrabalho extends Model
             ->get();
         return $select;
     }
-    public function listarById($request)
+    public function getById($request)
     {
         $idFuncionario = !empty($request->id) ? $request->id : $request;
 
@@ -44,7 +44,7 @@ class HorarioTrabalho extends Model
         $result = $select->toArray();
         return $result[0] ?? 0;
     }
-    public function listarByIdUsuario($idUsuario)
+    public function getByIdUsuario($idUsuario)
     {
         $select = DB::table('horario_trabalho')
             ->select(
@@ -62,7 +62,7 @@ class HorarioTrabalho extends Model
         return $result[0] ?? 0;
     }
 
-    public function listarByIdFuncionario($id)
+    public function getByIdFuncionario($id)
     {
         $select = DB::table('horario_trabalho')
             ->select(

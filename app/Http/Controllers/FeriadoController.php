@@ -20,9 +20,9 @@ class FeriadoController extends Controller
     {
         return $this->feriado->listar();
     }
-    public function listarById(Request $request)
+    public function getById(Request $request)
     {
-        return $this->feriado->listarById($request);
+        return $this->feriado->getById($request);
     }
 
     public function listarByMesAno(Request $request)

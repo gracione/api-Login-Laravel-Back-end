@@ -29,6 +29,6 @@ class FiltroController extends Controller
 
     public function listarFiltroTipoById(Request $request)
     {
-        return $this->filtroTipo->listarByIdTratamento($request);
+        return $this->filtroTipo->getByIdTratamento($request);
     }
 }

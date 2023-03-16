@@ -28,11 +28,11 @@ class HorariosTest extends TestCase
         $this->profissao = new Profissao();
         $listar = $this->funcionarios->listar();
         $usuario = array_pop($listar);
-        $listar = $this->profissao->listarByIdFuncionario($usuario);
+        $listar = $this->profissao->getByIdFuncionario($usuario);
         $profissao = array_pop($listar);
-        $listar = $this->tratamentos->listarByIdProfissao($profissao->id);
+        $listar = $this->tratamentos->getByIdProfissao($profissao->id);
         $tratamento = array_pop($listar);
-        $listar = $this->funcionarios->listarByIdUsuario($usuario);
+        $listar = $this->funcionarios->getByIdUsuario($usuario);
         $funcionario = array_pop($listar);
 
         $this->horarios = new Horario();
