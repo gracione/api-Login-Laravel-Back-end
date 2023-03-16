@@ -51,7 +51,7 @@ class Tratamentos extends Model
             ->where('tratamento.id', '=', $id)
             ->get();
         $result = $select->toArray();
-        if(!empty($result[0])){
+        if (!empty($result[0])) {
             $result[0]->tempo_gasto = Util::converterMinutosParaHora($result[0]->tempo_gasto);
             $result[0]->id_profissao = (int)$result[0]->id_profissao;
             $result[0]->filtro = FiltroTipo::listarByIdTratamento($id);
@@ -69,11 +69,11 @@ class Tratamentos extends Model
         $idTratamento = DB::table('tratamento')->insertGetId($tratamento);
 
         foreach ($request->tipoDeFiltro as $key => $value) {
-            if($value[0]){
+            if ($value[0]) {
                 $nomeFiltro = $request->tipoFiltro[$key];
                 $filtroTipo = ['nome' => $nomeFiltro, 'id_tratamento' => $idTratamento];
                 $idTipoFiltro = DB::table('filtro_tipo')->insertGetId($filtroTipo);
-    
+
                 foreach ($value as $valor) {
                     $filtro = ['nome' => $valor[0], 'porcentagem_tempo' => $valor[1], 'id_filtro_tipo' => $idTipoFiltro];
                     DB::table('filtro')->insert($filtro);
@@ -92,7 +92,7 @@ class Tratamentos extends Model
             ->get();
 
         foreach ($filtroTipo as $value) {
-            if(!empty($value->id)) {
+            if (!empty($value->id)) {
                 DB::table('filtro')->where('id_filtro_tipo', $value->id)->delete();
             }
         }
@@ -107,34 +107,32 @@ class Tratamentos extends Model
         $dadosParaAlterar['nome'] = !empty($request->nomeTratamento) ? $request->nomeTratamento : null;
         $dadosParaAlterar['tempo_gasto'] = !empty($request->tempoGasto) ? Util::converterHoraToMinuto($request->tempoGasto) : null;
         $dadosParaAlterar['id_profissao'] = !empty($request->profissao) ? $request->profissao : null;
-        
 
-        $filtroTipo = !empty($request->filtroTipo) ? $request->filtroTipo: [];
+
+        $filtroTipo = !empty($request->filtroTipo) ? $request->filtroTipo : [];
 
         foreach ($filtroTipo as $key => $value) {
-            if(!empty($value['id'])) {
+            if (!empty($value['id'])) {
                 DB::table('filtro_tipo')
-                ->where('id',$value['id'])
-                ->update(array_filter(['nome'=> $value['nome']]));
+                    ->where('id', $value['id'])
+                    ->update(array_filter(['nome' => $value['nome']]));
             }
         }
-        $filtro = !empty($request->filtro) ? array_filter($request->filtro): [];
+        $filtro = !empty($request->filtro) ? array_filter($request->filtro) : [];
         foreach ($filtro as $key => $value) {
-            if(!empty($value['id'])) {
+            if (!empty($value['id'])) {
                 DB::table('filtro')
-                ->where('id',$value['id'])
-                ->update(array_filter($value));
+                    ->where('id', $value['id'])
+                    ->update(array_filter($value));
             }
-
         }
-        
-        if(!empty(array_filter($dadosParaAlterar))) {
+
+        if (!empty(array_filter($dadosParaAlterar))) {
             DB::table('tratamento')
-            ->where('id',$request->id)
-            ->update(array_filter($dadosParaAlterar));
+                ->where('id', $request->id)
+                ->update(array_filter($dadosParaAlterar));
         }
 
         return true;
     }
-
 }

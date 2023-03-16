@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\App;
 class FeriadoController extends Controller
 {
     public $feriado;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->feriado = new Feriado();
-    } 
+    }
 
     public function listar()
     {
@@ -45,6 +46,5 @@ class FeriadoController extends Controller
         }
 
         return true;
-
     }
 }

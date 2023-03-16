@@ -10,7 +10,8 @@ class ServicosController extends Controller
 {
     public $servicos;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->servicos = new Servicos();
     }
 
@@ -18,5 +19,4 @@ class ServicosController extends Controller
     {
         return $this->servicos->listar($request);
     }
-
 }

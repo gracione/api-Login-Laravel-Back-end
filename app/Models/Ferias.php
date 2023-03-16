@@ -9,17 +9,19 @@ use Illuminate\Support\Facades\DB;
 class Ferias extends Model
 {
     use HasFactory;
-    public function listar ($request) {
+    public function listar($request)
+    {
         $select = DB::table('ferias')
-        ->select('*')
-        ->get();
+            ->select('*')
+            ->get();
         return $select;
     }
-    public function inserir ($request) {    
-         DB::table('ferias')->insert([
-             'inicio' => $request->inicio,
-             'fim' => $request->fim,
-             'id_funcionario' => $request->id_funcionario
+    public function inserir($request)
+    {
+        DB::table('ferias')->insert([
+            'inicio' => $request->inicio,
+            'fim' => $request->fim,
+            'id_funcionario' => $request->id_funcionario
         ]);
 
         return true;
@@ -29,5 +31,4 @@ class Ferias extends Model
         DB::table('ferias')->where('id', $request->id)->delete();
         return 'deletado';
     }
-
 }

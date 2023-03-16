@@ -9,7 +9,8 @@ class HorarioTrabalhoController extends Controller
 {
     public $expediente;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->expediente = new HorarioTrabalho();
     }
 

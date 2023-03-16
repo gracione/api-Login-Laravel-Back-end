@@ -10,15 +10,16 @@ class HorarioController extends Controller
 {
     public $horario;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->horario = new Horario();
     }
 
     public function inserir(Request $request)
     {
         $horario = $request->horario;
-        if(!empty($request->modoTradicional)) {
-            if($this->horario->verificarHorarioModoTradicional($request)){
+        if (!empty($request->modoTradicional)) {
+            if ($this->horario->verificarHorarioModoTradicional($request)) {
                 $horario = $request->modoTradicional;
             } else {
                 return false;
@@ -35,7 +36,7 @@ class HorarioController extends Controller
         $ar['id_tratamento'] = $request->idTratamento;
         $ar['id_funcionario'] = $request->idFuncionario;
         $ar['confirmado'] = false;
-        if(!empty($request->nomeCliente)){
+        if (!empty($request->nomeCliente)) {
             $ar['nome_cliente'] = $request->nomeCliente;
             $ar['confirmado'] = true;
         } else {
@@ -49,7 +50,7 @@ class HorarioController extends Controller
     {
         return $this->horario->excluir($request);
     }
-    
+
     public function confirmar(Request $request)
     {
         return $this->horario->confirmar($request);

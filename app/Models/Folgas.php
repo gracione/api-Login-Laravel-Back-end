@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\Util;
 
-
 class Folgas extends Model
 {
     use HasFactory;

@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\API\Constantes;
-//use DB;
 
 class Funcionarios extends Model
 {

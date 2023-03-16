@@ -26,7 +26,7 @@ class Util
     {
         $valor = Util::converterHoraToMinuto($valor);
         $valor = $valor + ($valor / 100 * $porcentagem);
-        
+
         return Util::converterMinutosParaHora($valor);
     }
 
@@ -55,5 +55,4 @@ class Util
     {
         return strtotime('1970-01-01 ' . $horario . 'UTC');
     }
-
 }

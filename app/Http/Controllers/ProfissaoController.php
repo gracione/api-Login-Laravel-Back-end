@@ -9,7 +9,8 @@ class ProfissaoController extends Controller
 {
     public $profissao;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->profissao = new Profissao();
     }
 

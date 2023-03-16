@@ -41,17 +41,17 @@ class Profissao extends Model
         $result = $select->toArray();
 
         return $result;
-    }   
+    }
 
     public function excluir($request)
-    {        
+    {
         try {
             DB::table('profissao')->delete($request->id);
         } catch (Exception $e) {
             return false;
         }
 
-        return true ;
+        return true;
     }
 
 

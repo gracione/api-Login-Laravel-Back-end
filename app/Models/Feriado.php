@@ -49,7 +49,7 @@ class Feriado extends Model
     {
         $data = explode('-', $request->data);
         $select = DB::table('feriados')
-            ->select(DB::raw('DAY(data) as dia, nome','feriados as feriados.id'))
+            ->select(DB::raw('DAY(data) as dia, nome', 'feriados as feriados.id'))
             ->whereMonth('feriados.data', $data[1])
             ->whereYear('feriados.data', $data[0])
             ->whereDay('feriados.data', $data[2])
@@ -76,7 +76,7 @@ class Feriado extends Model
     public function alterar($request)
     {
         foreach ($request->request as $key => $value) {
-            if($value){
+            if ($value) {
                 $ar[$key] = $value;
             }
         }

@@ -13,7 +13,8 @@ class FuncionariosController extends Controller
     public $expediente;
     public $profissao;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->funcionarios = new Funcionarios();
         $this->expediente = new HorarioTrabalho();
         $this->profissao = new Profissao();
@@ -27,7 +28,7 @@ class FuncionariosController extends Controller
     {
         return $this->funcionarios->listarFuncionarios($request);
     }
-    
+
     public function listarFuncionariosEprofissao()
     {
         return $this->funcionarios->listarFuncionariosEprofissao();

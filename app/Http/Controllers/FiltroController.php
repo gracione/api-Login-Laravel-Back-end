@@ -10,22 +10,25 @@ class FiltroController extends Controller
 {
     public $filtro;
     public $filtroTipo;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->filtro = new Filtro();
         $this->filtroTipo = new FiltroTipo();
     }
 
-    public function listar () {
+    public function listar()
+    {
         return $this->filtro->listar();
     }
 
-    public function listarFiltro (Request $request) {
+    public function listarFiltro(Request $request)
+    {
         return $this->filtro->listarFiltro($request);
     }
 
-    public function listarFiltroTipoById (Request $request) {
+    public function listarFiltroTipoById(Request $request)
+    {
         return $this->filtroTipo->listarByIdTratamento($request);
     }
-    
 }
