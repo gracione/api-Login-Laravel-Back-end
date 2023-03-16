@@ -7,25 +7,28 @@ use Illuminate\Http\Request;
 
 class FolgasController extends Controller
 {
+    public $folgas;
+
     public function __construct() {
+        $this->folgas = new Folgas();
     }
     public function listar () {
-        return Folgas::listar();
+        return $this->folgas->listar();
     }
     public function listarById (Request $request) {
-        return Folgas::listarById($request);
+        return $this->folgas->listarById($request);
     }
     public function listarByIdFuncionario (Request $request) {
-        return Folgas::listarByIdFuncionario($request);
+        return $this->folgas->listarByIdFuncionario($request);
     }
     public function inserir (Request $request) {
-        return Folgas::inserir($request);
+        return $this->folgas->inserir($request);
     }
     public function excluir (Request $request) {
-        return Folgas::excluir($request);
+        return $this->folgas->excluir($request);
     }
     public function alterar (Request $request) {
-        return Folgas::alterar($request);
+        return $this->folgas->alterar($request);
     }
 
 

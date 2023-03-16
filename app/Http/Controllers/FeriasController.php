@@ -15,14 +15,14 @@ class FeriasController extends Controller
 
     public function listar()
     {
-        return Ferias::listar();
+        return $this->ferias->listar();
     }
     public function inserir(Request $request)
     {
-        return Ferias::inserir($request);
+        return $this->ferias->inserir($request);
     }
     public function excluir (Request $request) {
-        return Ferias::excluir($request);
+        return $this->ferias->excluir($request);
     }
 
 }
