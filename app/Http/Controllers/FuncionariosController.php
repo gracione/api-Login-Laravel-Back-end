@@ -13,7 +13,8 @@ class FuncionariosController extends Controller
     public $expediente;
     public $profissao;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->funcionarios = new Funcionarios();
         $this->expediente = new HorarioTrabalho();
         $this->profissao = new Profissao();
@@ -27,18 +28,18 @@ class FuncionariosController extends Controller
     {
         return $this->funcionarios->listarFuncionarios($request);
     }
-    
+
     public function listarFuncionariosEprofissao()
     {
         return $this->funcionarios->listarFuncionariosEprofissao();
     }
 
-    public function listarById(Request $request)
+    public function getById(Request $request)
     {
         $ar = [];
-        $ar['expediente'] = $this->expediente->listarById($request);
-        $ar['funcionario'] = $this->funcionarios->listarByIdFuncionario($request);
-        $ar['profissao'] = $this->profissao->listarByIdFuncionario($request);
+        $ar['expediente'] = $this->expediente->getById($request);
+        $ar['funcionario'] = $this->funcionarios->getByIdFuncionario($request);
+        $ar['profissao'] = $this->profissao->getByIdFuncionario($request);
         $ar['profissoes'] = $this->profissao->listar();
         return $ar;
     }

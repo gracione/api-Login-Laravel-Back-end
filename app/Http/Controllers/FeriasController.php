@@ -8,21 +8,22 @@ use App\Models\Ferias;
 class FeriasController extends Controller
 {
     public $ferias;
-    
-    public function init() {
+
+    public function init()
+    {
         $this->ferias = new Ferias();
     }
 
     public function listar()
     {
-        return Ferias::listar();
+        return $this->ferias->listar();
     }
     public function inserir(Request $request)
     {
-        return Ferias::inserir($request);
+        return $this->ferias->inserir($request);
     }
-    public function excluir (Request $request) {
-        return Ferias::excluir($request);
+    public function excluir(Request $request)
+    {
+        return $this->ferias->excluir($request);
     }
-
 }

@@ -9,21 +9,26 @@ use App\Models\FiltroTipo;
 class FiltroController extends Controller
 {
     public $filtro;
-    
-    public function __construct() {
+    public $filtroTipo;
+
+    public function __construct()
+    {
         $this->filtro = new Filtro();
+        $this->filtroTipo = new FiltroTipo();
     }
 
-    public function listar () {
-        return Filtro::listar();
+    public function listar()
+    {
+        return $this->filtro->listar();
     }
 
-    public function listarFiltro (Request $request) {
-        return Filtro::listarFiltro($request);
+    public function listarFiltro(Request $request)
+    {
+        return $this->filtro->listarFiltro($request);
     }
 
-    public function listarFiltroTipoById (Request $request) {
-        return FiltroTipo::listarByIdTratamento($request);
+    public function listarFiltroTipoById(Request $request)
+    {
+        return $this->filtroTipo->getByIdTratamento($request);
     }
-    
 }

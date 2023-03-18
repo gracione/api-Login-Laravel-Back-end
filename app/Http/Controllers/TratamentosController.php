@@ -21,15 +21,15 @@ class TratamentosController extends Controller
     {
         return $this->tratamentos->listar();
     }
-    public function listarById(Request $request)
+    public function getById(Request $request)
     {
         $ar['profissoes'] = $this->profissao->listar();
-        $ar['tratamentos'] = $this->tratamentos->listarById($request);
+        $ar['tratamentos'] = $this->tratamentos->getById($request);
         return $ar;
     }
-    public function listarByIdProfissao(Request $request)
+    public function getByIdProfissao(Request $request)
     {
-        return $this->tratamentos->listarByIdProfissao($request);
+        return $this->tratamentos->getByIdProfissao($request);
     }
     public function inserir(Request $request)
     {

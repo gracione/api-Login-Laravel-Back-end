@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\Util;
 
-
 class Folgas extends Model
 {
     use HasFactory;
@@ -29,7 +28,7 @@ class Folgas extends Model
             ->get();
         return $select->toArray();
     }
-    public function listarById($request)
+    public function getById($request)
     {
         $select = DB::table('folga')
             ->join('funcionario', 'funcionario.id', '=', 'folga.id_funcionario')
@@ -48,7 +47,7 @@ class Folgas extends Model
         return $select;
     }
 
-    public function listarByIdFuncionario($request)
+    public function getByIdFuncionario($request)
     {
         $idFuncionario = $request->dados['idFuncionario'];
         $select = DB::table('folga')

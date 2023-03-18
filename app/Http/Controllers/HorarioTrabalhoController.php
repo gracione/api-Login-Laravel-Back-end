@@ -9,7 +9,8 @@ class HorarioTrabalhoController extends Controller
 {
     public $expediente;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->expediente = new HorarioTrabalho();
     }
 
@@ -17,9 +18,9 @@ class HorarioTrabalhoController extends Controller
     {
         return $this->expediente->listar();
     }
-    public function listarById(Request $request)
+    public function getById(Request $request)
     {
-        return $this->expediente->listarByIdUsuario($request->id);
+        return $this->expediente->getByIdUsuario($request->id);
     }
 
     public function inserir(Request $request)

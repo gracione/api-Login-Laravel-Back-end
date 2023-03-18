@@ -11,11 +11,13 @@ use App\Models\Sexo;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    public function verificarTipoPerfil() {
+    public function verificarTipoPerfil()
+    {
         return true;
     }
 
-    public function dadosUsuario() {
+    public function dadosUsuario()
+    {
         return Sexo::all();
     }
 }

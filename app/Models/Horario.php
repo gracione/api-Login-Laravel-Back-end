@@ -94,7 +94,7 @@ class Horario extends Model
         try {
             DB::table('horario')->delete($request->id);
         } catch (Exception $e) {
-            return false ;
+            return false;
         }
 
         return true;
@@ -115,7 +115,7 @@ class Horario extends Model
 
 
     public function verificarHorarioModoTradicional($request)
-    {           
+    {
         foreach (Horario::horarios((object)$request) as $key => $value) {
             return true;
         }
@@ -127,7 +127,7 @@ class Horario extends Model
             return false;
         }
 
-        $entradaSaida = HorarioTrabalho::listarByIdFuncionario($request->idFuncionario);
+        $entradaSaida = HorarioTrabalho::getByIdFuncionario($request->idFuncionario);
         $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
         $inicioHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
         $fimHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->fim_horario_de_almoco);
@@ -139,9 +139,9 @@ class Horario extends Model
         $horariosMarcados = Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
         $horariosMarcadosMinutos = [];
 
-        if(!empty($request->modoTradicional)){
+        if (!empty($request->modoTradicional)) {
             $horarioTradicionalInicio = Util::converterHoraToMinuto($request->modoTradicional);
-            $horarioTradicionalFim = $horarioTradicionalInicio+$tempoGasto-1;
+            $horarioTradicionalFim = $horarioTradicionalInicio + $tempoGasto - 1;
         }
 
         foreach ($horariosMarcados as $value) {
@@ -170,7 +170,7 @@ class Horario extends Model
                 }
             }
 
-            if(!empty($request->modoTradicional) && $verificarDisponibilidade){
+            if (!empty($request->modoTradicional) && $verificarDisponibilidade) {
                 $verificarDisponibilidade = false;
                 if ($horarioTradicionalInicio >= $inicio && $horarioTradicionalInicio < $fim) {
                     $verificarDisponibilidade = true;
@@ -185,7 +185,6 @@ class Horario extends Model
                     'inicio' => Util::converterMinutosParaHora($inicio),
                     'marcado' => 'nao'
                 ];
-
             }
 
             $verificarDisponibilidade = true;
@@ -213,7 +212,7 @@ class Horario extends Model
             ->join('users as func', 'func.id', '=', 'funcionario.id_usuario')
             ->join('tratamento as t', 't.id', '=', 'horario.id_tratamento');
 
-            if ($request->dados['tipoUsuario'] == Constantes::CLIENTE) {
+        if ($request->dados['tipoUsuario'] == Constantes::CLIENTE) {
             $select = $select
                 ->where('horario.id_cliente', $request->dados['idUsuario'])->get();
         } else if ($request->dados['tipoUsuario'] == Constantes::FUNCIONARIO) {

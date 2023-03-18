@@ -20,7 +20,7 @@ class Profissao extends Model
         return $select->toArray();
     }
 
-    public function listarById($request)
+    public function getById($request)
     {
         $select = DB::table('profissao')
             ->select('profissao.nome as nome')
@@ -31,7 +31,7 @@ class Profissao extends Model
         return $result;
     }
 
-    public function listarByIdFuncionario($request)
+    public function getByIdFuncionario($request)
     {
         $select = DB::table('profissao')
             ->select('profissao.nome as nome', 'profissao.id as id', 'funcionario.id_usuario', 'funcionario.id as id_funcionario')
@@ -41,17 +41,17 @@ class Profissao extends Model
         $result = $select->toArray();
 
         return $result;
-    }   
+    }
 
     public function excluir($request)
-    {        
+    {
         try {
             DB::table('profissao')->delete($request->id);
         } catch (Exception $e) {
             return false;
         }
 
-        return true ;
+        return true;
     }
 
 

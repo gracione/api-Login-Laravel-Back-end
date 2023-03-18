@@ -10,18 +10,19 @@ use Illuminate\Support\Facades\App;
 class FeriadoController extends Controller
 {
     public $feriado;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->feriado = new Feriado();
-    } 
+    }
 
     public function listar()
     {
         return $this->feriado->listar();
     }
-    public function listarById(Request $request)
+    public function getById(Request $request)
     {
-        return $this->feriado->listarById($request);
+        return $this->feriado->getById($request);
     }
 
     public function listarByMesAno(Request $request)
@@ -45,6 +46,5 @@ class FeriadoController extends Controller
         }
 
         return true;
-
     }
 }

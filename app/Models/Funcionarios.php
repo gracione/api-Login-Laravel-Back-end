@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\API\Constantes;
-//use DB;
 
 class Funcionarios extends Model
 {
@@ -78,7 +77,7 @@ class Funcionarios extends Model
         return $funcionarios;
     }
 
-    public function listarByIdUsuario($request)
+    public function getByIdUsuario($request)
     {
         $id = !empty($request->id) ? $request->id : $request;
 
@@ -112,7 +111,7 @@ class Funcionarios extends Model
         return $ar->toArray()[0]->id ?? null;
     }
 
-    public function listarByIdFuncionario($request)
+    public function getByIdFuncionario($request)
     {
         $id = !empty($request->id) ? $request->id : $request;
 
@@ -200,7 +199,7 @@ class Funcionarios extends Model
                 if (!empty($value)) {
                     if ($value == '-1') {
 
-                        if (count(Funcionarios::listarByIdUsuario($ar['id'])) > 1) {
+                        if (count(Funcionarios::getByIdUsuario($ar['id'])) > 1) {
                             DB::table('funcionario')
                                 ->where('id', $key)
                                 ->delete();
