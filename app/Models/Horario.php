@@ -41,7 +41,6 @@ class Horario extends Model
         $horariosMarcados = $this->buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
         $horariosMarcadosMinutos = [];
 
-        
         $medida = 10;
         for ($tempoContado = $entrada1; $tempoContado < $saida2; $tempoContado += $medida) {
             $verificarDisponibilidade = true;
