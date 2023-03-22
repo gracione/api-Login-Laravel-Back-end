@@ -23,9 +23,10 @@ class TratamentosController extends Controller
     }
     public function getById(Request $request)
     {
-        $ar['profissoes'] = $this->profissao->listar();
-        $ar['tratamentos'] = $this->tratamentos->getById($request);
-        return $ar;
+        return [
+            'profissoes' => $this->profissao->listar(),
+            'tratamentos' => $this->tratamentos->getById($request)
+        ];
     }
     public function getByIdProfissao(Request $request)
     {

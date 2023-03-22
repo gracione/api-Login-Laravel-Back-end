@@ -104,22 +104,21 @@ class Tratamentos extends Model
 
     public function alterar($request)
     {
-        $dadosParaAlterar['nome'] = !empty($request->nomeTratamento) ? $request->nomeTratamento : null;
-        $dadosParaAlterar['tempo_gasto'] = !empty($request->tempoGasto) ? Util::converterHoraToMinuto($request->tempoGasto) : null;
-        $dadosParaAlterar['id_profissao'] = !empty($request->profissao) ? $request->profissao : null;
+        $dadosParaAlterar = [
+        'nome' => $request->nomeTratamento??null ,
+        'tempo_gasto' => !empty($request->tempoGasto) ? Util::converterHoraToMinuto($request->tempoGasto) : null,
+        'id_profissao' => $request->profissao??null
+        ];
 
-
-        $filtroTipo = !empty($request->filtroTipo) ? $request->filtroTipo : [];
-
-        foreach ($filtroTipo as $key => $value) {
+        foreach ($request->filtroTipo??[] as $key => $value) {
             if (!empty($value['id'])) {
                 DB::table('filtro_tipo')
                     ->where('id', $value['id'])
                     ->update(array_filter(['nome' => $value['nome']]));
             }
         }
-        $filtro = !empty($request->filtro) ? array_filter($request->filtro) : [];
-        foreach ($filtro as $key => $value) {
+        
+        foreach (array_filter($request->filtro)??[] as $key => $value) {
             if (!empty($value['id'])) {
                 DB::table('filtro')
                     ->where('id', $value['id'])
