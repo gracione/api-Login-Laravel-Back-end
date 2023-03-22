@@ -36,12 +36,12 @@ class FuncionariosController extends Controller
 
     public function getById(Request $request)
     {
-        $ar = [];
-        $ar['expediente'] = $this->expediente->getById($request);
-        $ar['funcionario'] = $this->funcionarios->getByIdFuncionario($request);
-        $ar['profissao'] = $this->profissao->getByIdFuncionario($request);
-        $ar['profissoes'] = $this->profissao->listar();
-        return $ar;
+        return [
+            'expediente' => $this->expediente->getById($request),
+            'funcionario' => $this->funcionarios->getByIdFuncionario($request),
+            'profissao' => $this->profissao->getByIdFuncionario($request),
+            'profissoes' => $this->profissao->listar()
+        ];
     }
     public function inserir(Request $request)
     {
