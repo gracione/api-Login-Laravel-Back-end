@@ -66,12 +66,12 @@ class AuthController extends Controller
         return auth()->user();
     }
 
-    public function logout()
+    public function sair()
     {
         auth()->user()->tokens()->delete();
 
         return [
-            'message' => 'You have successfully logged out and the token was successfully deleted'
+            'message' => 'Você saiu com sucesso e o token foi excluído com sucesso'
         ];
     }
 

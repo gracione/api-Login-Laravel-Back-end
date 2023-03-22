@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/tratamentos/alterar', [App\Http\Controllers\TratamentosController::class, 'alterar']);
     Route::post('/tratamentos/excluir', [App\Http\Controllers\TratamentosController::class, 'excluir']);
 
-    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
+    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'sair']);
     Route::post('/filtro', [App\Http\Controllers\FiltroController::class, 'listar']);
     Route::post('/filtro/listar', [App\Http\Controllers\FiltroController::class, 'listarFiltro']);
     Route::post('/servicos/listar', [App\Http\Controllers\ServicosController::class, 'listar']);
