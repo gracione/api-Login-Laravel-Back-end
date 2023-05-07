@@ -1,0 +1,14 @@
+version: "3"
+
+services: 
+  app:
+    build: .
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    container_name: api-login-laravel-back-end
+    ports:
+      - "8015:80"
+    volumes:
+      - .:/var/www/html
+    command: >
+      sh -c "service apache2 start && redis-server --protected-mode no"

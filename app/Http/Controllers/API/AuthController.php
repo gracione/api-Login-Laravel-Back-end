@@ -49,7 +49,34 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if(!empty($request['googleId'])){
+            $idGoogle = $request['googleId'];
+//            $userGoogle = User::where('id_google', $idGoogle)->firstOrFail();
+
+            $userGoogle = DB::table('users')
+            ->where('id_google', $idGoogle)
+            ->get();
+
+            if (empty($userGoogle['0']->email)) {
+                $user = User::create([
+                    'nome' => $request['name'],
+                    'numero' => '23',
+                    'tipo_usuario' => '3',
+                    'id_sexo' => 3,
+                    'email' => $request['email'],
+                    'password' => Hash::make('123'),
+                    'id_google' => $idGoogle
+                ]);
+        
+                DB::table('cliente')->insert([
+                    'id_usuario' => $user['id']
+                ]);
+        
+                $token = $user->createToken('auth_token')->plainTextToken;
+        
+                return response()->json(['tipo_usuario' => $user['tipo_usuario'], 'nome' => $user['nome'], 'id_usuario' => $user['id'], 'data' => $user, 'token' => $token, 'token_type' => 'Bearer',]);        
+            }
+        } else if (!Auth::attempt($request->only('email', 'password'))) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
         }

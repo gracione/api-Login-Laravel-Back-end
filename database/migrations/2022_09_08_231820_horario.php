@@ -77,6 +77,10 @@ class Horario extends Migration
                 'id' => '2',
                 'nome' => 'feminino'
             ]);
+            DB::table('sexo')->insert([
+                'id' => '3',
+                'nome' => 'outro'
+            ]);
 
             DB::table('servico')->insert([
                 'id' => '2',
