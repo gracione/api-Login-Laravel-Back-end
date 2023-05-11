@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 use Auth;
 use Validator;
 use App\Models\User;
-use App\Models\Estabelecimento;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\API\Constantes;
 use Illuminate\Support\Facades\DB;

@@ -16,6 +16,8 @@ class Profissoes extends Migration
         Schema::create('profissao', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
+            $table->date('created_at');
+            $table->date('updated_at');
         });
     }
 
