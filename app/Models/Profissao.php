@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Exception;
+use Funcionario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +14,8 @@ class Profissao extends Model
 
     public function listar()
     {
-        return $this->select('nome', 'id')->get()->toArray();
+        return $this->select('nome as profissão', 'id')->get()->toArray();
+
     }
 
     public function getById($request)
@@ -27,7 +30,6 @@ class Profissao extends Model
             ->where('funcionario.id_usuario', $request->id)
             ->get()->toArray();
     }
-
     public function excluir($request)
     {
         try {
