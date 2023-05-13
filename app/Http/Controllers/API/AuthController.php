@@ -64,7 +64,8 @@ class AuthController extends Controller
                     'id_sexo' => 3,
                     'email' => $request['email'],
                     'password' => Hash::make('123'),
-                    'id_google' => $idGoogle
+                    'id_google' => $idGoogle,
+                    'img_url' => $request['imageUrl']
                 ]);
         
                 DB::table('cliente')->insert([
@@ -73,7 +74,7 @@ class AuthController extends Controller
         
                 $token = $user->createToken('auth_token')->plainTextToken;
         
-                return response()->json(['tipo_usuario' => $user['tipo_usuario'], 'nome' => $user['nome'], 'id_usuario' => $user['id'], 'data' => $user, 'token' => $token, 'token_type' => 'Bearer',]);        
+                return response()->json(['tipo_usuario' => $user['tipo_usuario'], 'nome' => $user['nome'], 'id_usuario' => $user['id'], 'data' => $user,'img_url' => $user['img_url'], 'token' => $token, 'token_type' => 'Bearer',]);        
             }
         } else if (!Auth::attempt($request->only('email', 'password'))) {
             return response()
@@ -84,7 +85,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['tipo_usuario' => $user['tipo_usuario'], 'nome' => $user['nome'], 'id_usuario' => $user['id'], 'token' => $token]);
+        return response()->json(['tipo_usuario' => $user['tipo_usuario'], 'nome' => $user['nome'], 'id_usuario' => $user['id'],'img_url' => $user['img_url'], 'token' => $token]);
     }
 
     public function dadosConfiguracao(Request $request)
