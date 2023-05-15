@@ -26,10 +26,10 @@ class HorarioController extends Controller
             }
         }
 
-        $tempoGastoEmHora =  Util::calcularTempoGasto($request->idFiltro, $request->idTratamento);
-        $tempoGastoEmMinutos = Util::converterHoraToMinuto($tempoGastoEmHora);
-        $horarioInicioMinutos = Util::converterHoraToMinuto($horario);
-        $horarioFim = Util::converterMinutosParaHora($horarioInicioMinutos + $tempoGastoEmMinutos - 1);
+        $tempoGastoEmHora =  Util::calculateTimeSpent($request->idFiltro, $request->idTratamento);
+        $tempoGastoEmMinutos = Util::convertHoursToMinutes($tempoGastoEmHora);
+        $horarioInicioMinutos = Util::convertHoursToMinutes($horario);
+        $horarioFim = Util::convertMinutesToHours($horarioInicioMinutos + $tempoGastoEmMinutos - 1);
         $ar['horario_inicio'] = $request->data . " " . $horario . ":00";
         $ar['horario_fim'] = $request->data . " " . $horarioFim . ":00";
         $ar['id_cliente'] = $request->idCliente;
@@ -69,7 +69,7 @@ class HorarioController extends Controller
     public function tempoGasto(Request $request)
     {
         return $request->filtros == 0 && $request->tratamento == 0 ? 0 :
-            Util::calcularTempoGasto($request->filtros, $request->tratamento);
+            Util::calculateTimeSpent($request->filtros, $request->tratamento);
     }
 
     public function horariosDiponivel(Request $request)
@@ -80,9 +80,9 @@ class HorarioController extends Controller
     public function verificarHorario($tempo, $horario)
     {
         foreach ($horario as $key => $value) {
-            $tempoSeg = Util::converterHorasEmSegundos($tempo);
-            $inicio = Util::converterHorasEmSegundos($value['horario_inicio']);
-            $fim = Util::converterHorasEmSegundos($value['horario_fim']);
+            $tempoSeg = Util::convertHoursToSeconds($tempo);
+            $inicio = Util::convertHoursToSeconds($value['horario_inicio']);
+            $fim = Util::convertHoursToSeconds($value['horario_fim']);
             if ($inicio <= $tempoSeg and $fim >= $tempoSeg) {
                 return false;
             }

@@ -4,55 +4,53 @@ namespace App\Models;
 
 class Util
 {
-    public function converterMinutosParaHora($tempoMinutos)
+    public static function convertMinutesToHours($minutes): string
     {
-        $hora = floor($tempoMinutos / 60);
-        $hora = $hora < 10 ? "0$hora" : $hora;
-        $minutos = $tempoMinutos % 60;
-        $minutos = $minutos < 10 ? "0$minutos" : $minutos;
-        return "$hora:$minutos";
-    }
-    public function converterHoraToMinuto($hora)
-    {
-        $arrayHm = explode(":", $hora);
-        $arrayHm[0];
-        $arrayHm[1];
-        $minutos = ($arrayHm[0] * 60);
-        $minutos = $minutos + $arrayHm[1];
+        $hours = floor($minutes / 60);
+        $minutes = $minutes % 60;
 
-        return $minutos;
-    }
-    public function almentarPorcentagem($valor, $porcentagem)
-    {
-        $valor = Util::converterHoraToMinuto($valor);
-        $valor = $valor + ($valor / 100 * $porcentagem);
-
-        return Util::converterMinutosParaHora($valor);
+        return sprintf("%02d:%02d", $hours, $minutes);
     }
 
-    public function separarPorHashtag($valor)
+    public static function convertHoursToMinutes($hours): int
     {
-        if (is_array($valor)) {
-            return $valor;
-        }
-        return explode(',', $valor);
+        [$hours, $minutes] = explode(":", $hours);
+
+        return ($hours * 60) + $minutes;
     }
 
-    public function calcularTempoGasto($filtros = 0, $tratamento = 0)
+    public static function increasePercentage($value, $percentage): string
     {
-        $filtros = Util::separarPorHashtag($filtros);
-        $tempoTratamento = Tratamentos::getById($tratamento)->tempo_gasto;
-        $porcentagemFiltro = Filtro::filtroById($filtros);
+        $valueInMinutes = self::convertHoursToMinutes($value);
+        $increasedValue = $valueInMinutes + ($valueInMinutes / 100 * $percentage);
 
-        foreach ($porcentagemFiltro as $value) {
-            $tempoTratamento = Util::almentarPorcentagem($tempoTratamento, $value->porcentagem_tempo);
+        return self::convertMinutesToHours($increasedValue);
+    }
+
+    public static function splitByHashtag($value): array
+    {
+        if (is_array($value)) {
+            return $value;
         }
 
-        return $tempoTratamento;
+        return explode(',', $value);
     }
 
-    public function converterHorasEmSegundos($horario)
+    public static function calculateTimeSpent($filters = 0, $treatment = 0): string
     {
-        return strtotime('1970-01-01 ' . $horario . 'UTC');
+        $filters = self::splitByHashtag($filters);
+        $treatmentTime = Tratamentos::getById($treatment)->tempo_gasto;
+        $filterPercentage = Filtro::filtroById($filters);
+
+        foreach ($filterPercentage as $value) {
+            $treatmentTime = self::increasePercentage($treatmentTime, $value->porcentagem_tempo);
+        }
+
+        return $treatmentTime;
+    }
+
+    public static function convertHoursToSeconds($time): int
+    {
+        return strtotime('1970-01-01 ' . $time . 'UTC');
     }
 }

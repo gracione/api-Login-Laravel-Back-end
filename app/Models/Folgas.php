@@ -13,7 +13,7 @@ class Folgas extends Model
 
     public function listar()
     {
-        $select = DB::table('folga')
+        return DB::table('folga')
             ->join('funcionario', 'funcionario.id', '=', 'folga.id_funcionario')
             ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
             ->join('users', 'users.id', '=', 'funcionario.id_usuario')
@@ -25,12 +25,13 @@ class Folgas extends Model
                 'folga.dia_semana as dia_semana',
                 'profissao.nome as profissao'
             )
-            ->get();
-        return $select->toArray();
+            ->get()
+            ->toArray();
     }
+
     public function getById($request)
     {
-        $select = DB::table('folga')
+        return DB::table('folga')
             ->join('funcionario', 'funcionario.id', '=', 'folga.id_funcionario')
             ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
             ->join('users', 'users.id', '=', 'funcionario.id_usuario')
@@ -44,7 +45,6 @@ class Folgas extends Model
             )
             ->where('folga.id', $request->id)
             ->get();
-        return $select;
     }
 
     public function getByIdFuncionario($request)
@@ -80,7 +80,7 @@ class Folgas extends Model
 
     public function inserir($request)
     {
-        $dados = Util::separarPorHashtag($request->dados);
+        $dados = Util::splitByHashtag($request->dados);
 
         DB::table('folga')->insert([
             'dia_semana' => $request->diaSemana,
@@ -90,6 +90,7 @@ class Folgas extends Model
 
         return true;
     }
+
     public function excluir($request)
     {
         DB::table('folga')->where('id', $request->id)->delete();

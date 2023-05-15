@@ -26,7 +26,7 @@ class Tratamentos extends Model
         $results = $select->toArray();;
 
         foreach ($results as $key => $value) {
-            $results[$key]->tempo_gasto = Util::converterMinutosParaHora($value->tempo_gasto);
+            $results[$key]->tempo_gasto = Util::convertMinutesToHours($value->tempo_gasto);
         }
 
         return $results;
@@ -52,7 +52,7 @@ class Tratamentos extends Model
             ->get();
         $result = $select->toArray();
         if (!empty($result[0])) {
-            $result[0]->tempo_gasto = Util::converterMinutosParaHora($result[0]->tempo_gasto);
+            $result[0]->tempo_gasto = Util::convertMinutesToHours($result[0]->tempo_gasto);
             $result[0]->id_profissao = (int)$result[0]->id_profissao;
             $result[0]->filtro = FiltroTipo::getByIdTratamento($id);
         }
@@ -63,7 +63,7 @@ class Tratamentos extends Model
     public function inserir($request)
     {
         $tratamento['nome'] = $request->tratamento;
-        $tratamento['tempo_gasto'] = Util::converterHoraToMinuto($request->tempoGasto);
+        $tratamento['tempo_gasto'] = Util::convertHoursToMinutes($request->tempoGasto);
         $tratamento['id_profissao'] = $request->idProfissao;
 
         $idTratamento = DB::table('tratamento')->insertGetId($tratamento);
@@ -106,7 +106,7 @@ class Tratamentos extends Model
     {
         $dadosParaAlterar = [
         'nome' => $request->nomeTratamento??null ,
-        'tempo_gasto' => !empty($request->tempoGasto) ? Util::converterHoraToMinuto($request->tempoGasto) : null,
+        'tempo_gasto' => !empty($request->tempoGasto) ? Util::convertHoursToMinutes($request->tempoGasto) : null,
         'id_profissao' => $request->profissao??null
         ];
 

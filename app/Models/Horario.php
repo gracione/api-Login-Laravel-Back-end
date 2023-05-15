@@ -30,14 +30,14 @@ class Horario extends Model
 //        }
 
         $entradaSaida = $this->expediente->listarByIdFuncionario($request->idFuncionario);
-        $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
-        $inicioHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
-        $fimHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->fim_horario_de_almoco);
-        $saida2 = Util::converterHoraToMinuto($entradaSaida->fim_de_expediente);
+        $entrada1 = Util::convertHoursToMinutes($entradaSaida->inicio_de_expediente);
+        $inicioHorarioAlmoco = Util::convertHoursToMinutes($entradaSaida->inicio_horario_de_almoco);
+        $fimHorarioAlmoco = Util::convertHoursToMinutes($entradaSaida->fim_horario_de_almoco);
+        $saida2 = Util::convertHoursToMinutes($entradaSaida->fim_de_expediente);
 
         $horariosDisponivel = [];
         $tempoContado = $entrada1;
-        $tempoGasto =  Util::converterHoraToMinuto(Util::calcularTempoGasto($request->idFiltro, $request->idTratamento));
+        $tempoGasto =  Util::convertHoursToMinutes(Util::calculateTimeSpent($request->idFiltro, $request->idTratamento));
         $horariosMarcados = $this->buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
         $horariosMarcadosMinutos = [];
 
@@ -47,8 +47,8 @@ class Horario extends Model
             $inicio = $tempoContado;
             $fim = $tempoContado+$tempoGasto;
             foreach ($horariosMarcados as $value) {
-                $inicioMarcado = Util::converterHoraToMinuto($value->horario_inicio);
-                $fimMarcado = Util::converterHoraToMinuto($value->horario_fim);
+                $inicioMarcado = Util::convertHoursToMinutes($value->horario_inicio);
+                $fimMarcado = Util::convertHoursToMinutes($value->horario_fim);
 
                 if ($inicioMarcado >= $inicio
                  || $inicioMarcado >= $fim) {
@@ -69,8 +69,8 @@ class Horario extends Model
 
             if($verificarDisponibilidade) {
                 $horariosDisponivel[]= [
-                'inicio' => Util::converterMinutosParaHora($inicio),
-                'fim' => Util::converterMinutosParaHora($fim)
+                'inicio' => Util::convertMinutesToHours($inicio),
+                'fim' => Util::convertMinutesToHours($fim)
                 ];
             }
         }
@@ -127,26 +127,26 @@ class Horario extends Model
         }
 
         $entradaSaida = HorarioTrabalho::getByIdFuncionario($request->idFuncionario);
-        $entrada1 = Util::converterHoraToMinuto($entradaSaida->inicio_de_expediente);
-        $inicioHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->inicio_horario_de_almoco);
-        $fimHorarioAlmoco = Util::converterHoraToMinuto($entradaSaida->fim_horario_de_almoco);
-        $saida2 = Util::converterHoraToMinuto($entradaSaida->fim_de_expediente);
+        $entrada1 = Util::convertHoursToMinutes($entradaSaida->inicio_de_expediente);
+        $inicioHorarioAlmoco = Util::convertHoursToMinutes($entradaSaida->inicio_horario_de_almoco);
+        $fimHorarioAlmoco = Util::convertHoursToMinutes($entradaSaida->fim_horario_de_almoco);
+        $saida2 = Util::convertHoursToMinutes($entradaSaida->fim_de_expediente);
 
         $horariosDisponivel = [];
         $tempoContado = $entrada1;
-        $tempoGasto =  Util::converterHoraToMinuto(Util::calcularTempoGasto($request->idFiltro, $request->idTratamento));
+        $tempoGasto =  Util::convertHoursToMinutes(Util::calculateTimeSpent($request->idFiltro, $request->idTratamento));
         $horariosMarcados = Horario::buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
         $horariosMarcadosMinutos = [];
 
         if (!empty($request->modoTradicional)) {
-            $horarioTradicionalInicio = Util::converterHoraToMinuto($request->modoTradicional);
+            $horarioTradicionalInicio = Util::convertHoursToMinutes($request->modoTradicional);
             $horarioTradicionalFim = $horarioTradicionalInicio + $tempoGasto - 1;
         }
 
         foreach ($horariosMarcados as $value) {
             $horariosMarcadosMinutos[] = [
-                'inicio' => Util::converterHoraToMinuto($value->horario_inicio),
-                'fim' => Util::converterHoraToMinuto($value->horario_fim)
+                'inicio' => Util::convertHoursToMinutes($value->horario_inicio),
+                'fim' => Util::convertHoursToMinutes($value->horario_fim)
             ];
         }
 
@@ -181,7 +181,7 @@ class Horario extends Model
 
             if ($verificarDisponibilidade) {
                 $horariosDisponivel[] = [
-                    'inicio' => Util::converterMinutosParaHora($inicio),
+                    'inicio' => Util::convertMinutesToHours($inicio),
                     'marcado' => 'nao'
                 ];
             }
