@@ -34,14 +34,17 @@ class Tratamentos extends Model
 
     public function getByIdProfissao($request)
     {
-        $id = !empty($request->dados['id']) ? $request->dados['id'] : $request;
-
+        $id = $request->dados['id'] ?? $request;
+        $id = $id->id ?? $id;
+    
         $select = DB::table('tratamento')
-            ->select(DB::raw('tratamento.nome as nome,tratamento.id as id'))
+            ->select('tratamento.nome as nome', 'tratamento.id as id')
             ->where('tratamento.id_profissao', '=', $id)
             ->get();
+    
         return $select->toArray();
     }
+
     public function getById($request)
     {
         $id = !empty($request->id) ? $request->id : $request;
