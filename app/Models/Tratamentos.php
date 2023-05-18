@@ -56,7 +56,7 @@ class Tratamentos extends Model
             $result[0]->id_profissao = (int)$result[0]->id_profissao;
             $result[0]->filtro = FiltroTipo::getByIdTratamento($id);
         }
-
+        
         return $result[0];
     }
 

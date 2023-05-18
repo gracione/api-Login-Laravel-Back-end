@@ -39,7 +39,7 @@ class Util
     public static function calculateTimeSpent($filters = 0, $treatment = 0): string
     {
         $filters = self::splitByHashtag($filters);
-        $treatmentTime = Tratamentos::getById($treatment)->tempo_gasto;
+        $treatmentTime = Tratamentos::getById($treatment);
         $filterPercentage = Filtro::filtroById($filters);
 
         foreach ($filterPercentage as $value) {
