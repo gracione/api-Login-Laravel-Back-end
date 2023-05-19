@@ -40,7 +40,7 @@ class Filtro extends Model
         return $filtro;
     }
 
-    public function filtroById($idFiltro)
+    public static function filtroById($idFiltro)
     {
         $users = DB::table('filtro')
             ->select(DB::raw('porcentagem_tempo'))

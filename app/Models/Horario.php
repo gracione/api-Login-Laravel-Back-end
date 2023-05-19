@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\API\Constantes;
 use App\Models\Funcionarios;
 use App\Models\HorarioTrabalho;
-use App\Models\Horario;
 use App\Models\Util;
 use App\Models\Feriado;
 use App\Models\Folgas;
@@ -115,7 +114,7 @@ class Horario extends Model
 
     public function verificarHorarioModoTradicional($request)
     {
-        foreach (Horario::horarios((object)$request) as $key => $value) {
+        foreach (self::horarios((object)$request) as $key => $value) {
             return true;
         }
         return false;

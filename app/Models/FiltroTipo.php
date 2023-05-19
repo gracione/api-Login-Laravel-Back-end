@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class FiltroTipo extends Model
 {
     use HasFactory;
-    public function getByIdTratamento($request)
+    public static function getByIdTratamento($request)
     {
         $id = !empty($request->id) ? $request->id : $request;
         $users = DB::table('filtro_tipo')

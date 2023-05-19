@@ -45,23 +45,24 @@ class Tratamentos extends Model
         return $select->toArray();
     }
 
-    public function getById($request)
+    public static function getById($request)
     {
-        $id = !empty($request->id) ? $request->id : $request;
-
+        $id = $request->id ?? $request;
         $select = DB::table('tratamento')
-            ->select(DB::raw('tratamento.nome as nome,tratamento.tempo_gasto as tempo_gasto,tratamento.id as id,tratamento.id_profissao as id_profissao'))
+            ->select('tratamento.nome as nome', 'tratamento.tempo_gasto as tempo_gasto', 'tratamento.id as id', 'tratamento.id_profissao as id_profissao')
             ->where('tratamento.id', '=', $id)
             ->get();
+            
         $result = $select->toArray();
+        
         if (!empty($result[0])) {
             $result[0]->tempo_gasto = Util::convertMinutesToHours($result[0]->tempo_gasto);
             $result[0]->id_profissao = (int)$result[0]->id_profissao;
             $result[0]->filtro = FiltroTipo::getByIdTratamento($id);
         }
-        
         return $result[0];
     }
+    
 
     public function inserir($request)
     {

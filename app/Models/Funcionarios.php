@@ -101,7 +101,7 @@ class Funcionarios extends Model
         return $ar->toArray();
     }
 
-    public function getIdUsuarioByIdFuncionario($id)
+    public static function getIdUsuarioByIdFuncionario($id)
     {
         $ar = DB::table('funcionario')
             ->select('funcionario.id_usuario as id',)
