@@ -90,6 +90,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/configuracao/dados-configuracao', [App\Http\Controllers\API\AuthController::class, 'dadosConfiguracao']);
     Route::post('/configuracoes/alterar', [App\Http\Controllers\API\AuthController::class, 'alterar']);
+    Route::post('/configuracoes-sistema/alterar', [App\Http\Controllers\ConfiguracaoController::class, 'alterar']);
 });
 
 Route::post('/verificar-tipo-perfil', [App\Http\Controllers\Controller::class, 'verificarTipoPerfil']);
