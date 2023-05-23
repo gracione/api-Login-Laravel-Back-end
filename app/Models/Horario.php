@@ -40,11 +40,11 @@ class Horario extends Model
         $horariosMarcados = $this->buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
         $horariosMarcadosMinutos = [];
 
-        $medida = 10;
+        $medida = 100;
         for ($tempoContado = $entrada1; $tempoContado < $saida2; $tempoContado += $medida) {
             $verificarDisponibilidade = true;
             $inicio = $tempoContado;
-            $fim = $tempoContado+$tempoGasto;
+            $fim = $tempoContado + $tempoGasto;
             foreach ($horariosMarcados as $value) {
                 $inicioMarcado = Util::convertHoursToMinutes($value->horario_inicio);
                 $fimMarcado = Util::convertHoursToMinutes($value->horario_fim);

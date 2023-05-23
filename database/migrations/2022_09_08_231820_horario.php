@@ -27,147 +27,58 @@ class Horario extends Migration
             $table->boolean('confirmado');
             $table->string('nome_cliente');
         });
-        if (true) {
-            DB::table('semana')->insert([
-                'id' => '1',
-                'nome' => 'Domingo'
-            ]);
-            DB::table('semana')->insert([
-                'id' => '2',
-                'nome' => 'Segunda Feira'
-            ]);
-            DB::table('semana')->insert([
-                'id' => '3',
-                'nome' => 'Terça Feira'
-            ]);
-            DB::table('semana')->insert([
-                'id' => '4',
-                'nome' => 'Quarta Feira'
-            ]);
-            DB::table('semana')->insert([
-                'id' => '5',
-                'nome' => 'Quinta Feira'
-            ]);
-            DB::table('semana')->insert([
-                'id' => '6',
-                'nome' => 'Sexta Feira',
-            ]);
-            DB::table('semana')->insert([
-                'id' => '7',
-                'nome' => 'Sabado'
-            ]);
+            $semanaData = [
+                ['id' => 1, 'nome' => 'Domingo'],
+                ['id' => 2, 'nome' => 'Segunda Feira'],
+                ['id' => 3, 'nome' => 'Terça Feira'],
+                ['id' => 4, 'nome' => 'Quarta Feira'],
+                ['id' => 5, 'nome' => 'Quinta Feira'],
+                ['id' => 6, 'nome' => 'Sexta Feira'],
+                ['id' => 7, 'nome' => 'Sábado'],
+            ];
+            DB::table('semana')->insert($semanaData);
 
-            DB::table('tipo_usuario')->insert([
-                'id' => '1',
-                'nome' => 'administrativo',
-            ]);
-            DB::table('tipo_usuario')->insert([
-                'id' => '2',
-                'nome' => 'funcionario',
-            ]);
-            DB::table('tipo_usuario')->insert([
-                'id' => '3',
-                'nome' => 'cliente',
-            ]);
-            DB::table('sexo')->insert([
-                'id' => '1',
-                'nome' => 'masculino'
-            ]);
-            DB::table('sexo')->insert([
-                'id' => '2',
-                'nome' => 'feminino'
-            ]);
-            DB::table('sexo')->insert([
-                'id' => '3',
-                'nome' => 'outro'
-            ]);
+            $tipoUsuarioData = [
+                ['id' => 1, 'nome' => 'administrativo'],
+                ['id' => 2, 'nome' => 'funcionario'],
+                ['id' => 3, 'nome' => 'cliente'],
+            ];
+            DB::table('tipo_usuario')->insert($tipoUsuarioData);
 
-            DB::table('servico')->insert([
-                'id' => '2',
-                'nome' => 'funcionários',
-                'url' => 'funcionarios',
-                'id_tipo_usuario' => '1'
-            ]);
+            $sexoData = [
+                ['id' => 1, 'nome' => 'masculino'],
+                ['id' => 2, 'nome' => 'feminino'],
+                ['id' => 3, 'nome' => 'outro'],
+            ];
+            DB::table('sexo')->insert($sexoData);
 
-            DB::table('servico')->insert([
-                'id' => '3',
-                'nome' => 'feriados',
-                'url' => 'feriados',
-                'id_tipo_usuario' => '1'
-            ]);
-
-            DB::table('servico')->insert([
-                'id' => '4',
-                'nome' => 'folgas',
-                'url' => 'folgas',
-                'id_tipo_usuario' => '1'
-            ]);
-
-            DB::table('servico')->insert([
-                'id' => '5',
-                'nome' => 'tratamentos',
-                'url' => 'tratamentos',
-                'id_tipo_usuario' => '1'
-            ]);
-
-            DB::table('servico')->insert([
-                'id' => '6',
-                'nome' => 'profissão',
-                'url' => 'profissao',
-                'id_tipo_usuario' => '1'
-            ]);
-
-            //            DB::table('users')->insert([
-            //                'id' => '1',
-            //                'nome_estabelecimento' => 'null',
-            //                'nome' => 'gracione',
-            //                'numero' => '(99)9 99999',
-            //                'tipo_usuario' => '1',
-            //                'id_sexo' => '1',
-            //                'email' => 'gracione@gmail.com',
-            //                'password' => '$2y$10$HzcQnbhACf/J3RXoOVCq5eduTLtDQJnxX08LZNXsEBqifn8w6eRJi'            
-            //            ]);
-            //            DB::table('tratamentos')->insert([
-            //                'nome' => 'hidratacao',
-            //                'tempo_padrao' => '30',
-            //                'valor_padrao' => '30',
-            //                'id_funcao_tipo' => '1',
-            //            ]);
-            //            DB::table('filtro_tipo')->insert([
-            //                'nome' => 'tamanho',
-            //                'id_funcao_tipo' => '1',
-            //    
-            //            ]);
-            //            DB::table('filtro')->insert([
-            //                'nome' => 'pequeno',
-            //                'porcentagem_tempo' => 30,
-            //                'porcentagem_valor' => 30,
-            //                'id_filtro_tipo' => '1',
-            //    
-            //            ]);
-            //                    
-            //        DB::table('horario')->insert([
-            //            'horario_inicio' => '2022-6-21 10:00:00',
-            //            'horario_fim' => '2022-6-21 10:30:00',
-            //            'id_usuario' => '1',
-            //            'id_tratamento' => '1',
-            //            'id_funcionario' => '1'
-            //        ]);
-            //        DB::table('horario')->insert([
-            //            'horario_inicio' => '2022-6-21 11:00:00',
-            //            'horario_fim' => '2022-6-21 11:20:00',
-            //            'id_usuario' => '1',
-            //            'id_tratamento' => '1',
-            //            'id_funcionario' => '1'
-            //        ]);
-            //        DB::table('horario')->insert([
-            //            'horario_inicio' => '2022-6-21 12:00:00',
-            //            'horario_fim' => '2022-6-21 12:45:00',
-            //            'id_usuario' => '1',
-            //            'id_tratamento' => '1',
-            //            'id_funcionario' => '1'
-            //        ]);
-        }
+            $servicoData = [
+                ['id' => 2, 'nome' => 'funcionários', 'url' => 'funcionarios', 'id_tipo_usuario' => 1],
+                ['id' => 3, 'nome' => 'feriados', 'url' => 'feriados', 'id_tipo_usuario' => 1],
+                ['id' => 4, 'nome' => 'folgas', 'url' => 'folgas', 'id_tipo_usuario' => 1],
+                ['id' => 5, 'nome' => 'tratamentos', 'url' => 'tratamentos', 'id_tipo_usuario' => 1],
+                ['id' => 6, 'nome' => 'profissão', 'url' => 'profissao', 'id_tipo_usuario' => 1],
+            ];
+            DB::table('servico')->insert($servicoData);
+            
+            Schema::create('configuracao', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('nome_estabelecimento')->nullable();
+                $table->string('frequencia_horario')->nullable();
+                $table->string('contato_estabelcimento')->nullable();
+                $table->string('localizacao')->nullable();
+                $table->string('email_estabelecimento')->nullable();
+                $table->string('endereco')->nullable();
+                $table->boolean('cliente_agendar')->nullable();
+                $table->boolean('cliente_alterar_horario')->nullable();
+                $table->boolean('cliente_desmarcar_horario')->nullable();
+                $table->time('inicio')->nullable();
+                $table->time('inicio_almoco')->nullable();
+                $table->time('fim_almoco')->nullable();
+                $table->time('fim')->nullable();
+    
+            });
+    
     }
 
     /**
