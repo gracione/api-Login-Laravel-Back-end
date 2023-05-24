@@ -26,4 +26,10 @@ class ConfiguracaoController extends Controller
 
         return true;
     }
+
+    public function listar()
+    {
+        return $this->configuracao->getAllConfiguracoes();
+    }
+
 }
