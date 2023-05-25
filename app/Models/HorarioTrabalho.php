@@ -4,98 +4,108 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class HorarioTrabalho extends Model
 {
     use HasFactory;
+
+    protected $table = 'horario_trabalho';
+
+    protected $fillable = [
+        'inicio1',
+        'fim1',
+        'inicio2',
+        'fim2',
+        'id_funcionario',
+    ];
+
+    public function funcionario()
+    {
+        return $this->belongsTo(Funcionario::class, 'id_funcionario');
+    }
+
     public function listar()
     {
-        $select = DB::table('horario_trabalho')
-            ->select(
+        return $this->with('funcionario')
+            ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
+            ->get([
                 'users.nome as funcionario',
                 'horario_trabalho.id as id',
                 'horario_trabalho.inicio1 as inicio_de_expediente',
                 'horario_trabalho.fim1 as inicio_horario_de_almoco',
                 'horario_trabalho.inicio2 as fim_horario_de_almoco',
                 'horario_trabalho.fim2 as fim_de_expediente'
-            )
-            ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
-            ->get();
-        return $select;
+            ]);
     }
+
     public function getById($request)
     {
         $idFuncionario = !empty($request->id) ? $request->id : $request;
 
-        $select = DB::table('horario_trabalho')
-            ->select(
-                'users.nome as nome',
-                'horario_trabalho.id as id',
-                'horario_trabalho.inicio1 as inicio_de_expediente',
-                'horario_trabalho.fim1 as inicio_horario_de_almoco',
-                'horario_trabalho.inicio2 as fim_horario_de_almoco',
-                'horario_trabalho.fim2 as fim_de_expediente'
-            )
+        return $this->with('funcionario')
             ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
             ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
             ->where('funcionario.id', '=', $idFuncionario)
-            ->get();
-        $result = $select->toArray();
-        return $result[0] ?? 0;
-    }
-    public function getByIdUsuario($idUsuario)
-    {
-        $select = DB::table('horario_trabalho')
-            ->select(
+            ->first([
                 'users.nome as nome',
                 'horario_trabalho.id as id',
                 'horario_trabalho.inicio1 as inicio_de_expediente',
                 'horario_trabalho.fim1 as inicio_horario_de_almoco',
                 'horario_trabalho.inicio2 as fim_horario_de_almoco',
                 'horario_trabalho.fim2 as fim_de_expediente'
-            )
+            ]);
+    }
+
+    public function getByIdUsuario($idUsuario)
+    {
+        return $this->with('funcionario')
             ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
             ->where('users.id', '=', $idUsuario)
-            ->get();
-        $result = $select->toArray();
-        return $result[0] ?? 0;
+            ->first([
+                'users.nome as nome',
+                'horario_trabalho.id as id',
+                'horario_trabalho.inicio1 as inicio_de_expediente',
+                'horario_trabalho.fim1 as inicio_horario_de_almoco',
+                'horario_trabalho.inicio2 as fim_horario_de_almoco',
+                'horario_trabalho.fim2 as fim_de_expediente'
+            ]);
     }
 
     public function getByIdFuncionario($id)
     {
-        $select = DB::table('horario_trabalho')
-            ->select(
+        return $this->with('funcionario')
+            ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
+            ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
+            ->where('funcionario.id', '=', $id)
+            ->first([
                 'users.nome as nome',
                 'horario_trabalho.id as id',
                 'horario_trabalho.inicio1 as inicio_de_expediente',
                 'horario_trabalho.fim1 as inicio_horario_de_almoco',
                 'horario_trabalho.inicio2 as fim_horario_de_almoco',
                 'horario_trabalho.fim2 as fim_de_expediente'
-            )
-            ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
-            ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
-            ->where('funcionario.id', '=', $id)
-            ->get();
-        $result = $select->toArray();
-        return $result[0] ?? 0;
+            ]);
     }
 
     public function inserir($request)
     {
-        DB::table('horario_trabalho')->insert([
+        $data = [
             'inicio1' => $request->inicioExpediente . ":00",
             'fim1' => $request->inicioAlmoco . ":00",
             'inicio2' => $request->fimAlmoco . ":00",
             'fim2' => $request->fimExpediente . ":00",
             'id_funcionario' => $request->idFuncionario
-        ]);
+        ];
+
+        $this->fill($data);
+        $this->save();
 
         return true;
     }
+
     public function excluir($request)
     {
-        DB::table('horario_trabalho')->delete($request->id);
+        $this->destroy($request->id);
 
         return 'excluido';
     }

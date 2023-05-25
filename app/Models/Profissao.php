@@ -3,10 +3,8 @@
 namespace App\Models;
 
 use Exception;
-use Funcionario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Profissao extends Model
 {
@@ -15,7 +13,6 @@ class Profissao extends Model
     public function listar()
     {
         return $this->select('nome as profissão', 'id')->get()->toArray();
-
     }
 
     public function getById($request)
@@ -25,11 +22,12 @@ class Profissao extends Model
 
     public function getByIdFuncionario($request)
     {
-        return $this->select('nome', 'id', 'funcionario.id_usuario', 'funcionario.id as id_funcionario')
+        return $this->select('nome', 'profissao.id', 'funcionario.id_usuario', 'funcionario.id as id_funcionario')
             ->join('funcionario', 'funcionario.id_profissao', '=', 'profissao.id')
             ->where('funcionario.id_usuario', $request->id)
-            ->get()->toArray();
+            ->get()->first();
     }
+
     public function excluir($request)
     {
         try {
@@ -53,6 +51,6 @@ class Profissao extends Model
     {
         $this->nome = $request->nome;
         $this->save();
-        return 'inserido';
+        return true;
     }
 }

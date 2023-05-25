@@ -9,21 +9,22 @@ use App\Models\Profissao;
 
 class FuncionariosController extends Controller
 {
-    public $funcionarios;
-    public $expediente;
-    public $profissao;
+    private $funcionarios;
+    private $expediente;
+    private $profissao;
 
-    public function __construct()
+    public function __construct(Funcionarios $funcionarios, HorarioTrabalho $expediente, Profissao $profissao)
     {
-        $this->funcionarios = new Funcionarios();
-        $this->expediente = new HorarioTrabalho();
-        $this->profissao = new Profissao();
+        $this->funcionarios = $funcionarios;
+        $this->expediente = $expediente;
+        $this->profissao = $profissao;
     }
 
     public function listar()
     {
         return $this->funcionarios->listar();
     }
+
     public function listarFuncionarios(Request $request)
     {
         return $this->funcionarios->listarFuncionarios($request);
@@ -43,14 +44,17 @@ class FuncionariosController extends Controller
             'profissoes' => $this->profissao->listar()
         ];
     }
+
     public function inserir(Request $request)
     {
         return $this->funcionarios->inserir($request);
     }
+
     public function excluir(Request $request)
     {
         return $this->funcionarios->excluir($request);
     }
+
     public function alterar(Request $request)
     {
         return $this->funcionarios->alterar($request);
