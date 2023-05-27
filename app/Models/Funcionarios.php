@@ -124,14 +124,7 @@ class Funcionarios extends Model
     public function inserir($request)
     {
         $validator = Validator::make($request->all(), [
-            'nome' => 'required|string|max:255',
-            'numero' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:3',
-            'inicioExpediente' => 'required|string|min:3',
-            'inicioAlmoco' => 'required|string|min:3',
-            'fimAlmoco' => 'required|string|min:3',
-            'fimExpediente' => 'required|string|min:3'
         ]);
 
         if ($validator->fails()) {
@@ -147,9 +140,11 @@ class Funcionarios extends Model
             'password' => Hash::make($request->password)
         ]);
 
-        $this->id_usuario = $user->id;
-        $this->id_profissao = $request->profissoesCadastradas;
-        $this->save();
+        foreach ($request->profissoesCadastradas as $key => $idProfissao) {
+            $this->id_usuario = $user->id;
+            $this->id_profissao = $idProfissao;
+            $this->save();
+        }
 
         HorarioTrabalho::create([
             'inicio1' => $request->inicioExpediente . ":00",

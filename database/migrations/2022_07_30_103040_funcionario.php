@@ -20,6 +20,7 @@ class Funcionario extends Migration
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->integer('id_profissao')->unsigned();
             $table->foreign('id_profissao')->references('id')->on('profissao');
+            $table->timestamps();
         });
     }
 

@@ -50,7 +50,6 @@ class AuthController extends Controller
     {
         if(!empty($request['googleId'])){
             $idGoogle = $request['googleId'];
-//            $userGoogle = User::where('id_google', $idGoogle)->firstOrFail();
 
             $userGoogle = DB::table('users')
             ->where('id_google', $idGoogle)

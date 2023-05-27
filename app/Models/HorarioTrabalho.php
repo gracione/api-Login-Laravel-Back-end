@@ -11,13 +11,14 @@ class HorarioTrabalho extends Model
     use HasFactory;
 
     protected $table = 'horario_trabalho';
+    public $timestamps = false;
 
     protected $fillable = [
         'inicio1',
         'fim1',
         'inicio2',
         'fim2',
-        'id_funcionario',
+        'id_usuario',
     ];
 
     public function funcionario()
