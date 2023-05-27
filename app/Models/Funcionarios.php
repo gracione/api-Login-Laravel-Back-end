@@ -178,8 +178,8 @@ class Funcionarios extends Model
 
     public function alterar($request)
     {
-        $ar = array_filter($request->request);
-
+        $ar = $request->all();
+    
         if (!empty($ar['profissoesAlteradas'])) {
             foreach ($ar['profissoesAlteradas'] as $key => $value) {
                 if ($value == '-1') {
@@ -192,7 +192,7 @@ class Funcionarios extends Model
             }
             unset($ar['profissoesAlteradas']);
         }
-
+    
         if (!empty($ar['profissoesCadastradas'])) {
             foreach ($ar['profissoesCadastradas'] as $key => $value) {
                 if (!empty($value)) {
@@ -201,20 +201,20 @@ class Funcionarios extends Model
             }
             unset($ar['profissoesCadastradas']);
         }
-
-        if (!empty(array_filter($ar['expediente']))) {
+    
+        if (!empty(array_filter($request->expediente))) {
             DB::table('horario_trabalho')
-                ->where('horario_trabalho.id_usuario', '=', $ar['id'])
-                ->update(array_filter($ar['expediente']));
+                ->where('id_usuario', '=', $request->id)
+                ->update(array_filter($request->expediente));
         }
-        unset($ar['expediente']);
-
-        if (!empty($ar['nome']) || !empty($ar['numero'])) {
+        unset($request->expediente);
+    
+        if (!empty($request->nome) || !empty($request->numero)) {
             DB::table('users')
-                ->where('id', '=', $ar['id'])
+                ->where('id', '=', $request->id)
                 ->update(array_filter($ar));
         }
-
+    
         return true;
     }
 }
