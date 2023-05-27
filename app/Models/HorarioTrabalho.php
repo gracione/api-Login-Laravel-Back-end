@@ -41,7 +41,7 @@ class HorarioTrabalho extends Model
     }
 
     public function getById($id)
-    {    
+    {
         $result = DB::table('horario_trabalho')
             ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
             ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
@@ -55,10 +55,10 @@ class HorarioTrabalho extends Model
             )
             ->where('users.id', '=', $id)
             ->first();
-    
+
         return $result ? (array) $result : null;
     }
-        
+
     public function getByIdUsuario($idUsuario)
     {
         $result = DB::table('horario_trabalho')
@@ -74,26 +74,28 @@ class HorarioTrabalho extends Model
             )
             ->where('users.id', '=', $idUsuario)
             ->first();
-    
+
         return $result ? (array) $result : null;
     }
-
     public function getByIdFuncionario($id)
     {
-        return $this->with('funcionario')
+        $result = DB::table('horario_trabalho')
             ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
             ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
             ->where('funcionario.id', '=', $id)
-            ->first([
+            ->select(
                 'users.nome as nome',
                 'horario_trabalho.id as id',
                 'horario_trabalho.inicio1 as inicio_de_expediente',
                 'horario_trabalho.fim1 as inicio_horario_de_almoco',
                 'horario_trabalho.inicio2 as fim_horario_de_almoco',
                 'horario_trabalho.fim2 as fim_de_expediente'
-            ]);
+            )
+            ->first();
+    
+        return $result;
     }
-
+    
     public function inserir($request)
     {
         $data = [

@@ -208,14 +208,16 @@ class Horario extends Model
             ->join('users', 'users.id', '=', 'horario.id_cliente')
             ->join('funcionario', 'funcionario.id', '=', 'horario.id_funcionario')
             ->join('users as func', 'func.id', '=', 'funcionario.id_usuario')
-            ->join('tratamento as t', 't.id', '=', 'horario.id_tratamento');
-
-        if ($request->dados['tipoUsuario'] == Constantes::CLIENTE) {
+            ->join('tratamento as t', 't.id', '=', 'horario.id_tratamento')
+            ->whereDate('horario.horario_inicio', '>=', $request->dataInicio)
+            ->whereDate('horario.horario_inicio', '<=', $request->dataFim);
+                    
+        if ($request->tipoUsuario == Constantes::CLIENTE) {
             $select = $select
-                ->where('horario.id_cliente', $request->dados['idUsuario'])->get();
-        } else if ($request->dados['tipoUsuario'] == Constantes::FUNCIONARIO) {
+                ->where('horario.id_cliente', $request->idUsuario)->get();
+        } else if ($request->tipoUsuario == Constantes::FUNCIONARIO) {
             $select = $select
-                ->where('func.id', $request->dados['idUsuario'])->get();
+                ->where('func.id', $request->idUsuario)->get();
         } else {
             $select = $select->get();
         }
