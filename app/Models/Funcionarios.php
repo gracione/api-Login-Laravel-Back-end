@@ -77,10 +77,8 @@ class Funcionarios extends Model
             ->toArray();
     }
 
-    public function getByIdUsuario($request)
+    public function getByIdUsuario($id)
     {
-        $id = !empty($request->id) ? $request->id : $request;
-
         return $this->select(
             'users.nome as nome',
             'funcionario.id as id',
@@ -94,7 +92,7 @@ class Funcionarios extends Model
             ->join('users', 'funcionario.id_usuario', '=', 'users.id')
             ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
             ->where('users.id', $id)
-            ->get()
+            ->get()->first()
             ->toArray();
     }
 

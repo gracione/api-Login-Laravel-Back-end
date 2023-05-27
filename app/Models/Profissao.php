@@ -24,7 +24,15 @@ class Profissao extends Model
     {
         return $this->select('nome', 'profissao.id', 'funcionario.id_usuario', 'funcionario.id as id_funcionario')
             ->join('funcionario', 'funcionario.id_profissao', '=', 'profissao.id')
-            ->where('funcionario.id_usuario', $request->id)
+            ->where('funcionario.id', $request->id)
+            ->get()->first()->toArray();
+    }
+
+    public function getByIdUsuario($idUsuario)
+    {
+        return $this->select('nome', 'profissao.id', 'funcionario.id_usuario', 'funcionario.id as id_funcionario')
+            ->join('funcionario', 'funcionario.id_profissao', '=', 'profissao.id')
+            ->where('funcionario.id_usuario', $idUsuario)
             ->get()->first()->toArray();
     }
 
