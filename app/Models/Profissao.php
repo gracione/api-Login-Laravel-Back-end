@@ -25,7 +25,7 @@ class Profissao extends Model
         return $this->select('nome', 'profissao.id', 'funcionario.id_usuario', 'funcionario.id as id_funcionario')
             ->join('funcionario', 'funcionario.id_profissao', '=', 'profissao.id')
             ->where('funcionario.id_usuario', $request->id)
-            ->get()->first();
+            ->get()->first()->toArray();
     }
 
     public function excluir($request)

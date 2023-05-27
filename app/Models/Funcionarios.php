@@ -120,7 +120,7 @@ class Funcionarios extends Model
         )
             ->join('users', 'funcionario.id_usuario', '=', 'users.id')
             ->where('funcionario.id_usuario', $id)
-            ->first();
+            ->first()->toArray();
     }
 
     public function inserir($request)

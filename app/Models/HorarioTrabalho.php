@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class HorarioTrabalho extends Model
 {
@@ -40,22 +41,25 @@ class HorarioTrabalho extends Model
 
     public function getById($request)
     {
-        $idFuncionario = !empty($request->id) ? $request->id : $request;
-
-        return $this->with('funcionario')
+        $id = !empty($request->id) ? $request->id : $request;
+    
+        $result = DB::table('horario_trabalho')
             ->join('users', 'users.id', '=', 'horario_trabalho.id_usuario')
             ->join('funcionario', 'funcionario.id_usuario', '=', 'users.id')
-            ->where('funcionario.id', '=', $idFuncionario)
-            ->first([
+            ->select(
                 'users.nome as nome',
                 'horario_trabalho.id as id',
                 'horario_trabalho.inicio1 as inicio_de_expediente',
                 'horario_trabalho.fim1 as inicio_horario_de_almoco',
                 'horario_trabalho.inicio2 as fim_horario_de_almoco',
                 'horario_trabalho.fim2 as fim_de_expediente'
-            ]);
+            )
+            ->where('users.id', '=', $id)
+            ->first();
+    
+        return $result ? (array) $result : null;
     }
-
+        
     public function getByIdUsuario($idUsuario)
     {
         return $this->with('funcionario')
