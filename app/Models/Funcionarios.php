@@ -207,12 +207,13 @@ class Funcionarios extends Model
                 ->where('id_usuario', '=', $request->id)
                 ->update(array_filter($request->expediente));
         }
-        unset($request->expediente);
+        unset($ar['expediente']);
     
         if (!empty($request->nome) || !empty($request->numero)) {
+            $ar = array_filter($ar);
             DB::table('users')
                 ->where('id', '=', $request->id)
-                ->update(array_filter($ar));
+                ->update($ar);
         }
     
         return true;
