@@ -141,9 +141,10 @@ class Funcionarios extends Model
         ]);
 
         foreach ($request->profissoesCadastradas as $key => $idProfissao) {
-            $this->id_usuario = $user->id;
-            $this->id_profissao = $idProfissao;
-            $this->save();
+            self::create([
+                'id_usuario' => $user->id,
+                'id_profissao' => $idProfissao
+            ]);
         }
 
         HorarioTrabalho::create([
