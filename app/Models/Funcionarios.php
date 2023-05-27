@@ -162,13 +162,34 @@ class Funcionarios extends Model
         return true;
     }
 
-    public function excluir($request)
+    public function excluirByIdUsuario($idUsuario)
     {
         try {
-            DB::table('folga')->where('id_usuario', $request->id)->delete();
-            DB::table('funcionario')->where('id_usuario', $request->id)->delete();
-            DB::table('horario_trabalho')->where('id_usuario', $request->id)->delete();
-            DB::table('users')->where('id', $request->id)->delete();
+            DB::table('folga')->where('id_usuario', $idUsuario)->delete();
+            DB::table('funcionario')->where('id_usuario', $idUsuario)->delete();
+            DB::table('horario_trabalho')->where('id_usuario', $idUsuario)->delete();
+            DB::table('users')->where('id', $idUsuario)->delete();
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function excluirByIdFuncionario($idFuncionario)
+    {
+
+        try {
+            $idUsuario = self::getIdUsuarioByIdFuncionario($idFuncionario);
+
+            $result = $this->select('*')
+                ->join('users', 'funcionario.id_usuario', '=', 'users.id')
+                ->where('users.id', $idUsuario)
+                ->get()
+                ->toArray();
+            if (count($result) > 1) {
+                DB::table('funcionario')->where('id', $idFuncionario)->delete();
+            }
         } catch (Exception $e) {
             return false;
         }
@@ -179,7 +200,7 @@ class Funcionarios extends Model
     public function alterar($request)
     {
         $ar = $request->all();
-    
+
         if (!empty($ar['profissoesAlteradas'])) {
             foreach ($ar['profissoesAlteradas'] as $key => $value) {
                 if ($value == '-1') {
@@ -192,7 +213,7 @@ class Funcionarios extends Model
             }
             unset($ar['profissoesAlteradas']);
         }
-    
+
         if (!empty($ar['profissoesCadastradas'])) {
             foreach ($ar['profissoesCadastradas'] as $key => $value) {
                 if (!empty($value)) {
@@ -201,21 +222,21 @@ class Funcionarios extends Model
             }
             unset($ar['profissoesCadastradas']);
         }
-    
+
         if (!empty(array_filter($request->expediente))) {
             DB::table('horario_trabalho')
                 ->where('id_usuario', '=', $request->id)
                 ->update(array_filter($request->expediente));
         }
         unset($ar['expediente']);
-    
+
         if (!empty($request->nome) || !empty($request->numero)) {
             $ar = array_filter($ar);
             DB::table('users')
                 ->where('id', '=', $request->id)
                 ->update($ar);
         }
-    
+
         return true;
     }
 }

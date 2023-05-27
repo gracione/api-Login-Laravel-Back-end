@@ -57,9 +57,14 @@ class FuncionariosController extends Controller
         return $this->funcionarios->inserir($request);
     }
 
-    public function excluir(Request $request)
+    public function excluirByIdUsuario(Request $request)
     {
-        return $this->funcionarios->excluir($request);
+        return $this->funcionarios->excluirByIdUsuario($request->id);
+    }
+
+    public function excluirByIdFuncionario(Request $request)
+    {
+        return $this->funcionarios->excluirByIdFuncionario($request->id);
     }
 
     public function alterar(Request $request)
