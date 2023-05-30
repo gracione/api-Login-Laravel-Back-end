@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
+    public $users;
+
+    public function __construct()
+    {
+        $this->users = new User();
+    }
+
+    public function listar() {
+        return $this->users->listar();
+    }
+
     public function registrarCliente(Request $request)
     {
         $validator = Validator::make($request->all(), [

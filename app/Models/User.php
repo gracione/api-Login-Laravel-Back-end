@@ -54,6 +54,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function listar()
+    {
+        $result = DB::table('users')
+            ->select('*')
+            ->get()->toArray();
+
+        return $result;
+    }
+
     public function alterar($request)
     {
         try {
