@@ -28,12 +28,13 @@ class MensagemController extends Controller
     public function enviar(Request $request)
     {
         $request->validate([
-            'usuario_id' => 'required',
-            'mensagem' => 'required',
+            'remetente_id' => 'required',
+            'conteudo' => 'required',
         ]);
 
         $mensagem = Mensagem::create($request->all());
 
+        
         return response()->json($mensagem, 201);
     }
 
