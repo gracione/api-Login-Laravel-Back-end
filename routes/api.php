@@ -96,6 +96,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/users/listar', [App\Http\Controllers\API\AuthController::class, 'listar']);
 
+    Route::get('/mensagens', [App\Http\Controllers\MensagemController::class, 'index']);
+    Route::get('/mensagens/{id}', [App\Http\Controllers\MensagemController::class, 'listar']);
+    Route::post('/mensagens', [App\Http\Controllers\MensagemController::class, 'enviar']);
+    Route::put('/mensagens/{id}', [App\Http\Controllers\MensagemController::class, 'alterar']);
+    Route::delete('/mensagens/{id}', [App\Http\Controllers\MensagemController::class, 'excluir']);
+
 });
 
 Route::post('/verificar-tipo-perfil', [App\Http\Controllers\Controller::class, 'verificarTipoPerfil']);
