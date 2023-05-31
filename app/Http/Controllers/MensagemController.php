@@ -14,17 +14,22 @@ class MensagemController extends Controller
         return response()->json($mensagens);
     }
 
-    public function listar($id)
+    public function listar(Request $request)
     {
-        $mensagem = Mensagem::find($id);
-
-        if (!$mensagem) {
-            return response()->json(['message' => 'Mensagem não encontrada'], 404);
+        $remetenteId = $request->remetente_id;
+        $destinatarioId = $request->destinatario_id;
+    
+        $mensagens = Mensagem::where('remetente_id', $remetenteId)
+            ->where('destinatario_id', $destinatarioId)
+            ->get();
+    
+        if ($mensagens->isEmpty()) {
+            return response()->json(['message' => 'Mensagens não encontradas'], 404);
         }
-
-        return response()->json($mensagem);
+    
+        return response()->json($mensagens);
     }
-
+    
     public function enviar(Request $request)
     {
         $request->validate([
