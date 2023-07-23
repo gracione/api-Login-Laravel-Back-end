@@ -19,9 +19,21 @@ class MensagemController extends Controller
         $remetenteId = $request->remetente_id;
         $destinatarioId = $request->destinatario_id;
     
-        $mensagens = Mensagem::where('remetente_id', $remetenteId)
-            ->where('destinatario_id', $destinatarioId)
-            ->get();
+        $mensagens = Mensagem::select('mensagens.*', 'remetente.nome as nome_remetente')
+        ->join('users as remetente', 'mensagens.remetente_id', '=', 'remetente.id')
+        ->where(function ($query) use ($remetenteId, $destinatarioId) {
+            $query->where([
+                ['mensagens.remetente_id', $remetenteId],
+                ['mensagens.destinatario_id', $destinatarioId],
+            ]);
+        })
+        ->orWhere(function ($query) use ($remetenteId, $destinatarioId) {
+            $query->where([
+                ['mensagens.remetente_id', $destinatarioId],
+                ['mensagens.destinatario_id', $remetenteId],
+            ]);
+        })
+        ->get();
     
         if ($mensagens->isEmpty()) {
             return response()->json(['message' => 'Mensagens não encontradas'], 404);
