@@ -21,8 +21,8 @@ class AuthController extends Controller
         $this->users = new User();
     }
 
-    public function listar() {
-        return $this->users->listar();
+    public function listar(Request $request) {
+        return $this->users->listar($request);
     }
 
     public function registrarCliente(Request $request)
