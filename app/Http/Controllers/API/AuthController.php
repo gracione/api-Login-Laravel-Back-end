@@ -45,7 +45,8 @@ class AuthController extends Controller
             'tipo_usuario' => '3',
             'id_sexo' => $request->id_sexo,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'img_url' => './perfil/sem_usuario.png'
         ]);
 
         DB::table('cliente')->insert([
