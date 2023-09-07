@@ -112,7 +112,16 @@ class AuthController extends Controller
             'message' => 'Você saiu com sucesso e o token foi excluído com sucesso'
         ];
     }
-
+    public function enviarImagem(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        
+        $imagePath = $request->file('image')->store('uploads');
+        
+        return back()->with('success', 'Imagem enviada com sucesso!');
+    }
     public function alterar(Request $request)
     {
         return User::alterar($request);
