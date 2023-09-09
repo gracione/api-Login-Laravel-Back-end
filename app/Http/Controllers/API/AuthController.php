@@ -11,6 +11,8 @@ use App\Models\User;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\API\Constantes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Route;
 
 class AuthController extends Controller
 {
@@ -21,7 +23,8 @@ class AuthController extends Controller
         $this->users = new User();
     }
 
-    public function listar(Request $request) {
+    public function listar(Request $request)
+    {
         return $this->users->listar($request);
     }
 
@@ -60,12 +63,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if(!empty($request['googleId'])){
+        if (!empty($request['googleId'])) {
             $idGoogle = $request['googleId'];
 
             $userGoogle = DB::table('users')
-            ->where('id_google', $idGoogle)
-            ->get();
+                ->where('id_google', $idGoogle)
+                ->get();
 
             if (empty($userGoogle['0']->email)) {
                 $user = User::create([
@@ -78,14 +81,14 @@ class AuthController extends Controller
                     'id_google' => $idGoogle,
                     'img_url' => $request['imageUrl']
                 ]);
-        
+
                 DB::table('cliente')->insert([
                     'id_usuario' => $user['id']
                 ]);
-        
+
                 $token = $user->createToken('auth_token')->plainTextToken;
-        
-                return response()->json(['tipo_usuario' => $user['tipo_usuario'], 'nome' => $user['nome'], 'id_usuario' => $user['id'], 'data' => $user,'img_url' => $user['img_url'], 'token' => $token, 'token_type' => 'Bearer',]);        
+
+                return response()->json(['tipo_usuario' => $user['tipo_usuario'], 'nome' => $user['nome'], 'id_usuario' => $user['id'], 'data' => $user, 'img_url' => $user['img_url'], 'token' => $token, 'token_type' => 'Bearer',]);
             }
         } else if (!Auth::attempt($request->only('email', 'password'))) {
             return response()
@@ -96,7 +99,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['tipo_usuario' => $user['tipo_usuario'], 'nome' => $user['nome'], 'id_usuario' => $user['id'],'img_url' => $user['img_url'], 'token' => $token]);
+        return response()->json(['tipo_usuario' => $user['tipo_usuario'], 'nome' => $user['nome'], 'id_usuario' => $user['id'], 'img_url' => $user['img_url'], 'token' => $token]);
     }
 
     public function dadosConfiguracao(Request $request)
@@ -112,14 +115,46 @@ class AuthController extends Controller
             'message' => 'Você saiu com sucesso e o token foi excluído com sucesso'
         ];
     }
+    //    public function enviarImagem(Request $request)
+    //    {
+    //        $request->validate([
+    //            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //            
+    //        ]);
+    //        $imagePath = $request->file('image')->store('/perfil');
+    //
+    //        $idUsuario = auth()->user()->id;
+    //        $user = User::find($idUsuario);
+    //        $user->img_url = $imagePath;
+    //        $user->save();
+    //
+    //        return back()->with('success', 'Imagem enviada com sucesso!');
+    //    }
     public function enviarImagem(Request $request)
     {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        
-        $imagePath = $request->file('image')->store('uploads');
-        
+
+        $image = $request->file('image');
+        $publicPath = public_path('/perfil');
+        $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+        $image->move($publicPath, $imageName);
+
+        $idUsuario = auth()->user()->id;
+        $user = User::find($idUsuario);
+        //
+        $publicPath = public_path('perfil/' . $imageName);
+
+        if (file_exists($publicPath)) {
+            $imageContent = file_get_contents($publicPath);
+            $imageData = base64_encode($imageContent);
+            $imageSrc = 'data:image/' . pathinfo($publicPath, PATHINFO_EXTENSION) . ';base64,' . $imageData;
+        }
+        //
+        $user->img_url = $imageSrc;
+            $user->save();
+
         return back()->with('success', 'Imagem enviada com sucesso!');
     }
     public function alterar(Request $request)
