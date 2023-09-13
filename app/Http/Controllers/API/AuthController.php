@@ -115,21 +115,6 @@ class AuthController extends Controller
             'message' => 'Você saiu com sucesso e o token foi excluído com sucesso'
         ];
     }
-    //    public function enviarImagem(Request $request)
-    //    {
-    //        $request->validate([
-    //            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //            
-    //        ]);
-    //        $imagePath = $request->file('image')->store('/perfil');
-    //
-    //        $idUsuario = auth()->user()->id;
-    //        $user = User::find($idUsuario);
-    //        $user->img_url = $imagePath;
-    //        $user->save();
-    //
-    //        return back()->with('success', 'Imagem enviada com sucesso!');
-    //    }
     public function enviarImagem(Request $request)
     {
         $request->validate([
@@ -151,11 +136,9 @@ class AuthController extends Controller
             $imageData = base64_encode($imageContent);
             $imageSrc = 'data:image/' . pathinfo($publicPath, PATHINFO_EXTENSION) . ';base64,' . $imageData;
         }
-        //
         $user->img_url = $imageSrc;
-            $user->save();
-
-        return back()->with('success', 'Imagem enviada com sucesso!');
+        $user->save();
+        return $imageSrc;
     }
     public function alterar(Request $request)
     {

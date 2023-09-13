@@ -90,7 +90,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/expediente/excluir', [App\Http\Controllers\HorarioTrabalhoController::class, 'excluir']);
 
     Route::post('/configuracao/dados-configuracao', [App\Http\Controllers\API\AuthController::class, 'dadosConfiguracao']);
-    Route::get('/uploads/{filename}', [App\Http\Controllers\API\AuthController::class, 'show'])->name('show.storage');
     Route::post('/configuracoes/alterar', [App\Http\Controllers\API\AuthController::class, 'alterar']);
     Route::post('/configuracao-sistema/alterar', [App\Http\Controllers\ConfiguracaoController::class, 'alterar']);
     Route::post('/configuracao-sistema/listar', [App\Http\Controllers\ConfiguracaoController::class, 'listar']);
