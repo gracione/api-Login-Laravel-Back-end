@@ -128,7 +128,6 @@ class AuthController extends Controller
 
         $idUsuario = auth()->user()->id;
         $user = User::find($idUsuario);
-        //
         $publicPath = public_path('perfil/' . $imageName);
 
         if (file_exists($publicPath)) {

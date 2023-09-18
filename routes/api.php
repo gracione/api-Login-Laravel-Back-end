@@ -41,6 +41,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/tratamentos/alterar', [App\Http\Controllers\TratamentosController::class, 'alterar']);
     Route::post('/tratamentos/excluir', [App\Http\Controllers\TratamentosController::class, 'excluir']);
 
+    Route::post('/galeria/listar', [App\Http\Controllers\GaleriaController::class, 'listar']);
+    Route::post('/galeria/listar-fotos', [App\Http\Controllers\GaleriaController::class, 'fotosAlbum']);
+    Route::post('/galeria/inserir', [App\Http\Controllers\GaleriaController::class, 'inserir']);
+
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'sair']);
     Route::post('/filtro', [App\Http\Controllers\FiltroController::class, 'listar']);
     Route::post('/filtro/listar', [App\Http\Controllers\FiltroController::class, 'listarFiltro']);
