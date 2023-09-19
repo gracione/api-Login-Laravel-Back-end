@@ -21,7 +21,7 @@ class Galeria extends Model
     }
 
     public function fotosAlbum($request) {
-        $select = DB::table('albuns')
+        $select = DB::table('imagens')
             ->select(
                 'imagens.nome_arquivo as nome_arquivo'
             )
