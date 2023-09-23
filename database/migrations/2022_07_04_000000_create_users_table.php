@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->foreign('id_sexo')->references('id')->on('sexo');
             $table->rememberToken();
             $table->string('id_google')->nullable();
-            $table->longText('img_url')->nullable()->change();
+            $table->longText('img_url')->nullable();
             $table->timestamps();
         });
 

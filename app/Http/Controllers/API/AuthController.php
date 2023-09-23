@@ -79,7 +79,7 @@ class AuthController extends Controller
                     'email' => $request['email'],
                     'password' => Hash::make('123'),
                     'id_google' => $idGoogle,
-                    'img_url' => $request['imageUrl']
+                    'img_url' => $request['imageUrl']??null
                 ]);
 
                 DB::table('cliente')->insert([

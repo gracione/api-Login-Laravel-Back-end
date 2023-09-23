@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/galeria/listar', [App\Http\Controllers\GaleriaController::class, 'listar']);
     Route::post('/galeria/listar-fotos', [App\Http\Controllers\GaleriaController::class, 'fotosAlbum']);
+    Route::post('/galeria/upload-foto', [App\Http\Controllers\GaleriaController::class, 'uploadFoto']);
     Route::post('/galeria/inserir', [App\Http\Controllers\GaleriaController::class, 'inserir']);
 
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'sair']);

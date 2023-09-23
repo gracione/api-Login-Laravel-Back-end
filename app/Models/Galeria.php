@@ -23,12 +23,12 @@ class Galeria extends Model
     public function fotosAlbum($request) {
         $select = DB::table('imagens')
             ->select(
-                'imagens.nome_arquivo as nome_arquivo'
+                'imagens.nome_arquivo as imageUrl'
             )
-            ->where('album_id', '=', $request->idAlbum)
+            ->where('album_id', '=', $request->id)
             ->get();
-        return $select->toArray();
-
+        $test = $select->toArray();
+        return $test;
     }
 
     public function getById($request)

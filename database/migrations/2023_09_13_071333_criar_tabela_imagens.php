@@ -16,7 +16,7 @@ class CriarTabelaImagens extends Migration
         Schema::create('imagens', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('album_id');
-            $table->string('nome_arquivo');
+            $table->longText('nome_arquivo')->nullable();
             $table->text('descricao')->nullable();
             $table->timestamps();
 

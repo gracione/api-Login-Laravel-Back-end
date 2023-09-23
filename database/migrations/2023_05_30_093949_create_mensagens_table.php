@@ -12,16 +12,16 @@ class CreateMensagensTable extends Migration
      */
     public function up()
     {
-        Schema::create('mensagens', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('remetente_id');
-            $table->unsignedBigInteger('destinatario_id');
-            $table->text('conteudo');
-            $table->timestamps();
-
-            $table->foreign('remetente_id')->references('id')->on('users');
-            $table->foreign('destinatario_id')->references('id')->on('users');
-        });
+//        Schema::create('mensagens', function (Blueprint $table) {
+//            $table->id();
+//            $table->unsignedBigInteger('remetente_id');
+//            $table->unsignedBigInteger('destinatario_id');
+//            $table->text('conteudo');
+//            $table->timestamps();
+//
+//            $table->foreign('remetente_id')->references('id')->on('users');
+//            $table->foreign('destinatario_id')->references('id')->on('users');
+//        });
     }
 
     /**
