@@ -75,10 +75,10 @@ class Horario extends Migration
                 $table->time('inicio')->nullable();
                 $table->time('inicio_almoco')->nullable();
                 $table->time('fim_almoco')->nullable();
-                $table->time('fim')->nullable();
-    
+                $table->time('fim')->nullable();    
             });
-    
+            DB::table('configuracao')->insert(['nome_estabelecimento' => 'salao','frequencia_horario' => '20','contato_estabelcimento' => '99999','localizacao' => '11','email_estabelecimento' => 'teste','endereco' => 'teste','cliente_agendar' => 'teste','cliente_alterar_horario' => 'teste','cliente_desmarcar_horario' => 'teste','inicio' => 'teste','inicio_almoco' => 'teste','fim_almoco' => 'teste','fim' => 'teste']);
+
     }
 
     /**
