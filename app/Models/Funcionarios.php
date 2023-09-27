@@ -137,7 +137,8 @@ class Funcionarios extends Model
             'tipo_usuario' => '2',
             'id_sexo' => $request->id_sexo,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'img_url' => './perfil/sem_usuario.png'
         ]);
 
         foreach ($request->profissoesCadastradas as $key => $idProfissao) {
