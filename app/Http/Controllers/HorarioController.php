@@ -20,10 +20,9 @@ class HorarioController extends Controller
         $horario = $request->horario;
         if (!empty($request->modoTradicional)) {
             if ($this->horario->verificarHorarioModoTradicional($request)) {
-                $horario = $request->modoTradicional;
-            } else {
                 return false;
             }
+            $horario = $request->modoTradicional;
         }
 
         $tempoGastoEmHora =  Util::calculateTimeSpent($request->idFiltro, $request->idTratamento);

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\HorarioTrabalho;
+use App\Models\Expediente as HorarioTrabalho;
 
 class HorarioTrabalhoController extends Controller
 {

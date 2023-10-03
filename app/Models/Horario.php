@@ -115,9 +115,9 @@ class Horario extends Model
     public function verificarHorarioModoTradicional($request)
     {
         foreach (self::horarios((object)$request) as $key => $value) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
     public function horarios($request)
     {

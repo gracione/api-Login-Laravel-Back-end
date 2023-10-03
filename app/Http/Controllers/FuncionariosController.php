@@ -27,7 +27,7 @@ class FuncionariosController extends Controller
 
     public function listarFuncionarios(Request $request)
     {
-        return $this->funcionarios->listarFuncionarios($request);
+c        return $this->funcionarios->listarFuncionarios($request);
     }
 
     public function listarFuncionariosEprofissao()
