@@ -17,29 +17,33 @@ class HorarioController extends Controller
 
     public function inserir(Request $request)
     {
-        $horario = $request->horario;
+        $horarioInicioHora = $request->horario;
+
         if (!empty($request->modoTradicional)) {
             if ($this->horario->verificarHorarioModoTradicional($request)) {
                 return false;
             }
-            $horario = $request->modoTradicional;
+            $horarioInicioHora = $request->modoTradicional;
         }
 
         $tempoGastoEmHora =  Util::calculateTimeSpent($request->idFiltro, $request->idTratamento);
         $tempoGastoEmMinutos = Util::convertHoursToMinutes($tempoGastoEmHora);
-        $horarioInicioMinutos = Util::convertHoursToMinutes($horario);
-        $horarioFim = Util::convertMinutesToHours($horarioInicioMinutos + $tempoGastoEmMinutos - 1);
-        $ar['horario_inicio'] = $request->data . " " . $horario . ":00";
-        $ar['horario_fim'] = $request->data . " " . $horarioFim . ":00";
+
+        $horarioInicioMinutos = Util::convertHoursToMinutes($horarioInicioHora);
+
+        $horarioFimMin = $horarioInicioMinutos + $tempoGastoEmMinutos - 1;
+        $horarioFimHora = Util::convertMinutesToHours($horarioFimMin);
+        $ar['horario_inicio'] = "$request->data $horarioInicioHora:00";
+        $ar['horario_fim'] = "$request->data $horarioFimHora:00";//saida tempo em hora
         $ar['id_cliente'] = $request->idCliente;
         $ar['id_tratamento'] = $request->idTratamento;
         $ar['id_funcionario'] = $request->idFuncionario;
         $ar['confirmado'] = false;
+        $ar['nome_cliente'] = $request->nomeUsuario;
+
         if (!empty($request->nomeCliente)) {
             $ar['nome_cliente'] = $request->nomeCliente;
             $ar['confirmado'] = true;
-        } else {
-            $ar['nome_cliente'] = $request->nomeUsuario;
         }
 
         return $this->horario->inserir($ar);
