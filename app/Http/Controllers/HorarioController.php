@@ -17,38 +17,45 @@ class HorarioController extends Controller
 
     public function inserir(Request $request)
     {
+        // Obtém o horário de início com base na entrada do usuário
         $horarioInicioHora = $request->horario;
-
+    
+        // Verifica se o modo tradicional está definido e se o horário é válido
         if (!empty($request->modoTradicional)) {
             if ($this->horario->verificarHorarioModoTradicional($request)) {
                 return false;
             }
             $horarioInicioHora = $request->modoTradicional;
         }
-
-        $tempoGastoEmHora =  Util::calculateTimeSpent($request->idFiltro, $request->idTratamento);
+    
+        // Calcula o tempo gasto em horas e minutos
+        $tempoGastoEmHora = Util::calculateTimeSpent($request->idFiltro, $request->idTratamento);
         $tempoGastoEmMinutos = Util::convertHoursToMinutes($tempoGastoEmHora);
-
+    
+        // Converte o horário de início para minutos
         $horarioInicioMinutos = Util::convertHoursToMinutes($horarioInicioHora);
-
+    
+        // Calcula o horário de término em minutos
         $horarioFimMin = $horarioInicioMinutos + $tempoGastoEmMinutos - 1;
+    
+        // Converte o horário de término de minutos de volta para horas
         $horarioFimHora = Util::convertMinutesToHours($horarioFimMin);
-        $ar['horario_inicio'] = "$request->data $horarioInicioHora:00";
-        $ar['horario_fim'] = "$request->data $horarioFimHora:00";//saida tempo em hora
-        $ar['id_cliente'] = $request->idCliente;
-        $ar['id_tratamento'] = $request->idTratamento;
-        $ar['id_funcionario'] = $request->idFuncionario;
-        $ar['confirmado'] = false;
-        $ar['nome_cliente'] = $request->nomeUsuario;
-
-        if (!empty($request->nomeCliente)) {
-            $ar['nome_cliente'] = $request->nomeCliente;
-            $ar['confirmado'] = true;
-        }
-
+    
+        // Cria um array com os dados a serem inseridos
+        $ar = [
+            'horario_inicio' => "$request->data $horarioInicioHora:00",
+            'horario_fim' => "$request->data $horarioFimHora:00",
+            'id_cliente' => $request->idCliente,
+            'id_tratamento' => $request->idTratamento,
+            'id_funcionario' => $request->idFuncionario,
+            'confirmado' => empty($request->nomeCliente) ? false : true,
+            'nome_cliente' => empty($request->nomeCliente) ? $request->nomeUsuario : $request->nomeCliente,
+        ];
+    
+        // Insere os dados no banco de dados utilizando o método apropriado
         return $this->horario->inserir($ar);
     }
-
+    
     public function desmarcar(Request $request)
     {
         return $this->horario->excluir($request);
