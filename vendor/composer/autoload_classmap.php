@@ -35,6 +35,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Models\\Configuracao' => $baseDir . '/app/Models/Configuracao.php',
     'App\\Models\\Estabelecimento' => $baseDir . '/app/Models/Estabelecimento.php',
+    'App\\Models\\Expediente' => $baseDir . '/app/Models/Expediente.php',
     'App\\Models\\Feriado' => $baseDir . '/app/Models/Feriado.php',
     'App\\Models\\Ferias' => $baseDir . '/app/Models/Ferias.php',
     'App\\Models\\Filtro' => $baseDir . '/app/Models/Filtro.php',

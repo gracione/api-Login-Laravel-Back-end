@@ -634,6 +634,7 @@ class ComposerStaticInit12e8e57b66c3761aa938d06857dc8a28
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\Configuracao' => __DIR__ . '/../..' . '/app/Models/Configuracao.php',
         'App\\Models\\Estabelecimento' => __DIR__ . '/../..' . '/app/Models/Estabelecimento.php',
+        'App\\Models\\Expediente' => __DIR__ . '/../..' . '/app/Models/Expediente.php',
         'App\\Models\\Feriado' => __DIR__ . '/../..' . '/app/Models/Feriado.php',
         'App\\Models\\Ferias' => __DIR__ . '/../..' . '/app/Models/Ferias.php',
         'App\\Models\\Filtro' => __DIR__ . '/../..' . '/app/Models/Filtro.php',
