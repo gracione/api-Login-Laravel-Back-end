@@ -12,19 +12,22 @@ class Tratamentos extends Model
 {
     use HasFactory;
 
+    public $tratamento = 'tratamento';
+    public $profissao = 'profissao';
+
     public function listar()
     {
-        $select = DB::table('tratamento')
-            ->select(
-                'tratamento.id as id',
-                'tratamento.nome as tratamento',
-                'profissao.nome as profissão',
-                'tratamento.tempo_gasto as tempo_gasto'
-            )
-            ->join('profissao', 'profissao.id', '=', 'tratamento.id_profissao')
-            ->get();
-        $results = $select->toArray();;
-
+        $select = DB::table($this->tratamento)
+        ->select(
+            "$this->tratamento.id as id",
+            "$this->tratamento.nome as tratamento",
+            "$this->profissao.nome as profissao",
+            "$this->tratamento.tempo_gasto as tempo_gasto"
+        )
+        ->join('profissao', 'profissao.id', '=', "$this->tratamento.id_profissao")
+        ->get();
+        $results = $select->toArray();
+    
         foreach ($results as $key => $value) {
             $results[$key]->tempo_gasto = Util::convertMinutesToHours($value->tempo_gasto);
         }
@@ -37,7 +40,7 @@ class Tratamentos extends Model
         $id = $request->dados['id'] ?? $request;
         $id = $id->id ?? $id;
     
-        $select = DB::table('tratamento')
+        $select = DB::table($this->tratamento)
             ->select('tratamento.nome as nome', 'tratamento.id as id')
             ->where('tratamento.id_profissao', '=', $id)
             ->get();
@@ -131,7 +134,7 @@ class Tratamentos extends Model
         }
 
         if (!empty(array_filter($dadosParaAlterar))) {
-            DB::table('tratamento')
+            DB::table($this->tratamento)
                 ->where('id', $request->id)
                 ->update(array_filter($dadosParaAlterar));
         }

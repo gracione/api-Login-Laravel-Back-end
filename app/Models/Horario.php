@@ -18,15 +18,16 @@ class Horario extends Model
     use HasFactory;
     public $expediente;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->expediente = new HorarioTrabalho();
     }
-    
+
     public function listar($request)
     {
-//        if (Feriado::verificarFeriado($request) || Folgas::verificarFolga($request)) {
-//            return false;
-//        }
+        //        if (Feriado::verificarFeriado($request) || Folgas::verificarFolga($request)) {
+        //            return false;
+        //        }
 
         $entradaSaida = $this->expediente->getByIdFuncionario($request->idFuncionario);
         $entrada1 = Util::convertHoursToMinutes($entradaSaida->inicio_de_expediente);
@@ -38,42 +39,37 @@ class Horario extends Model
         $tempoContado = $entrada1;
         $tempoGasto =  Util::convertHoursToMinutes(Util::calculateTimeSpent($request->idFiltro, $request->idTratamento));
         $horariosMarcados = $this->buscarHorariosDisponivel($tempoGasto, $request->idFuncionario, $request->data);
-        $horariosMarcadosMinutos = [];
 
         $medida = Configuracao::getAllConfiguracoes()['frequencia_horario'];
+
         for ($tempoContado = $entrada1; $tempoContado < $saida2; $tempoContado += $medida) {
-            $verificarDisponibilidade = true;
             $inicio = $tempoContado;
             $fim = $tempoContado + $tempoGasto;
-            foreach ($horariosMarcados as $value) {
-                $inicioMarcado = Util::convertHoursToMinutes($value->horario_inicio);
-                $fimMarcado = Util::convertHoursToMinutes($value->horario_fim);
 
-                if ($inicioMarcado >= $inicio
-                 || $inicioMarcado >= $fim) {
-                    if ($fimMarcado <= $inicio
-                    || $fimMarcado <= $fim) {
-                        $verificarDisponibilidade = false;
-                    }   
-                }
-
-                if ($fimMarcado >= $inicio
-                || $fimMarcado >= $fim) {
-                   if ($inicioMarcado <= $inicio
-                   || $inicioMarcado <= $fim) {
-                       $verificarDisponibilidade = false;
-                   }   
-               }
-            }
-
-            if($verificarDisponibilidade) {
-                $horariosDisponivel[]= [
-                'inicio' => Util::convertMinutesToHours($inicio),
-                'fim' => Util::convertMinutesToHours($fim)
+            if ($this->verificarDisponibilidadeHorario($inicio, $fim, $horariosMarcados)) {
+                $horariosDisponivel[] = [
+                    'inicio' => Util::convertMinutesToHours($inicio),
+                    'fim' => Util::convertMinutesToHours($fim)
                 ];
             }
         }
         return $horariosDisponivel;
+    }
+
+    function verificarDisponibilidadeHorario($inicio, $fim, $horariosMarcados)
+    {
+        foreach ($horariosMarcados as $value) {
+            $inicioMarcado = Util::convertHoursToMinutes($value->horario_inicio);
+            $fimMarcado = Util::convertHoursToMinutes($value->horario_fim);
+
+            if ($fimMarcado <= $inicio || $inicioMarcado >= $fim) {
+                return true;
+            }
+
+            return false;
+        }
+
+        return true;
     }
 
     public function inserir($ar)
@@ -211,7 +207,7 @@ class Horario extends Model
             ->join('tratamento as t', 't.id', '=', 'horario.id_tratamento')
             ->whereDate('horario.horario_inicio', '>=', $request->dataInicio)
             ->whereDate('horario.horario_inicio', '<=', $request->dataFim);
-                    
+
         if ($request->tipoUsuario == Constantes::CLIENTE) {
             $select = $select
                 ->where('horario.id_cliente', $request->idUsuario)->get();
