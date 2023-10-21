@@ -14,6 +14,8 @@ class Tratamentos extends Model
 
     public $tratamento = 'tratamento';
     public $profissao = 'profissao';
+    public $filtroTipo = 'filtro_tipo';
+    public $filtro = 'filtro';
 
     public function listar()
     {
@@ -24,7 +26,7 @@ class Tratamentos extends Model
             "$this->profissao.nome as profissao",
             "$this->tratamento.tempo_gasto as tempo_gasto"
         )
-        ->join('profissao', 'profissao.id', '=', "$this->tratamento.id_profissao")
+        ->join("$this->profissao", "$this->profissao.id", '=', "$this->tratamento.id_profissao")
         ->get();
         $results = $select->toArray();
     
@@ -41,8 +43,8 @@ class Tratamentos extends Model
         $id = $id->id ?? $id;
     
         $select = DB::table($this->tratamento)
-            ->select('tratamento.nome as nome', 'tratamento.id as id')
-            ->where('tratamento.id_profissao', '=', $id)
+            ->select("$this->tratamento.nome as nome", "$this->tratamento.id as id")
+            ->where("$this->tratamento.id_profissao", '=', $id)
             ->get();
     
         return $select->toArray();
@@ -73,7 +75,7 @@ class Tratamentos extends Model
         $tratamento['tempo_gasto'] = Util::convertHoursToMinutes($request->tempoGasto);
         $tratamento['id_profissao'] = $request->idProfissao;
 
-        $idTratamento = DB::table('tratamento')->insertGetId($tratamento);
+        $idTratamento = DB::table($this->tratamento)->insertGetId($tratamento);
 
         foreach ($request->tipoDeFiltro as $key => $value) {
             if ($value[0]) {
@@ -93,9 +95,9 @@ class Tratamentos extends Model
 
     public function excluir($request)
     {
-        $filtroTipo = DB::table('filtro_tipo')
+        $filtroTipo = DB::table($this->filtroTipo)
             ->select('*')
-            ->where('filtro_tipo.id_tratamento', '=', $request->id)
+            ->where("$this->filtroTipo.id_tratamento", '=', $request->id)
             ->get();
 
         foreach ($filtroTipo as $value) {
@@ -105,7 +107,7 @@ class Tratamentos extends Model
         }
 
         DB::table('filtro_tipo')->where('id_tratamento', $request->id)->delete();
-        DB::table('tratamento')->where('id', $request->id)->delete();
+        DB::table($this->tratamento)->where('id', $request->id)->delete();
         return 'deletado';
     }
 
