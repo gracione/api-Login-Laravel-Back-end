@@ -34,12 +34,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/funcionarios/excluir', [App\Http\Controllers\FuncionariosController::class, 'excluirByIdUsuario']);
     Route::post('/funcionarios/excluir-id', [App\Http\Controllers\FuncionariosController::class, 'excluirByIdFuncionario']);
 
-    Route::post('/tratamentos/listar-id-profissao', [App\Http\Controllers\TratamentosController::class, 'getByIdProfissao']);
-    Route::post('/tratamentos/listar-id', [App\Http\Controllers\TratamentosController::class, 'getById']);
-    Route::post('/tratamentos/listar', [App\Http\Controllers\TratamentosController::class, 'listar']);
-    Route::post('/tratamentos/inserir', [App\Http\Controllers\TratamentosController::class, 'inserir']);
-    Route::post('/tratamentos/alterar', [App\Http\Controllers\TratamentosController::class, 'alterar']);
-    Route::post('/tratamentos/excluir', [App\Http\Controllers\TratamentosController::class, 'excluir']);
+    Route::post('/servicos-profissao/listar-id-profissao', [App\Http\Controllers\TratamentosController::class, 'getByIdProfissao']);
+    Route::post('/servicos-profissao/listar-id', [App\Http\Controllers\TratamentosController::class, 'getById']);
+    Route::post('/servicos-profissao/listar', [App\Http\Controllers\TratamentosController::class, 'listar']);
+    Route::post('/servicos-profissao/inserir', [App\Http\Controllers\TratamentosController::class, 'inserir']);
+    Route::post('/servicos-profissao/alterar', [App\Http\Controllers\TratamentosController::class, 'alterar']);
+    Route::post('/servicos-profissao/excluir', [App\Http\Controllers\TratamentosController::class, 'excluir']);
 
     Route::post('/tratamentos-funcionarios/listar-id-profissao', [App\Http\Controllers\TratamentosFuncionariosController::class, 'getByIdProfissao']);
     Route::post('/tratamentos-funcionarios/listar-id', [App\Http\Controllers\TratamentosFuncionariosController::class, 'getById']);
