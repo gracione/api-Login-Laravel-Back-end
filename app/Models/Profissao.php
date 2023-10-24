@@ -12,7 +12,7 @@ class Profissao extends Model
 
     public function listar()
     {
-        return $this->select('nome as profissão', 'id')->get()->toArray();
+        return $this->select('nome as profissao', 'id')->get()->toArray();
     }
 
     public function getById($request)
