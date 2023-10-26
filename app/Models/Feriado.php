@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\DB;
 class Feriado extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+    protected $fillable = ['data','nome'];
+
     public function listar()
     {
         $select = DB::table('feriados')
@@ -73,18 +77,5 @@ class Feriado extends Model
     {
         DB::table('feriados')->where('id', $id)->delete();
         return 'deletado';
-    }
-    public function alterar($request)
-    {
-        foreach ($request->request as $key => $value) {
-            if ($value) {
-                $ar[$key] = $value;
-            }
-        }
-        DB::table('feriados')
-            ->where('id', $request->id)
-            ->update(array_filter($ar));
-
-        return true;
     }
 }
