@@ -35,17 +35,13 @@ class FeriadoController extends Controller
     }
     public function excluir(Request $request)
     {
-        return $this->feriado->excluir($request->id);
+        $feriado = Feriado::find($request->id);
+
+        return $feriado->delete($request->id);
     }
     public function alterar(Request $request)
     {
         $feriado = Feriado::find($request->id);
-    
-        if ($feriado) {
-            $feriado->update(array_filter($request->all()));   
-            return "Registro alterado com sucesso!";
-        } else {
-            return "Registro não encontrado.";
-        }
+        return $feriado->update(array_filter($request->all()));   
     }    
 }

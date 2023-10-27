@@ -73,9 +73,4 @@ class Feriado extends Model
 
         return true;
     }
-    public function excluir($id)
-    {
-        DB::table('feriados')->where('id', $id)->delete();
-        return 'deletado';
-    }
 }
