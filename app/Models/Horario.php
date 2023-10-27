@@ -83,7 +83,7 @@ class Horario extends Model
         return true;
     }
 
-    public function excluir($request)
+    public function destroy($request)
     {
         try {
             DB::table('horario')->delete($request->id);

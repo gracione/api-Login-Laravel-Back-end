@@ -36,7 +36,7 @@ class TratamentosController extends Controller
     {
         return $this->tratamentos->inserir($request);
     }
-    public function excluir(Request $request)
+    public function destroy(Request $request)
     {
         return $this->tratamentos->excluir($request);
     }

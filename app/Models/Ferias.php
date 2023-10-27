@@ -26,7 +26,7 @@ class Ferias extends Model
 
         return true;
     }
-    public function excluir($request)
+    public function destroy($request)
     {
         DB::table('ferias')->where('id', $request->id)->delete();
         return 'deletado';

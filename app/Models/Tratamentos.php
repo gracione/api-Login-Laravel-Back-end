@@ -93,7 +93,7 @@ class Tratamentos extends Model
         return true;
     }
 
-    public function excluir($request)
+    public function destroy($request)
     {
         $filtroTipo = DB::table($this->filtroTipo)
             ->select('*')

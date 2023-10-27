@@ -27,7 +27,7 @@ class HorarioTrabalhoController extends Controller
     {
         return $this->expediente->inserir($request);
     }
-    public function excluir(Request $request)
+    public function destroy(Request $request)
     {
         return $this->expediente->excluir($request);
     }

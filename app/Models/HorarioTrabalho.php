@@ -115,7 +115,7 @@ class HorarioTrabalho extends Model
         return true;
     }
 
-    public function excluir($request)
+    public function destroy($request)
     {
         $this->destroy($request->id);
 

@@ -159,7 +159,7 @@ class Funcionarios extends Model
         return true;
     }
 
-    public function excluirByIdUsuario($idUsuario)
+    public function destroyByIdUsuario($idUsuario)
     {
         try {
             DB::table('folga')->where('id_usuario', $idUsuario)->delete();
@@ -173,7 +173,7 @@ class Funcionarios extends Model
         return true;
     }
 
-    public function excluirByIdFuncionario($idFuncionario)
+    public function destroyByIdFuncionario($idFuncionario)
     {
 
         try {

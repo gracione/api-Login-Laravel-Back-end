@@ -49,7 +49,7 @@ class Galeria extends Model
 
         return true;
     }
-    public function excluir($id)
+    public function destroy($id)
     {
         DB::table('albuns')->where('id', $id)->delete();
         return 'deletado';

@@ -91,7 +91,7 @@ class Folgas extends Model
         return true;
     }
 
-    public function excluir($request)
+    public function destroy($request)
     {
         DB::table('folga')->where('id', $request->id)->delete();
         return 'deletado';

@@ -24,7 +24,7 @@ class ProfissaoController extends Controller
         return $this->profissao->listar();
     }
 
-    public function excluir(Request $request)
+    public function destroy(Request $request)
     {
         return $this->profissao->excluir($request);
     }

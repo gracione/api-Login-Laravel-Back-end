@@ -22,7 +22,7 @@ class FeriasController extends Controller
     {
         return $this->ferias->inserir($request);
     }
-    public function excluir(Request $request)
+    public function destroy(Request $request)
     {
         return $this->ferias->excluir($request);
     }

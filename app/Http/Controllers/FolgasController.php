@@ -29,7 +29,7 @@ class FolgasController extends Controller
     {
         return $this->folgas->inserir($request);
     }
-    public function excluir(Request $request)
+    public function destroy(Request $request)
     {
         return $this->folgas->excluir($request);
     }

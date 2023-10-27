@@ -68,7 +68,7 @@ class MensagemController extends Controller
         return response()->json($mensagem);
     }
 
-    public function excluir($id)
+    public function destroy($id)
     {
         $mensagem = Mensagem::find($id);
 

@@ -36,7 +36,7 @@ class Profissao extends Model
             ->get()->toArray();
     }
 
-    public function excluir($request)
+    public function destroy($request)
     {
         try {
             $this->where('id', $request->id)->delete();
