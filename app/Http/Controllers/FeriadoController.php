@@ -31,18 +31,17 @@ class FeriadoController extends Controller
     }
     public function inserir(Request $request)
     {
-        return $this->feriado->inserir($request);
+        $this->feriado->fill(array_filter($request->all()));
+        return $this->feriado->save();
     }
     public function alterar(Request $request)
     {
         $feriado = $this->feriado::find($request->id);
-        return $feriado->update(array_filter($request->all()));   
+        return $feriado->update(array_filter($request->all()));
     }
     public function destroy(Request $request)
     {
         $feriado = $this->feriado::find($request->id);
-
         return $feriado->delete($request->id);
     }
-
 }
