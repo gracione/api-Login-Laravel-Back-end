@@ -18,12 +18,20 @@ class FeriadoController extends Controller
 
     public function listar()
     {
-        return $this->feriado->listar();
+        return $this->feriado::all();
     }
+
     public function getById(Request $request)
     {
-        return $this->feriado->getById($request);
+        $feriado = $this->feriado->find($request->idFeriado);
+
+        if (!$feriado) {
+            return response()->json(['message' => 'Feriado não encontrado'], 404);
+        }
+
+        return response()->json([$feriado], 200);
     }
+
 
     public function listarByMesAno(Request $request)
     {
