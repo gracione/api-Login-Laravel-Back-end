@@ -13,27 +13,6 @@ class Feriado extends Model
     public $timestamps = false;
     protected $fillable = ['data','nome'];
 
-    public function listar()
-    {
-        $select = DB::table('feriados')
-            ->select(
-                'feriados.id as id',
-                'feriados.nome as nome',
-                'feriados.data as data'
-            )
-            ->get();
-        return $select->toArray();
-    }
-
-    public function getById($request)
-    {
-        $select = DB::table('feriados')
-            ->select('*')
-            ->where('id', '=', $request->idFeriado)
-            ->get();
-        return $select;
-    }
-
     public function listarByMesAno($request)
     {
         $select = DB::table('feriados')
@@ -64,13 +43,4 @@ class Feriado extends Model
         return !empty($results[0]) ? true : false;
     }
 
-    public function inserir($request)
-    {
-        DB::table('feriados')->insert([
-            'nome' => $request->nome,
-            'data' => $request->data
-        ]);
-
-        return true;
-    }
 }
