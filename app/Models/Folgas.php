@@ -10,6 +10,9 @@ use App\Models\Util;
 class Folgas extends Model
 {
     use HasFactory;
+    protected $table = 'folga';
+    public $timestamps = false;
+    protected $fillable = ['dia_semana' ,'id_funcionario' ,'id_usuario'];
 
     public function listar()
     {
@@ -89,12 +92,6 @@ class Folgas extends Model
         ]);
 
         return true;
-    }
-
-    public function destroy($request)
-    {
-        DB::table('folga')->where('id', $request->id)->delete();
-        return 'deletado';
     }
 
     public function alterar($request)

@@ -24,11 +24,6 @@ class ProfissaoController extends Controller
         return $this->profissao->listar();
     }
 
-    public function destroy(Request $request)
-    {
-        return $this->profissao->excluir($request);
-    }
-
     public function alterar(Request $request)
     {
         return $this->profissao->alterar($request);
@@ -42,4 +37,10 @@ class ProfissaoController extends Controller
     {
         return $this->profissao->getByIdFuncionario($request);
     }
+    public function destroy(Request $request)
+    {
+        $profissao = $this->profissao->find($request->id);
+        return $profissao->delete($request->id);
+    }
+
 }

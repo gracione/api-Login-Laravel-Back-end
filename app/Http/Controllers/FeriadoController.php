@@ -31,11 +31,6 @@ class FeriadoController extends Controller
 
         return response()->json([$feriado], 200);
     }
-
-    public function listarByMesAno(Request $request)
-    {
-        return $this->feriado->listarByMesAno($request);
-    }
     public function inserir(Request $request)
     {
         $this->feriado->fill(array_filter($request->all()));
@@ -50,5 +45,10 @@ class FeriadoController extends Controller
     {
         $feriado = $this->feriado->find($request->id);
         return $feriado->delete($request->id);
+    }
+
+    public function listarByMesAno(Request $request)
+    {
+        return $this->feriado->listarByMesAno($request);
     }
 }

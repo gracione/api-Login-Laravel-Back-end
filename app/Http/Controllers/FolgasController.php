@@ -17,9 +17,16 @@ class FolgasController extends Controller
     {
         return $this->folgas->listar();
     }
+
     public function getById(Request $request)
     {
-        return $this->folgas->getById($request);
+        $folgas = $this->folgas->find($request->id);
+
+        if (!$folgas) {
+            return response()->json(['message' => 'Feriado não encontrado'], 404);
+        }
+
+        return response()->json([$folgas], 200);
     }
     public function getByIdFuncionario(Request $request)
     {
@@ -31,7 +38,8 @@ class FolgasController extends Controller
     }
     public function destroy(Request $request)
     {
-        return $this->folgas->excluir($request);
+        $folgas = $this->folgas->find($request->id);
+        return $folgas->delete($request->id);
     }
     public function alterar(Request $request)
     {
