@@ -51,6 +51,7 @@ class Funcionarios extends Model
             'users.nome as nome',
             'funcionario.id as id',
             'profissao.nome as profissao',
+            'funcionario.id as id_funcionario',
             'profissao.id as id_profissao'
         )
             ->join('users', 'funcionario.id_usuario', '=', 'users.id')
@@ -64,20 +65,6 @@ class Funcionarios extends Model
         }
 
         return $select->get()->toArray();
-    }
-
-    public function listarFuncionariosEprofissao()
-    {
-        return $this->select(
-            'users.nome as nome',
-            'users.id as id',
-            'funcionario.id as id_funcionario',
-            'profissao.nome as profissao'
-        )
-            ->join('users', 'funcionario.id_usuario', '=', 'users.id')
-            ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id')
-            ->get()
-            ->toArray();
     }
 
     public function getByIdUsuario($id)

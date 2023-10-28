@@ -36,11 +36,6 @@ class FuncionariosController extends Controller
         return response()->json($funcionarios, 200);
     }
 
-    public function listarFuncionariosEprofissao()
-    {
-        return $this->funcionarios->listarFuncionariosEprofissao();
-    }
-
     public function dadosFuncionarioByIdUsuario(Request $request)
     {
         $idUsuario = !empty($request->id) ? $request->id : $request;
