@@ -29,6 +29,8 @@ class HorarioTrabalhoController extends Controller
     }
     public function destroy(Request $request)
     {
-        return $this->expediente->excluir($request);
+        $expediente = $this->expediente->find($request->id);
+        return $expediente->delete($request->id);
     }
+
 }

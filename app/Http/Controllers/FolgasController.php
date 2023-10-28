@@ -36,13 +36,13 @@ class FolgasController extends Controller
     {
         return $this->folgas->inserir($request);
     }
+    public function alterar(Request $request)
+    {
+        return $this->folgas->alterar($request);
+    }
     public function destroy(Request $request)
     {
         $folgas = $this->folgas->find($request->id);
         return $folgas->delete($request->id);
-    }
-    public function alterar(Request $request)
-    {
-        return $this->folgas->alterar($request);
     }
 }

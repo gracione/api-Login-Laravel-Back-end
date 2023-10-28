@@ -25,9 +25,15 @@ class FuncionariosController extends Controller
         return $this->funcionarios->listar();
     }
 
-    public function listarFuncionarios(Request $request)
+    public function listarFuncionarios()
     {
-        return $this->funcionarios->listarFuncionarios($request);
+        $funcionarios = $this->funcionarios->getFuncionariosAndProfissao();
+
+        if (!$funcionarios) {
+            return response()->json(['message' => 'Nenhum Funcionario Encontrado'], 404);
+        }
+
+        return response()->json($funcionarios, 200);
     }
 
     public function listarFuncionariosEprofissao()

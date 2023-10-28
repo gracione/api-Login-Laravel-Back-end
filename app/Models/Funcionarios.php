@@ -45,7 +45,7 @@ class Funcionarios extends Model
             ->toArray();
     }
 
-    public function listarFuncionarios($request)
+    public function getFuncionariosAndProfissao()
     {
         $select = $this->select(
             'users.nome as nome',
@@ -56,8 +56,11 @@ class Funcionarios extends Model
             ->join('users', 'funcionario.id_usuario', '=', 'users.id')
             ->join('profissao', 'funcionario.id_profissao', '=', 'profissao.id');
 
-        if (!empty($request->dados['tipoUsuario']) && $request->dados['tipoUsuario'] == Constantes::FUNCIONARIO) {
-            $select = $select->where('funcionario.id_usuario', $request->dados['idUsuario']);
+        $tipoUsuario = auth()->user()->tipo_usuario;
+        $idUsuario = auth()->user()->id;
+            
+        if ($tipoUsuario == Constantes::FUNCIONARIO) {
+            $select = $select->where('funcionario.id_usuario', $idUsuario);
         }
 
         return $select->get()->toArray();

@@ -59,8 +59,10 @@ class GaleriaController extends Controller
 
     public function destroy(Request $request)
     {
-        return $this->galeria->excluir($request->id);
+        $galeria = $this->galeria->find($request->id);
+        return $galeria->delete($request->id);
     }
+
     public function alterar(Request $request)
     {
         try {

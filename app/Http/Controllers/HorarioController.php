@@ -60,7 +60,11 @@ class HorarioController extends Controller
     {
         return $this->horario->excluir($request);
     }
-
+    public function destroy(Request $request)
+    {
+        $horario = $this->horario->find($request->id);
+        return $horario->delete($request->id);
+    }
     public function confirmar(Request $request)
     {
         return $this->horario->confirmar($request);

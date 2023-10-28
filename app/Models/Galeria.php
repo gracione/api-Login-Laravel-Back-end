@@ -49,11 +49,6 @@ class Galeria extends Model
 
         return true;
     }
-    public function destroy($id)
-    {
-        DB::table('albuns')->where('id', $id)->delete();
-        return 'deletado';
-    }
     public function alterar($request)
     {
         foreach ($request->request as $key => $value) {
