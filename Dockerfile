@@ -1,44 +1,39 @@
+# Use uma imagem oficial do PHP com Apache
 FROM php:7.4-apache
 
-RUN apt-get update && apt-get install -y redis-server libxml2-dev autoconf automake libpq-dev libonig-dev libzip-dev libcurl4-openssl-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev 
+# Instale as extensões PHP necessárias
+RUN docker-php-ext-install pdo pdo_mysql
 
-
-# RUN docker-php-ext-install xml 
-RUN docker-php-ext-install dom 
-RUN docker-php-ext-install pdo 
-RUN docker-php-ext-install pdo_pgsql
-RUN docker-php-ext-install mbstring 
-RUN docker-php-ext-install curl 
-RUN docker-php-ext-install gd 
-RUN docker-php-ext-install soap 
-RUN docker-php-ext-install zip 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install -j$(nproc) gd
-
-# XDEBUG
-RUN pecl install -o -f redis xdebug-3.1.4 \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis xdebug
-
-RUN echo "zend_extension = xdebug.so" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-	&& echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-	&& echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-	&& echo "xdebug.discover_client_host=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-	&& echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-	&& echo "XDEBUG_SESSION=Gracione" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-	&& echo "xdebug=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-	&& echo "xdebug.var_display_max_children = 128" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-
-COPY virtualhost.conf /etc/apache2/sites-available/000-default.conf
-
+# Ativar o módulo rewrite do Apache
 RUN a2enmod rewrite
+
+# Instalar o Xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+COPY xdebug.ini /usr/local/etc/php/conf.d/
+
+# Configurar as variáveis de ambiente do Laravel
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+ENV APP_ENV=local
+ENV APP_KEY=base64:SeuAppKeyAqui
+ENV APP_DEBUG=true
+ENV APP_LOG=errorlog
+ENV APP_URL=http://salao.localhost
+
+# Definir o nome do host virtual
+RUN echo "ServerName salao.localhost" >> /etc/apache2/apache2.conf
+
+# Copiar o arquivo de configuração do host virtual
+COPY salao.localhost.conf /etc/apache2/sites-available/
+RUN a2ensite salao.localhost.conf
+
+# Reiniciar o Apache
 RUN service apache2 restart
 
+# Definir o diretório de trabalho
+WORKDIR /var/www/html
+
+# Expor a porta 80 do contêiner
 EXPOSE 80
+
+# Comando para iniciar o Apache em segundo plano
+CMD ["apache2-foreground"]

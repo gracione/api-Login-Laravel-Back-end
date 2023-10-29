@@ -1,14 +1,21 @@
-version: "3"
+version: '3'
 
-services: 
-  app:
-    build: .
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+services:
+  api-login-laravel-back-end:
+    build:
+      context: .
+      dockerfile: Dockerfile.laravel
+    image: api-login-laravel-back-end
     container_name: api-login-laravel-back-end
     ports:
-      - "8015:80"
+      - "80:80"
     volumes:
-      - .:/var/www/html
-    command: >
-      sh -c "service apache2 start && redis-server --protected-mode no"
+      - ./seu_projeto_laravel:/var/www/html
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
