@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/servicos-profissao/listar-id-profissao', [App\Http\Controllers\TratamentosController::class, 'getByIdProfissao']);
     Route::post('/servicos-profissao/listar-id', [App\Http\Controllers\TratamentosController::class, 'getById']);
-    Route::post('/servicos-profissao/listar', [App\Http\Controllers\TratamentosController::class, 'listar']);
+    Route::get('/servicos-profissao/listar', [App\Http\Controllers\TratamentosController::class, 'listar']);
     Route::post('/servicos-profissao/inserir', [App\Http\Controllers\TratamentosController::class, 'inserir']);
     Route::post('/servicos-profissao/alterar', [App\Http\Controllers\TratamentosController::class, 'alterar']);
     Route::post('/servicos-profissao/excluir', [App\Http\Controllers\TratamentosController::class, 'destroy']);
