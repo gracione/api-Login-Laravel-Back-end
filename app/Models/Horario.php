@@ -83,17 +83,6 @@ class Horario extends Model
         return true;
     }
 
-    public function destroy($request)
-    {
-        try {
-            DB::table('horario')->delete($request->id);
-        } catch (Exception $e) {
-            return false;
-        }
-
-        return true;
-    }
-
     public function confirmar($request)
     {
         try {
@@ -106,7 +95,6 @@ class Horario extends Model
 
         return true;
     }
-
 
     public function verificarHorarioModoTradicional($request)
     {

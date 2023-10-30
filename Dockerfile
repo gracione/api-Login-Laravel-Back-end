@@ -8,8 +8,8 @@ RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod rewrite
 
 # Instalar o Xdebug
-RUN pecl install xdebug && docker-php-ext-enable xdebug
-COPY xdebug.ini /usr/local/etc/php/conf.d/
+#RUN pecl install xdebug && docker-php-ext-enable xdebug
+#COPY xdebug.ini /usr/local/etc/php/conf.d/
 
 # Configurar as variáveis de ambiente do Laravel
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
@@ -27,7 +27,7 @@ COPY salao.localhost.conf /etc/apache2/sites-available/
 RUN a2ensite salao.localhost.conf
 
 # Reiniciar o Apache
-RUN service apache2 restart
+#RUN service apache2 restart
 
 # Definir o diretório de trabalho
 WORKDIR /var/www/html

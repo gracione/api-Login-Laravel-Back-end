@@ -4,15 +4,12 @@ services:
   api-login-laravel-back-end:
     build:
       context: .
-      dockerfile: Dockerfile.laravel
     image: api-login-laravel-back-end
     container_name: api-login-laravel-back-end
     ports:
       - "80:80"
     volumes:
       - ./seu_projeto_laravel:/var/www/html
-    depends_on:
-      - mysql
     networks:
       - app-network
 
