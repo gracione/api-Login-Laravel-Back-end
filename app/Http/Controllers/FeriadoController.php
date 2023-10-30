@@ -49,6 +49,6 @@ class FeriadoController extends Controller
 
     public function listarByMesAno(Request $request)
     {
-        return $this->feriado->listarByMesAno($request);
+        return $this->feriado->listarByMesAno((int) $request['mes'],(int) $request['ano']);
     }
 }

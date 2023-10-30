@@ -11,22 +11,22 @@ class Feriado extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = ['data','nome'];
+    protected $fillable = ['data', 'nome'];
 
-    public function listarByMesAno($request)
+    public function listarByMesAno(int $mes, int $ano)
     {
-        $select = DB::table('feriados')
-            ->select(DB::raw('DAY(data) as dia, nome'))
-            ->whereMonth('feriados.data', $request['mes'])
-            ->whereYear('feriados.data', $request['ano'])
-            ->get();
-        $results = $select->toArray();
-
-        $arr = [];
-        foreach ($results as $value) {
-            $arr[$value->dia] = $value->nome;
+        if ($mes < 1 || $mes > 12 || $ano < 1900) {
+            return ['error' => 'Parâmetros de mês ou ano inválidos'];
         }
-        return $arr;
+
+        $feriados = Feriado::selectRaw('DAY(data) as dia, nome')
+            ->whereMonth('data', $mes)
+            ->whereYear('data', $ano)
+            ->get();
+
+        $feriadosAssociativos = $feriados->pluck('nome', 'dia')->toArray();
+
+        return $feriadosAssociativos;
     }
 
     public function verificarFeriado($request)
@@ -42,5 +42,4 @@ class Feriado extends Model
         $results = $select->toArray();
         return !empty($results[0]) ? true : false;
     }
-
 }

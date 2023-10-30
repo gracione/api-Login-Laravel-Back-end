@@ -85,8 +85,8 @@ class HorarioController extends Controller
         return $request->filtros == 0 && $request->tratamento == 0 ? 0 :
             Util::calculateTimeSpent($request->filtros, $request->tratamento);
     }
-    //listar
-    public function horariosDiponivel(Request $request)
+
+    public function horariosDisponivel(Request $request)
     {
         return $this->horario->listar($request);
     }
