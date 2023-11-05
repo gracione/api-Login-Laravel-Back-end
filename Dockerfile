@@ -1,39 +1,41 @@
-# Use uma imagem oficial do PHP com Apache
+# Define a imagem base a partir da qual sua imagem Docker será criada
 FROM php:7.4-apache
 
-# Instale as extensões PHP necessárias
-RUN docker-php-ext-install pdo pdo_mysql
+# Atualiza a lista de pacotes do sistema e instala dependências
+RUN apt-get update && apt-get install -y wget redis-server libxml2-dev autoconf automake libpq-dev libonig-dev libzip-dev libcurl4-openssl-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev
 
-# Ativar o módulo rewrite do Apache
+# Instala várias extensões do PHP
+RUN docker-php-ext-install dom
+RUN docker-php-ext-install pgsql
+RUN docker-php-ext-install pdo
+RUN docker-php-ext-install pdo_pgsql
+RUN docker-php-ext-install mbstring
+RUN docker-php-ext-install curl
+RUN docker-php-ext-install gd
+RUN docker-php-ext-install soap
+RUN docker-php-ext-install zip
+
+# Configura a extensão gd para usar freetype e jpeg
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+
+# Compila a extensão gd com o número de núcleos de CPU disponíveis
+RUN docker-php-ext-install -j$(nproc) gd
+
+# Copia o arquivo de configuração do virtual host do Apache para o local correto
+COPY virtualhost.conf /etc/apache2/sites-available/000-default.conf
+
+# Ativa o módulo de reescrita do Apache
 RUN a2enmod rewrite
 
-# Instalar o Xdebug
-#RUN pecl install xdebug && docker-php-ext-enable xdebug
-#COPY xdebug.ini /usr/local/etc/php/conf.d/
+# Reinicia o serviço do Apache
+RUN service apache2 restart
 
-# Configurar as variáveis de ambiente do Laravel
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-ENV APP_ENV=local
-ENV APP_KEY=base64:SeuAppKeyAqui
-ENV APP_DEBUG=true
-ENV APP_LOG=errorlog
-ENV APP_URL=http://salao.localhost
+# Baixa o Composer e o coloca no diretório /usr/local/bin
+RUN wget https://getcomposer.org/composer.phar
+RUN mv composer.phar /usr/local/bin/composer
 
-# Definir o nome do host virtual
-RUN echo "ServerName salao.localhost" >> /etc/apache2/apache2.conf
+# Define permissões para o Composer
+RUN chmod -R 755 /usr/local/bin/composer
 
-# Copiar o arquivo de configuração do host virtual
-COPY salao.localhost.conf /etc/apache2/sites-available/
-RUN a2ensite salao.localhost.conf
-
-# Reiniciar o Apache
-#RUN service apache2 restart
-
-# Definir o diretório de trabalho
-WORKDIR /var/www/html
-
-# Expor a porta 80 do contêiner
+# Expõe a porta 80 para acessar o servidor web Apache dentro do contêiner
 EXPOSE 80
-
-# Comando para iniciar o Apache em segundo plano
-CMD ["apache2-foreground"]

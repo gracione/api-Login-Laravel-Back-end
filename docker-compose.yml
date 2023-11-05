@@ -1,18 +1,19 @@
-version: '3'
+version: "3"  # Versão da configuração do Docker Compose
 
 services:
-  api-login-laravel-back-end:
-    build:
-      context: .
-    image: api-login-laravel-back-end
-    container_name: api-login-laravel-back-end
-    ports:
-      - "80:80"
-    volumes:
-      - ./seu_projeto_laravel:/var/www/html
-    networks:
-      - app-network
+  app:  # Nome do serviço
+    build: .  # Define o contexto para construir a imagem a partir do Dockerfile no diretório atual
 
-networks:
-  app-network:
-    driver: bridge
+    extra_hosts:  # Define mapeamento de hosts adicionais (neste caso, mapeia host.docker.internal para host-gateway)
+      - "host.docker.internal:host-gateway"
+
+    container_name: api  # Define o nome do contêiner como "api"
+
+    ports:
+      - "8099:80"  # Mapeia a porta 8099 do host para a porta 80 do contêiner
+
+    volumes:
+      - .:/var/www/html  # Mapeia o diretório atual (no host) para /var/www/html (no contêiner)
+
+    command: >  # Define o comando a ser executado no contêiner
+      sh -c "service apache2 start && redis-server --protected-mode no"

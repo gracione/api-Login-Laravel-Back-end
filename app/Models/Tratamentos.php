@@ -22,7 +22,7 @@ class Tratamentos extends Model
         $select = DB::table($this->tratamento)
         ->select(
             "$this->tratamento.id as id",
-            "$this->tratamento.nome as tratamento",
+            "$this->tratamento.nome as serviço",
             "$this->profissao.nome as profissao",
             "$this->tratamento.tempo_gasto as tempo_gasto"
         )
